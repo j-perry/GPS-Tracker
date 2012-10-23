@@ -5,6 +5,7 @@
     android:gravity="top" >
 
     <LinearLayout
+        android:id="@+id/linearLayout1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
@@ -62,7 +63,6 @@
             android:layout_weight="1"
             android:text="Medium Text"
             android:textAppearance="?android:attr/textAppearanceMedium" />
-
     </LinearLayout>
 
     <TextView
@@ -75,5 +75,15 @@
         android:text="Team Two"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textColor="#A47D23" />
+
+    <Button
+        android:id="@+id/button1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/linearLayout1"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="94dp"
+        android:onClick="onUserClick"
+        android:text="Change User" />
 
 </RelativeLayout>

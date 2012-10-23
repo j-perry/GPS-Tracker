@@ -8,8 +8,9 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-//import android.util.Log;
+import android.util.Log;
 import android.view.Menu;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.text.format.*;
@@ -36,9 +37,7 @@ public class MainActivity extends Activity implements LocationListener
         setContentView(R.layout.activity_main);
         latituteField = (TextView) findViewById(R.id.LatValue);
         longitudeField = (TextView) findViewById(R.id.LongValue);                
-        CheckForGPSEnabled();     
-        UpdateGPS();
-        locationManager.requestLocationUpdates(provider, 0, 0, this);
+        CheckForGPSEnabled();
         handleTimer = new Handler();
         handleTimer.removeCallbacks(runUpdateTimerTask);
         handleTimer.postDelayed(runUpdateTimerTask, 100);
@@ -108,15 +107,15 @@ public class MainActivity extends Activity implements LocationListener
     private void CheckForGPSEnabled()
     {    	
     	locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);    	
-        boolean enabled_GPS = false;
-        boolean enabled_NETWORK = false;
+        boolean enabled = false;
         try
-        {        	        	
-        	enabled_GPS = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
-        	enabled_NETWORK = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);        	
+        {        	
+        	enabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+        	//enabled = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);        	
         }
         catch (Exception e)
-        {        	
+        {
+        	Log.e("Class", "Here!");
 			AlertDialog alertDialog = new AlertDialog.Builder(this).create();
 			alertDialog.setTitle("Error");
 			alertDialog.setMessage("Error with GPS Location.\n" + e.getMessage());
@@ -134,7 +133,7 @@ public class MainActivity extends Activity implements LocationListener
 		// Check if enabled and if not send user to the GSP settings
 		// Better solution would be to display a dialog and suggesting to 
 		// go to the settings
-		if (enabled_GPS == false && enabled_NETWORK == false) {
+		if (enabled == false) {
 			AlertDialog alertDialog = new AlertDialog.Builder(this).create();
 			alertDialog.setTitle("GPS Disabled");
 			alertDialog.setMessage("Location services are currently disabled\nGo to Settings to activate them.");
@@ -143,7 +142,7 @@ public class MainActivity extends Activity implements LocationListener
 				public void onClick(DialogInterface dialog, int arg1) 
 				{
 					Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-					startActivity(intent);					
+					startActivity(intent);
 	            }
 			});						
 			alertDialog.show();
@@ -185,7 +184,7 @@ public class MainActivity extends Activity implements LocationListener
     {
     	super.onResume();    
     	CheckForGPSEnabled();
-        locationManager.requestLocationUpdates(provider, 0, 0, this);
+        locationManager.requestLocationUpdates(provider, 400, 1, this);
     }  
         
     @Override
@@ -193,6 +192,11 @@ public class MainActivity extends Activity implements LocationListener
     {
       super.onPause();
       locationManager.removeUpdates(this);
+    }
+
+    public void onUserClick(View view) {
+        Intent intent = new Intent(this, UserActivity.class);
+        startActivity(intent);
     }
 
 }
