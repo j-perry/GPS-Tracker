@@ -7,13 +7,12 @@ public class Workout {
 	int		stop;
 	int		distance;
 	
-	public Workout( int _id, int user_id, int start, int stop, int distance ){
+	public Workout( int _id, int user_id, int start, int stop, int distance ){		
 		this._id = _id;
 		this.user_id = user_id;
 		this.start = start;
 		this.stop = stop;
-		this.distance = distance;
-		
+		this.distance = distance;		
 	}
 	
 	public int getID(){

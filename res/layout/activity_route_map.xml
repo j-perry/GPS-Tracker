@@ -1,0 +1,35 @@
+  <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+     android:layout_width="match_parent"
+     android:layout_height="match_parent"
+     android:layout_gravity="top" android:orientation="vertical" >     
+      
+      <TextView
+          android:id="@+id/textView1"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_alignParentLeft="true"
+          android:layout_alignParentTop="true"
+          android:layout_marginTop="15dp"
+          android:text="Distance"
+          android:textAppearance="?android:attr/textAppearanceLarge" />
+
+      <TextView
+          android:id="@+id/distance"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_alignBaseline="@+id/textView1"
+          android:layout_alignBottom="@+id/textView1"
+          android:layout_marginLeft="26dp"
+          android:layout_toRightOf="@+id/textView1"
+          android:text="1.2m" />
+      
+      <com.google.android.maps.MapView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/mapview"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:clickable="true"
+    android:apiKey="09KSqdg6VuYqhtOOjFH2hGG33OdSFf8Dvcjl-3g" />
+
+      
+    </LinearLayout>
