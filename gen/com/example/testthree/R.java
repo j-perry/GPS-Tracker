@@ -27,20 +27,24 @@ public final class R {
         public static final int add=0x7f070008;
         public static final int button1=0x7f070011;
         public static final int cancel=0x7f070009;
+        public static final int chronoTimer=0x7f070012;
         public static final int edit_age=0x7f070004;
         public static final int edit_email=0x7f070003;
         public static final int edit_fname=0x7f070001;
         public static final int edit_height=0x7f070006;
         public static final int edit_sname=0x7f070002;
         public static final int edit_weight=0x7f070005;
-        public static final int lblDistanceCovered=0x7f070013;
-        public static final int lblTimeTaken=0x7f070015;
+        public static final int lblDistanceCovered=0x7f070017;
+        public static final int lblTimeTaken=0x7f070019;
         public static final int linearLayout1=0x7f070000;
         public static final int linearLayout2=0x7f070007;
-        public static final int mapview=0x7f070016;
-        public static final int menu_settings=0x7f070017;
-        public static final int textView1=0x7f070012;
-        public static final int textView2=0x7f070014;
+        public static final int mapview=0x7f07001a;
+        public static final int menu_settings=0x7f07001b;
+        public static final int resetChrono=0x7f070015;
+        public static final int startChrono=0x7f070013;
+        public static final int stopChrono=0x7f070014;
+        public static final int textView1=0x7f070016;
+        public static final int textView2=0x7f070018;
     }
     public static final class layout {
         public static final int activity_add_user=0x7f030000;

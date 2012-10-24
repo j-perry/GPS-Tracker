@@ -95,37 +95,35 @@
         android:layout_marginTop="22dp"
         android:text="No Timer"
         android:textAppearance="?android:attr/textAppearanceMedium" />
-
+
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
-        android:layout_marginBottom="51dp" >
-
+        android:layout_below="@+id/chronoTimer"
+        android:layout_marginTop="22dp" >
+
         <Button
             android:id="@+id/startChrono"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:onClick="onStartClick"
             android:text="Start Timer" />
-
+
         <Button
             android:id="@+id/stopChrono"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:onClick="onStopClick"
-            android:text="Stop Timer"
-            android:visibility="visible" />
-
+            android:text="Stop Timer" />
+
         <Button
-            android:id="@+id/restartChrono"
+            android:id="@+id/resetChrono"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:onClick="onResetClick"
-            android:text="Restart Timer"
-            android:visibility="visible" />
+            android:text="Reset Timer" />
 
     </LinearLayout>
 
