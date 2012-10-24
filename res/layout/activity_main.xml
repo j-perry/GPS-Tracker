@@ -75,15 +75,58 @@
         android:text="Team Two"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textColor="#A47D23" />
-
+
     <Button
         android:id="@+id/button1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/GroupName"
         android:layout_below="@+id/linearLayout1"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="94dp"
+        android:layout_marginTop="29dp"
         android:onClick="onUserClick"
         android:text="Change User" />
+
+    <TextView
+        android:id="@+id/chronoTimer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/button1"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="22dp"
+        android:text="No Timer"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="51dp" >
+
+        <Button
+            android:id="@+id/startChrono"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="onStartClick"
+            android:text="Start Timer" />
+
+        <Button
+            android:id="@+id/stopChrono"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="onStopClick"
+            android:text="Stop Timer"
+            android:visibility="visible" />
+
+        <Button
+            android:id="@+id/restartChrono"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="onResetClick"
+            android:text="Restart Timer"
+            android:visibility="visible" />
+
+    </LinearLayout>
 
 </RelativeLayout>

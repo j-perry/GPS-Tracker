@@ -2,10 +2,8 @@ package com.example.testthree;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import com.example.testthree.R;
 import com.example.testthree.entity.LocationPoint;
-
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Parcelable;
@@ -28,14 +26,14 @@ import android.location.LocationManager;
 public class MainActivity extends Activity implements LocationListener
 {
 
-	private Handler handleTimer;
-	private TextView latituteField;
-	private TextView longitudeField;		
-	private LocationManager locationManager = null;
+	private Handler handleTimer, handleChrono;
+	private TextView latituteField, longitudeField;	
 	private int runTimerCount = 0;	
+	private String hours, minutes, seconds, milliseconds, provider, currentTime;
+	private long startTime, elapsedTime;
+	private boolean stopChrono = false;
 	private boolean terminateCount = false;
-	private String provider;
-	private String currentTime;
+	private LocationManager locationManager = null;	
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -47,6 +45,7 @@ public class MainActivity extends Activity implements LocationListener
         handleTimer = new Handler();
         handleTimer.removeCallbacks(runUpdateTimerTask);
         handleTimer.postDelayed(runUpdateTimerTask, 100);
+        handleChrono = new Handler();
         runOnUiThread(UpdateGPSOnUI);
     }
     
@@ -218,4 +217,90 @@ public class MainActivity extends Activity implements LocationListener
     	startActivity(intent);
     }
 
+    private void updateTimer (float time){
+		long secs = (long)(time/1000);
+		long mins = (long)((time/1000)/60);
+		long hrs = (long)(((time/1000)/60)/60);
+		//
+		seconds = String.valueOf(secs % 60);
+    	if(secs == 0)
+    	{
+    		seconds = "00";
+    	}
+    	if(secs <10 && secs > 0)
+    	{
+    		seconds = "0" + seconds;
+    	}
+    	
+		minutes = String.valueOf(mins % 60);
+    	if(mins == 0)
+    	{
+    		minutes = "00";
+    	}
+    	if(mins <10 && mins > 0)
+    	{
+    		minutes = "0" + minutes;
+    	}
+
+    	hours = String.valueOf(hrs);
+    	if(hrs == 0)
+    	{
+    		hours = "00";
+    	}
+    	if(hrs <10 && hrs > 0)
+    	{
+    		hours = "0" + hours;
+    	}
+    	
+    	milliseconds = String.valueOf((long)time);
+    	if(milliseconds.length() == 2)
+    	{
+    		milliseconds = "0"+ milliseconds;
+    	}
+    	else if(milliseconds.length() <= 1)
+    	{
+    		milliseconds = "00";
+    	}
+    	else 
+    	{
+    		milliseconds = milliseconds.substring(milliseconds.length()- 3 , milliseconds.length()-1);
+    	}
+		    
+   
+		((TextView)findViewById(R.id.chronoTimer)).setText(hours + ":" + minutes + ":" + seconds + "." + milliseconds);		
+	}    
+    
+    private Runnable startTimer = new Runnable() 
+    {
+	   public void run() {
+		   elapsedTime = System.currentTimeMillis() - startTime;
+		   updateTimer(elapsedTime);
+		   handleChrono.postDelayed(this, 100);
+	   }
+    };    
+    public void onStartClick(View view)
+    {    
+    	if(stopChrono == true)
+    	{    	
+    		startTime = System.currentTimeMillis() - elapsedTime;
+    	}
+    	else
+    	{
+    		startTime = System.currentTimeMillis();
+    	}
+    	handleChrono.removeCallbacks(startTimer);
+    	handleChrono.postDelayed(startTimer, 0);
+    }
+
+    public void onStopClick(View view)
+    {       
+    	handleChrono.removeCallbacks(startTimer);
+    	stopChrono = true;
+    }  
+    
+    public void onResetClick(View view)
+    {
+    	stopChrono = false;
+    	((TextView)findViewById(R.id.chronoTimer)).setText("No Timer");    	
+    }    
 }
