@@ -1,4 +1,4 @@
-package com.example.testthree;
+package com.example.testthree.entity;
 
 public class Location {
 	int		_id;			// primary key

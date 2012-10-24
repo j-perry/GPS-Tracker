@@ -1,8 +1,14 @@
 package com.example.testthree;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.example.testthree.R;
+import com.example.testthree.entity.LocationPoint;
+
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Parcelable;
 import android.provider.Settings;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -81,7 +87,7 @@ public class MainActivity extends Activity implements LocationListener
     private void UpdateTime()
     {
 		TextView t = (TextView)findViewById(R.id.TimeValue);
-		currentTime = DateFormat.format("h:mm:ssaa, EEE dd-MM-yyyy ", new java.util.Date()).toString();
+		currentTime = DateFormat.format("h:mm:ssaa ", new java.util.Date()).toString();
 		t.setText(currentTime);
     }
     
@@ -119,7 +125,7 @@ public class MainActivity extends Activity implements LocationListener
 			AlertDialog alertDialog = new AlertDialog.Builder(this).create();
 			alertDialog.setTitle("Error");
 			alertDialog.setMessage("Error with GPS Location.\n" + e.getMessage());
-			alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "OK", new DialogInterface.OnClickListener() 
+			alertDialog.setButton(DialogInterface.BUTTON_POSITIVE, "OK", new DialogInterface.OnClickListener() 
 			{
 				public void onClick(DialogInterface dialog, int arg1) 
 				{
@@ -137,7 +143,7 @@ public class MainActivity extends Activity implements LocationListener
 			AlertDialog alertDialog = new AlertDialog.Builder(this).create();
 			alertDialog.setTitle("GPS Disabled");
 			alertDialog.setMessage("Location services are currently disabled\nGo to Settings to activate them.");
-			alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "Location Services", new DialogInterface.OnClickListener() 
+			alertDialog.setButton(DialogInterface.BUTTON_POSITIVE, "Location Services", new DialogInterface.OnClickListener() 
 			{
 				public void onClick(DialogInterface dialog, int arg1) 
 				{
@@ -195,8 +201,21 @@ public class MainActivity extends Activity implements LocationListener
     }
 
     public void onUserClick(View view) {
-        Intent intent = new Intent(this, UserActivity.class);
-        startActivity(intent);
+        Intent intent = new Intent(this, RouteMap.class); 
+        List<LocationPoint> points = new ArrayList<LocationPoint>();
+        Time startTime = new Time();
+        startTime.setToNow();
+        
+        Time endTime = new Time();
+        endTime.set(20, 20, 4, 10, 10, 2012);
+        LocationPoint p1 = new LocationPoint( -0.1106,50.86524,startTime,true,false,"This is the starting point");
+        points.add(p1);
+        LocationPoint p2 = new LocationPoint( -0.0939,50.8133,endTime,false,true,"This is the end point");
+        points.add(p2);
+        
+        intent.putParcelableArrayListExtra("com.example.testthree.entity.LocationPoint", (ArrayList<? extends Parcelable>) points);
+        
+    	startActivity(intent);
     }
 
 }

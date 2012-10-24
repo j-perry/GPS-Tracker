@@ -4,6 +4,8 @@ package com.example.testthree;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.example.testthree.entity.User;
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;

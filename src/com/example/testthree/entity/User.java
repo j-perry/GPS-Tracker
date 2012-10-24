@@ -1,4 +1,4 @@
-package com.example.testthree;
+package com.example.testthree.entity;
 
 public class User {
 

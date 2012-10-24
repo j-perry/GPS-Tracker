@@ -6,7 +6,6 @@
     <string name="title_activity_main">GPS Tracker</string>
     <string name="title_activity_user">User</string>
     <string name="title_activity_add_user">Add User</string>
-
     <string name="please_enter">Please enter</string>
     <string name="edit_fname">First Name</string>
     <string name="edit_sname">Second Name</string>
@@ -14,9 +13,11 @@
     <string name="edit_age">Age</string>
     <string name="edit_weight">Weight</string>
     <string name="edit_height">Height</string>
-    
-
     <string name="add_user">Add user</string>
     <string name="cancel">Cancel</string>
-    
+    <string name="ViewRoute">View Route Traveled</string>
+    <string name="title_activity_route_map">Route Map</string>
+    <string name="overlay_start_title">Start</string>
+    <string name="overlay_finish_title">Finish</string>
+
 </resources>
