@@ -44,15 +44,13 @@
         <uses-library
             android:name="com.google.android.maps"
             android:required="true" />
-
         <activity
             android:name=".WorkoutActivity"
             android:label="@string/title_activity_workout" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+        </activity>
+        <activity
+            android:name=".LocationActivity"
+            android:label="@string/title_activity_location" >
         </activity>
     </application>
 

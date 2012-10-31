@@ -36,8 +36,6 @@ public class UserActivity extends ListActivity {
         lv.setOnItemLongClickListener(
         	new AdapterView.OnItemLongClickListener() {
         		public boolean onItemLongClick(AdapterView<?> adapter, View view, int position, long id) {
-            	
-        			
         			return onLongListItemClick(view, position, id) ;
         		}
         	}

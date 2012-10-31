@@ -1,6 +1,8 @@
 package com.team2.dash.entity;
 
-public class Location {
+import android.text.format.DateFormat;
+
+public class LocationP {
 	int		_id;			// primary key
 	int		workout_id;		// 
 	int 	time;			// real time of the reading
@@ -9,7 +11,7 @@ public class Location {
 	double 	longtitude;
 	double	altitude;
 	
-	public Location( int _id, int workout_id, int time, int workoutTime, double latitude, 
+	public LocationP( int _id, int workout_id, int time, int workoutTime, double latitude, 
 			double longtitude, double altitude){
 		this._id = _id;
 		this.workout_id = workout_id;
@@ -18,6 +20,13 @@ public class Location {
 		this.latitude = latitude;
 		this.longtitude = longtitude;
 		this.altitude = altitude;
+	}
+	
+    @Override
+	public String toString(){
+    	
+		String txt = DateFormat.format("MM/dd/yy h:mm:ssaa ", time).toString();
+		return (txt);
 	}
 	
 	public int getID(){
