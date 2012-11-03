@@ -247,6 +247,11 @@ public class MainActivity extends Activity implements LocationListener
     	startActivity(intent);
     }
 
+    public void onCheckInClick(View view) {
+        Intent intent = new Intent(this, CheckInActivity.class); 
+    	startActivity(intent);
+    }
+
     public void onWorkoutClick(View view) {
         Intent intent = new Intent(this, WorkoutActivity.class);
         intent.putExtra("activeUserID", activeUser.getID());        

@@ -20,5 +20,8 @@
     <string name="overlay_finish_title">Finish</string>
     <string name="title_activity_workout">Workouts</string>
     <string name="title_activity_location">Locations</string>
+    <string name="CheckIn">Check In</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="title_activity_check_in">CheckInActivity</string>
 
 </resources>

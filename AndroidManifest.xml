@@ -44,6 +44,7 @@
         <uses-library
             android:name="com.google.android.maps"
             android:required="true" />
+
         <activity
             android:name=".WorkoutActivity"
             android:label="@string/title_activity_workout" >
@@ -52,6 +53,12 @@
             android:name=".LocationActivity"
             android:label="@string/title_activity_location" >
         </activity>
+        <activity
+            android:name=".CheckInActivity"
+            android:label="@string/title_activity_check_in" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.team2.dash.MainActivity" />
+        </activity>
     </application>
-
 </manifest>
