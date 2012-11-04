@@ -48,12 +48,17 @@
         <activity
             android:name=".WorkoutActivity"
             android:label="@string/title_activity_workout" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+        </activity>
+        <activity
+            android:name=".LocationActivity"
+            android:label="@string/title_activity_location" >
+        </activity>
+        <activity
+            android:name=".CheckInActivity"
+            android:label="@string/title_activity_check_in" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.team2.dash.MainActivity" />
         </activity>
     </application>
-
 </manifest>
