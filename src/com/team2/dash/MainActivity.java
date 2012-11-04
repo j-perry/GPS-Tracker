@@ -3,7 +3,7 @@ package com.team2.dash;
 import java.util.ArrayList;
 import java.util.List;
 import com.team2.dash.R;
-import com.team2.dash.entity.LocationPoint;
+import com.team2.dash.entity.*;
 
 import android.os.Bundle;
 import android.os.Handler;
@@ -28,20 +28,33 @@ public class MainActivity extends Activity implements LocationListener
 {
 
 	private Handler handleTimer, handleChrono;
-	private TextView latituteField, longitudeField;	
+	private TextView latituteField, longitudeField, altitudeField;	
 	private int runTimerCount = 0;	
 	private String hours, minutes, seconds, milliseconds, provider, currentTime;
 	private long startTime, elapsedTime;
 	private boolean stopChrono = false;
 	private boolean terminateCount = false;
 	private LocationManager locationManager = null;	
+	private User		activeUser;		// keep active user in here
+	private	Workout		workout = null; // active workout, null if not in use
+    DatabaseHandler db;
+	double latitude;
+	double longitude;
+	double altitude;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        db = new DatabaseHandler(this);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        
+        activeUser = db.getActiveUser();
+        
         latituteField = (TextView) findViewById(R.id.LatValue);
-        longitudeField = (TextView) findViewById(R.id.LongValue);                
+        longitudeField = (TextView) findViewById(R.id.LongValue);  
+        altitudeField = (TextView) findViewById(R.id.AltValue); 
         CheckForGPSEnabled();
         handleTimer = new Handler();
         handleTimer.removeCallbacks(runUpdateTimerTask);
@@ -66,7 +79,8 @@ public class MainActivity extends Activity implements LocationListener
         	else 
         	{
         		handleTimer.postDelayed(this, 1000);	        		
-        	}                         
+        	}    
+        	
         }
     };   
          
@@ -89,6 +103,13 @@ public class MainActivity extends Activity implements LocationListener
 		TextView t = (TextView)findViewById(R.id.TimeValue);
 		currentTime = DateFormat.format("h:mm:ssaa ", new java.util.Date()).toString();
 		t.setText(currentTime);
+// ================================================
+		   if( (workout != null) && stopChrono){
+			   
+			   LocationP loc = new LocationP( 0, workout.getID(), (int)System.currentTimeMillis(), (int)elapsedTime, latitude, longitude, altitude );
+			   db.addLocation(loc);
+		   }
+// ================================================
     }
     
     private void UpdateGPS()
@@ -106,6 +127,7 @@ public class MainActivity extends Activity implements LocationListener
         {
           latituteField.setText("Location not available");
           longitudeField.setText("Location not available");
+          altitudeField.setText("Location not available");
         }
     	
     }        
@@ -157,10 +179,12 @@ public class MainActivity extends Activity implements LocationListener
         
     public void onLocationChanged(Location location) 
     {
-    	double x = location.getLatitude();
-    	double y = location.getLongitude();
-        latituteField.setText("Lat: " + x);
-        longitudeField.setText("Long:" + y); 
+    	latitude = location.getLatitude();
+    	longitude = location.getLongitude();
+    	altitude = location.getAltitude();
+        latituteField.setText("Lat: " + latitude);
+        longitudeField.setText("Long:" + longitude); 
+        altitudeField.setText("Alt:" + altitude); 
     }
     
     public void onStatusChanged(String provider, int status, Bundle extras) 
@@ -220,13 +244,17 @@ public class MainActivity extends Activity implements LocationListener
 
     public void onUserClick(View view) {
         Intent intent = new Intent(this, UserActivity.class); 
-        
+    	startActivity(intent);
+    }
+
+    public void onCheckInClick(View view) {
+        Intent intent = new Intent(this, CheckInActivity.class); 
     	startActivity(intent);
     }
 
     public void onWorkoutClick(View view) {
-        Intent intent = new Intent(this, WorkoutActivity.class); 
-        
+        Intent intent = new Intent(this, WorkoutActivity.class);
+        intent.putExtra("activeUserID", activeUser.getID());        
     	startActivity(intent);
     }
 
@@ -300,9 +328,17 @@ public class MainActivity extends Activity implements LocationListener
     	else
     	{
     		startTime = System.currentTimeMillis();
+// ================================================
+        	workout = new Workout( 0, activeUser.getID(), 0, 0, 0, DateFormat.format("MM/dd/yy h:mmaa", new java.util.Date()).toString() );
+        	int id = db.addWorkout(workout);
+        	workout.setID( id );
+// ================================================
+    		
     	}
     	handleChrono.removeCallbacks(startTimer);
     	handleChrono.postDelayed(startTimer, 0);
+    	
+    	
     }
 
     public void onStopClick(View view)
@@ -314,6 +350,10 @@ public class MainActivity extends Activity implements LocationListener
     public void onResetClick(View view)
     {
     	stopChrono = false;
-    	((TextView)findViewById(R.id.chronoTimer)).setText("No Timer");    	
+    	((TextView)findViewById(R.id.chronoTimer)).setText("No Timer");
+// ================================================
+    	workout = null;
+// ================================================
+
     }    
 }

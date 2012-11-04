@@ -63,7 +63,16 @@
             android:layout_weight="1"
             android:text="Medium Text"
             android:textAppearance="?android:attr/textAppearanceMedium" />
-    </LinearLayout>
+
+        <TextView
+            android:id="@+id/AltValue"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:text="Medium Text"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+        
+</LinearLayout>
 
     <TextView
         android:id="@+id/GroupName"
@@ -144,5 +153,14 @@
         android:layout_toRightOf="@+id/button1"
         android:onClick="onWorkoutClick"
         android:text="Workouts" />
+
+    <Button
+        android:id="@+id/checkIn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:onClick="onCheckInClick"
+        android:text="Check In" />
     
 </RelativeLayout>

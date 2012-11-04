@@ -249,48 +249,121 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         db.close();
     }
     
-/*        
+        
 	public int addWorkout(Workout workout) {
 		SQLiteDatabase db = this.getWritableDatabase();
  
-        ContentValues values = new ContentValues();
-        values.put("active", 	USER_NON_ACTIVE);					// set to non-active
-        values.put("fname", 	user.getFname());	
-        values.put("sname", 	user.getSname());	
-        values.put("email", 	user.getEmail());	
-        values.put("age", 		user.getAge());	
-        values.put("weight",	user.getWeight());	
-        values.put("height",	user.getHeight());	
- 
+
+		ContentValues values = new ContentValues();
+        values.put("user_id", 		workout.getUserID());		
+        values.put("start", 		workout.getStart());
+        values.put("stop", 			workout.getStop());
+        values.put("distance", 		workout.getStop());
+        values.put("description", 	workout.getDescription());
+         
         // Inserting Row
-        int id = (int)db.insert(TABLE_USERS, null, values);
+        int id = (int)db.insert(TABLE_WORKOUTS, null, values);
         db.close(); // Closing database connection
         return	id;
     }
-
-	public int updateUser(User user) {
+	
+    public void deleteWorkout( int id ) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_WORKOUTS, TableUsersColumnNames[0] + " = ?",
+                new String[] { String.valueOf(id) });
+        db.close();
+    }
+	
+	public int updateWorkout(Workout workout) {
 		SQLiteDatabase db = this.getWritableDatabase();
  
-        ContentValues values = new ContentValues();
-        values.put("_id", 		user.getID());	
-        values.put("active", 	user.getActive());					// set to non-active
-        values.put("fname", 	user.getFname());	
-        values.put("sname", 	user.getSname());	
-        values.put("email", 	user.getEmail());	
-        values.put("age", 		user.getAge());	
-        values.put("weight",	user.getWeight());	
-        values.put("height",	user.getHeight());	
- 
-        // Inserting Row
-        int id = db.update(TABLE_USERS, values, TableUsersColumnNames[0] + " = ?",
-                new String[] { String.valueOf(user.getID()) });
+
+		ContentValues values = new ContentValues();
+        values.put("_id", 			workout.getID());		
+        values.put("user_id", 		workout.getUserID());		
+        values.put("start", 		workout.getStart());
+        values.put("stop", 			workout.getStop());
+        values.put("distance", 		workout.getStop());
+        values.put("description", 	workout.getDescription());
+         
+        // Updating Row
+        int id = db.update(TABLE_WORKOUTS, values, "_id = ?",
+                new String[] { String.valueOf(workout.getID()) });
         db.close(); // Closing database connection
         return	id;
     }
-
-*/
+	
     
+    public List<Workout> getAllWorkouts(int userID) {
+        List<Workout> workoutList = new ArrayList<Workout>();
+        // Select All Query
+        String selectQuery = "SELECT  * FROM " + TABLE_WORKOUTS + " WHERE user_id=" + userID;
+ 
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+ 
+ // looping through all rows and adding to list
+        if (cursor.moveToFirst()) {
+            do {
+        	    Workout workout = new Workout(Integer.parseInt(cursor.getString(0)), Integer.parseInt(cursor.getString(1)),
+        	    		Integer.parseInt(cursor.getString(2)), Integer.parseInt(cursor.getString(3)), 
+        	    		Integer.parseInt(cursor.getString(4)), cursor.getString(5));
+                // Adding contact to list
+                workoutList.add(workout);
+            } while (cursor.moveToNext());
+        }
+ 
+        // return contact list
+        return workoutList;
+    }
     
+    public List<LocationP> getAllLocations( int workoutID ) {
+        List<LocationP> locationList = new ArrayList<LocationP>();
+        // Select All Query
+        String selectQuery = "SELECT  * FROM " + TABLE_LOCATIONS + " WHERE workout_id=" + workoutID;
+ 
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+ 
+        // looping through all rows and adding to list
+        if (cursor.moveToFirst()) {
+            do {
+        	    LocationP location = new LocationP(Integer.parseInt(cursor.getString(0)), Integer.parseInt(cursor.getString(1)),
+        	    		Integer.parseInt(cursor.getString(2)), Integer.parseInt(cursor.getString(3)), 
+    	                Double.parseDouble(cursor.getString(4)), Double.parseDouble(cursor.getString(5)), 
+    	                Double.parseDouble(cursor.getString(6)));
+                // Adding contact to list
+                locationList.add(location);
+            } while (cursor.moveToNext());
+        }
+ 
+        // return contact list
+        return locationList;
+    }
+    
+	public int addLocation(LocationP location) {
+		SQLiteDatabase db = this.getWritableDatabase();
+ 
+		ContentValues values = new ContentValues();
+        values.put("workout_id", 	location.getWorkoutID());		
+        values.put("time", 			location.getTime());
+        values.put("workoutTime", 	location.getWorkoutTime());
+        values.put("latitude", 		location.getLatitude());
+        values.put("longtitude", 	location.getLongtitude());
+        values.put("altitude", 		location.getAltitude());
+         
+        // Inserting Row
+        int id = (int)db.insert(TABLE_LOCATIONS, null, values);
+        db.close(); // Closing database connection
+        return	id;
+    }
+	
+    public void deleteLocation( int id ) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_LOCATIONS, TableUsersColumnNames[0] + " = ?",
+                new String[] { String.valueOf(id) });
+        db.close();
+    }
 }
 
 
