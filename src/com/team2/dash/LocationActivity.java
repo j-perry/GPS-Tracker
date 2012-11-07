@@ -1,6 +1,7 @@
 package com.team2.dash;
 
 import java.util.List;
+
 import android.app.ListActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -8,12 +9,11 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.team2.dash.R;
-import com.team2.dash.entity.LocationP;
+import com.team2.dash.entity.LocationPoint;
 
 public class LocationActivity extends ListActivity {
 
-    List<LocationP> values;
+    List<LocationPoint> values;
     DatabaseHandler db;
     int		workoutID;
     
@@ -35,7 +35,7 @@ public class LocationActivity extends ListActivity {
         	
         values = db.getAllLocations( workoutID );
 
-        ArrayAdapter<LocationP> adapter = new ArrayAdapter<LocationP>(this,
+        ArrayAdapter<LocationPoint> adapter = new ArrayAdapter<LocationPoint>(this,
             android.R.layout.simple_list_item_1, values);
         setListAdapter(adapter);
         
@@ -50,7 +50,7 @@ public class LocationActivity extends ListActivity {
 
     @Override
     public void onListItemClick( ListView l, View v, int position, long id) {
-    	LocationP Location = (LocationP)l.getItemAtPosition(position);
+    	LocationPoint Location = (LocationPoint)l.getItemAtPosition(position);
     	String txt = "Location " + Location + " selected";
     	Toast.makeText(this, txt, Toast.LENGTH_SHORT).show();
 //    	finish();
@@ -69,7 +69,7 @@ public class LocationActivity extends ListActivity {
 
     private void refreshList(){
         @SuppressWarnings("unchecked")      
-        ArrayAdapter<LocationP> adapter = (ArrayAdapter<LocationP>) getListAdapter();
+        ArrayAdapter<LocationPoint> adapter = (ArrayAdapter<LocationPoint>) getListAdapter();
         values = db.getAllLocations(workoutID);
         adapter.clear();
         for(int i=0; i<values.size(); i++)

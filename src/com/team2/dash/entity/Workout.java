@@ -1,12 +1,24 @@
 package com.team2.dash.entity;
 
-public class Workout {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class Workout implements Parcelable {
 	int		_id;
 	int		user_id;
 	int		start;
 	int		stop;
 	int		distance;
 	String	description;
+	
+	public Workout(Parcel in){
+		_id = in.readInt();
+		user_id = in.readInt();
+		start = in.readInt();
+		stop = in.readInt();
+		distance = in.readInt();
+		description = in.readString();
+	}
 	
 	public Workout( int _id, int user_id, int start, int stop, int distance, String description ){		
 		this._id = _id;
@@ -74,5 +86,31 @@ public class Workout {
 	public void setDescription( String description ){
 		this.description = description;
 	}
+
+	public int describeContents() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	public void writeToParcel(Parcel dest, int flags) {
+		dest.writeInt(_id);
+		dest.writeInt(user_id);
+		dest.writeInt(start);
+		dest.writeInt(stop);
+		dest.writeInt(distance);
+		dest.writeString(description);
+		
+	}
+	
+	public static final Parcelable.Creator<Workout> CREATOR = new Creator<Workout>() {
+		public Workout[] newArray(int size){
+			return new Workout[size];
+		}
+		
+		public Workout createFromParcel(Parcel source) {
+			// TODO Auto-generated method stub
+			return new Workout(source);
+		}
+	};
 	
 }

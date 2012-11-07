@@ -317,8 +317,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return workoutList;
     }
     
-    public List<LocationP> getAllLocations( int workoutID ) {
-        List<LocationP> locationList = new ArrayList<LocationP>();
+    public List<LocationPoint> getAllLocations( int workoutID ) {
+        List<LocationPoint> locationList = new ArrayList<LocationPoint>();
         // Select All Query
         String selectQuery = "SELECT  * FROM " + TABLE_LOCATIONS + " WHERE workout_id=" + workoutID;
  
@@ -328,7 +328,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         // looping through all rows and adding to list
         if (cursor.moveToFirst()) {
             do {
-        	    LocationP location = new LocationP(Integer.parseInt(cursor.getString(0)), Integer.parseInt(cursor.getString(1)),
+        	    LocationPoint location = new LocationPoint(Integer.parseInt(cursor.getString(0)), Integer.parseInt(cursor.getString(1)),
         	    		Integer.parseInt(cursor.getString(2)), Integer.parseInt(cursor.getString(3)), 
     	                Double.parseDouble(cursor.getString(4)), Double.parseDouble(cursor.getString(5)), 
     	                Double.parseDouble(cursor.getString(6)));
@@ -341,7 +341,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return locationList;
     }
     
-	public int addLocation(LocationP location) {
+	public int addLocation(LocationPoint location) {
 		SQLiteDatabase db = this.getWritableDatabase();
  
 		ContentValues values = new ContentValues();

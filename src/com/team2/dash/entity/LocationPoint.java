@@ -1,97 +1,114 @@
 package com.team2.dash.entity;
 
-import java.io.Serializable;
-
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.text.format.Time;
-/**
- * A class to hold the runtime latitude and longitude of the phone when a user is running. This class exist so has to have a consistent way of passing 
- * locations between the MainActivity and the RouteMap Activity
- * @author ndy40
- *
- */
-public class LocationPoint implements Parcelable {
-	
-	/* Private Members */
-	
-	private double longitude;
-	private double latitude;
-	private Time   timeAtPosition;
-	private boolean isStartLocation;
-	private boolean isFinishLocation;
-	private String description;
+import android.os.Parcelable.Creator;
+import android.text.format.DateFormat;
+
+public class LocationPoint implements Parcelable{
+	int		_id;			// primary key
+	int		workout_id;		// 
+	int 	time;			// real time of the reading
+	int		workoutTime;	// time since workout started excluding breaks
+	double	latitude;
+	double 	longtitude;
+	double	altitude;
 	
 	
-	
-	
-	public String getDescription() {
-		return description;
+	public LocationPoint(Parcel in){
+		_id = in.readInt();
+		workout_id = in.readInt();
+		time = in.readInt();
+		workoutTime = in.readInt();
+		latitude = in.readDouble();
+		longtitude = in.readDouble();
+		altitude = in.readDouble();
 	}
-	public void setDescription(String description) {
-		this.description = description;
+	
+	public LocationPoint( int _id, int workout_id, int time, int workoutTime, double latitude, 
+			double longtitude, double altitude){
+		this._id = _id;
+		this.workout_id = workout_id;
+		this.time = time;
+		this.workoutTime = workoutTime;
+		this.latitude = latitude;
+		this.longtitude = longtitude;
+		this.altitude = altitude;
 	}
-	public double getLongitude() {
-		return longitude;
+	
+    @Override
+	public String toString(){
+    	
+		String txt = DateFormat.format("MM/dd/yy h:mm:ssaa ", time).toString();
+		return (txt);
 	}
-	public void setLongitude(double longitude) {
-		this.longitude = longitude;
+	
+	public int getID(){
+		return	this._id;
 	}
-	public double getLatitude() {
-		return latitude;
+	public void setID( int _id ){
+		this._id = _id;
 	}
-	public void setLatitude(double latitude) {
+
+	public int getWorkoutID(){
+		return	this.workout_id;
+	}
+	public void setWorkoutID( int workout_id ){
+		this.workout_id = workout_id;
+	}
+
+	public int getTime(){
+		return	this.time;
+	}
+	public void setTime( int time ){
+		this.time = time;
+	}
+
+	public int getWorkoutTime(){
+		return	this.workoutTime;
+	}
+	public void setWorkoutTime( int workoutTime ){
+		this.workoutTime = workoutTime;
+	}
+
+	public double getLatitude(){
+		return	this.latitude;
+	}
+	public void setLatitude( double latitude ){
 		this.latitude = latitude;
 	}
-	public Time getTimeAtPosition() {
-		return timeAtPosition;
-	}
-	public void setTimeAtPosition(Time timeAtPosition) {
-		this.timeAtPosition = timeAtPosition;
-	}
-	public boolean isStartLocation() {
-		return isStartLocation;
-	}
-	public void setStartLocation(boolean isStartLocation) {
-		this.isStartLocation = isStartLocation;
-	}
-	public boolean isFinishLocation() {
-		return isFinishLocation;
-	}
-	public void setFinishLocation(boolean isFinishLocation) {
-		this.isFinishLocation = isFinishLocation;
-	}
-	
-	/*Constructor to accept parcel */
-	public LocationPoint(Parcel in){
-		longitude = in.readDouble();
-		latitude = in.readDouble();
 
-		//create a time object and get the value in milliseconds and then convert to Time object via Time.Set method
-		Time tmp = new Time();
-		tmp.set(in.readLong());
-		timeAtPosition = tmp;
-		//I read the boolean values as integer since I didn't want to create a boolean array for just one element
-		isStartLocation = (in.readInt() == 1);
-		isFinishLocation = (in.readInt() == 1); 
-		description = in.readString();
-		
+	public double getLongtitude(){
+		return	this.longtitude;
 	}
-	
+	public void setLongtitude( double longtitude ){
+		this.longtitude = longtitude;
+	}
+
+	public double getAltitude(){
+		return	this.altitude;
+	}
+	public void setAltitude( double altitude ){
+		this.altitude = altitude;
+	}
+
 	public int describeContents() {
 		// TODO Auto-generated method stub
 		return 0;
 	}
-	public void writeToParcel(Parcel dest, int flags) {
-		dest.writeDouble(longitude);
+
+	public void writeToParcel(Parcel dest, int arg1) {
+		dest.writeInt(_id);
+		dest.writeInt(workout_id);
+		dest.writeInt(time);
+		dest.writeInt(workoutTime);
 		dest.writeDouble(latitude);
-		dest.writeLong(timeAtPosition.toMillis(false));
-		dest.writeInt(isStartLocation ? 0 : 1);
-		dest.writeInt(isFinishLocation?0:1);	
-		dest.writeString(description);
+		dest.writeDouble(longtitude);
+		dest.writeDouble(altitude);
+		
 	}
 	
-	public static final Parcelable.Creator<LocationPoint> CREATOR = new Creator<LocationPoint>() {
+public static final Parcelable.Creator<LocationPoint> CREATOR = new Creator<LocationPoint>() {
 		
 		public LocationPoint[] newArray(int size) {
 			// TODO Auto-generated method stub
@@ -105,31 +122,6 @@ public class LocationPoint implements Parcelable {
 		
 		
 	};
-	
 
-	/**
-	 * Default constructor for comfort
-	 */
-	public LocationPoint(){
-		
-	}
-	
-	/**
-	 * This class is used to hold the position of the phone/runner at during movement. Always ensure you set the start and finish location carefully.
-	 * E.g a location cannot or shouldn't be both the start and finish on a regular day. 
-	 * @param longitude  
-	 * @param latitude
-	 * @param time
-	 * @param isStartLocation  this indicates that the locationpoint is the starting point of the race
-	 * @param isFinishLocation this indicates that the locationpoint is the finish point of the race. This is when the user stops moving.
-	 * 
-	 */
-	public LocationPoint(double longitude, double latitude, Time time,boolean isStartLocation, boolean isFinishLocation,String description){
-		this.longitude = longitude;
-		this.latitude = latitude;
-		this.timeAtPosition = time;
-		this.isStartLocation = isStartLocation;
-		this.isFinishLocation = isFinishLocation;
-		this.description = description;
-	}
+
 }

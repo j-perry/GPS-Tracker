@@ -71,25 +71,12 @@
             android:layout_weight="1"
             android:text="Medium Text"
             android:textAppearance="?android:attr/textAppearanceMedium" />
-        
-</LinearLayout>
-
-    <TextView
-        android:id="@+id/GroupName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"
-        android:text="Team Two"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textColor="#A47D23" />
+    </LinearLayout>
 
     <Button
         android:id="@+id/button1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignRight="@+id/GroupName"
         android:layout_below="@+id/linearLayout1"
         android:layout_marginTop="29dp"
         android:onClick="onUserClick"
@@ -104,7 +91,7 @@
         android:layout_marginTop="22dp"
         android:text="No Timer"
         android:textAppearance="?android:attr/textAppearanceMedium" />
-
+
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -112,7 +99,7 @@
         android:layout_alignParentRight="true"
         android:layout_below="@+id/chronoTimer"
         android:layout_marginTop="22dp" >
-
+
         <Button
             android:id="@+id/startChrono"
             android:layout_width="wrap_content"
@@ -126,25 +113,15 @@
             android:layout_height="wrap_content"
             android:onClick="onStopClick"
             android:text="Stop Timer" />
-
+
         <Button
             android:id="@+id/resetChrono"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:onClick="onResetClick"
             android:text="Reset Timer" />
-
     </LinearLayout>
-
-    <Button
-        android:id="@+id/button2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/chronoTimer"
-        android:layout_toLeftOf="@+id/GroupName"
-        android:onClick="onMapClick"
-        android:text="Show Map" />
-
+
     <Button
         android:id="@+id/button3"
         android:layout_width="wrap_content"
@@ -153,7 +130,7 @@
         android:layout_toRightOf="@+id/button1"
         android:onClick="onWorkoutClick"
         android:text="Workouts" />
-
+
     <Button
         android:id="@+id/checkIn"
         android:layout_width="wrap_content"
@@ -162,5 +139,14 @@
         android:layout_alignParentLeft="true"
         android:onClick="onCheckInClick"
         android:text="Check In" />
-    
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/chronoTimer"
+        android:layout_toRightOf="@+id/button3"
+        android:onClick="onMapClick"
+        android:text="Show Map" />
+
 </RelativeLayout>

@@ -106,7 +106,7 @@ public class MainActivity extends Activity implements LocationListener
 // ================================================
 		   if( (workout != null) && stopChrono){
 			   
-			   LocationP loc = new LocationP( 0, workout.getID(), (int)System.currentTimeMillis(), (int)elapsedTime, latitude, longitude, altitude );
+			   LocationPoint loc = new LocationPoint( 0, workout.getID(), (int)System.currentTimeMillis(), (int)elapsedTime, latitude, longitude, altitude );
 			   db.addLocation(loc);
 		   }
 // ================================================
@@ -225,21 +225,11 @@ public class MainActivity extends Activity implements LocationListener
     }
 
     public void onMapClick(View view) {
-        Intent intent = new Intent(this, RouteMap.class); 
-        List<LocationPoint> points = new ArrayList<LocationPoint>();
-        Time startTime = new Time();
-        startTime.setToNow();
-        
-        Time endTime = new Time();
-        endTime.set(20, 20, 4, 10, 10, 2012);
-        LocationPoint p1 = new LocationPoint( -0.1106,50.86524,startTime,true,false,"This is the starting point");
-        points.add(p1);
-        LocationPoint p2 = new LocationPoint( -0.0939,50.8133,endTime,false,true,"This is the end point");
-        points.add(p2);
-        
-        intent.putParcelableArrayListExtra("com.team2.dash.entity.LocationPoint", (ArrayList<? extends Parcelable>) points);
-        
-    	startActivity(intent);
+    	if(workout != null || workout.getID() != 0){
+    		Intent intent = new Intent(this, RouteMap.class); 
+    		intent.putExtra("com.team2.dash.entity.Workout",workout);    		
+        	startActivity(intent);
+    	}
     }
 
     public void onUserClick(View view) {
