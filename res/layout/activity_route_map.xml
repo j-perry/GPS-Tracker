@@ -43,13 +43,17 @@
             android:text="0:00s" />
 
     </RelativeLayout>
-    
+    
     <com.google.android.maps.MapView
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/mapview"
-        android:layout_width="match_parent"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="14px"
+        android:layout_marginRight="14px"
+        android:layout_marginTop="50px"
         android:apiKey="0ebjO8jIeeuJmkaqSnOOfbXKFSR3_pz_m1x7RAQ"
-        android:clickable="true" android:layout_marginLeft="14px" android:layout_marginTop="50px" android:layout_marginRight="14px" android:layout_height="450px" >
+        android:clickable="true" >
         
     </com.google.android.maps.MapView>
 

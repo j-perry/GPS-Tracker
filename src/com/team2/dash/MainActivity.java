@@ -1,13 +1,10 @@
 package com.team2.dash;
 
-import java.util.ArrayList;
-import java.util.List;
 import com.team2.dash.R;
 import com.team2.dash.entity.*;
 
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Parcelable;
 import android.provider.Settings;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -35,12 +32,13 @@ public class MainActivity extends Activity implements LocationListener
 	private boolean stopChrono = false;
 	private boolean terminateCount = false;
 	private LocationManager locationManager = null;	
-	private User		activeUser;		// keep active user in here
+	private User		activeUser = null;		// keep active user in here
 	private	Workout		workout = null; // active workout, null if not in use
     DatabaseHandler db;
 	double latitude;
 	double longitude;
 	double altitude;
+	double distance;
 
 
     @Override
@@ -50,8 +48,7 @@ public class MainActivity extends Activity implements LocationListener
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         
-        activeUser = db.getActiveUser();
-        
+       
         latituteField = (TextView) findViewById(R.id.LatValue);
         longitudeField = (TextView) findViewById(R.id.LongValue);  
         altitudeField = (TextView) findViewById(R.id.AltValue); 
@@ -62,6 +59,25 @@ public class MainActivity extends Activity implements LocationListener
         handleChrono = new Handler();
         runOnUiThread(UpdateGPSOnUI);
     }
+    
+    
+    @Override
+    public void onResume() {
+        super.onResume();
+       	CheckForGPSEnabled();
+        locationManager.requestLocationUpdates(provider, 400, 1, this);
+            
+        activeUser = db.getActiveUser();
+        if( activeUser == null)
+        {
+        	String txt = "Please choose active user\n or create a new one!";
+        	Toast.makeText(this, txt, Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(this, UserActivity.class); 
+        	startActivity(intent);
+        	
+        }
+    }
+
     
     private Runnable runUpdateTimerTask = new Runnable() 
     {
@@ -104,7 +120,7 @@ public class MainActivity extends Activity implements LocationListener
 		currentTime = DateFormat.format("h:mm:ssaa ", new java.util.Date()).toString();
 		t.setText(currentTime);
 // ================================================
-		   if( (workout != null) && stopChrono){
+		   if( (workout != null) && (stopChrono == false)){
 			   
 			   LocationP loc = new LocationP( 0, workout.getID(), (int)System.currentTimeMillis(), (int)elapsedTime, latitude, longitude, altitude );
 			   db.addLocation(loc);
@@ -210,14 +226,6 @@ public class MainActivity extends Activity implements LocationListener
     }
     
     @Override
-    public void onResume()
-    {
-    	super.onResume();    
-    	CheckForGPSEnabled();
-        locationManager.requestLocationUpdates(provider, 400, 1, this);
-    }  
-        
-    @Override
     protected void onPause() 
     {
       super.onPause();
@@ -226,19 +234,31 @@ public class MainActivity extends Activity implements LocationListener
 
     public void onMapClick(View view) {
         Intent intent = new Intent(this, RouteMap.class); 
-        List<LocationPoint> points = new ArrayList<LocationPoint>();
-        Time startTime = new Time();
-        startTime.setToNow();
-        
+//        List<LocationP> points = new ArrayList<LocationP>();
+//        Time startTime = new Time();
+//        startTime.setToNow();
+ /*       
         Time endTime = new Time();
         endTime.set(20, 20, 4, 10, 10, 2012);
-        LocationPoint p1 = new LocationPoint( -0.1106,50.86524,startTime,true,false,"This is the starting point");
+        LocationP p1 = new LocationP( -0.1106,50.86524,startTime,true,false, );
+        points.add(p1);
+        p1 = new LocationPoint( -0.1056,50.86454,startTime,true,false,"");
+        points.add(p1);
+        p1 = new LocationPoint( -0.1036,50.86384,startTime,true,false,"");
+        points.add(p1);
+        p1 = new LocationPoint( -0.1006,50.86354,startTime,true,false,"");
+        points.add(p1);
+        p1 = new LocationPoint( -0.0970,50.86364,startTime,true,false,"");
+        points.add(p1);
+        p1 = new LocationPoint( -0.0965,50.86326,startTime,true,false,"");
+        points.add(p1);
+        p1 = new LocationPoint( -0.0820,50.86200,startTime,true,false,"");
         points.add(p1);
         LocationPoint p2 = new LocationPoint( -0.0939,50.8133,endTime,false,true,"This is the end point");
         points.add(p2);
         
         intent.putParcelableArrayListExtra("com.team2.dash.entity.LocationPoint", (ArrayList<? extends Parcelable>) points);
-        
+*/        
     	startActivity(intent);
     }
 
@@ -327,6 +347,7 @@ public class MainActivity extends Activity implements LocationListener
         	workout = new Workout( 0, activeUser.getID(), 0, 0, 0, DateFormat.format("MM/dd/yy h:mmaa", new java.util.Date()).toString() );
         	int id = db.addWorkout(workout);
         	workout.setID( id );
+        	distance = 0;
 // ================================================
     		
     	}

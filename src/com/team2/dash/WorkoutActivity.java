@@ -65,7 +65,8 @@ public class WorkoutActivity extends ListActivity {
     	Workout workout = (Workout)l.getItemAtPosition(position);
     	String txt = "Workout " + workout + " selected";
     	Toast.makeText(this, txt, Toast.LENGTH_SHORT).show();
-        Intent intent = new Intent(this, LocationActivity.class);
+//        Intent intent = new Intent(this, LocationActivity.class);
+        Intent intent = new Intent(this, RouteMap.class);
         intent.putExtra("workoutID", workout.getID());        
     	startActivity(intent);
     }
