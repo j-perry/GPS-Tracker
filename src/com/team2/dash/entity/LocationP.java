@@ -5,13 +5,13 @@ import android.text.format.DateFormat;
 public class LocationP {
 	int		_id;			// primary key
 	int		workout_id;		// 
-	int 	time;			// real time of the reading
+	long 	time;			// real time of the reading
 	int		workoutTime;	// time since workout started excluding breaks
 	double	latitude;
 	double 	longtitude;
 	double	altitude;
 	
-	public LocationP( int _id, int workout_id, int time, int workoutTime, double latitude, 
+	public LocationP( int _id, int workout_id, long time, int workoutTime, double latitude, 
 			double longtitude, double altitude){
 		this._id = _id;
 		this.workout_id = workout_id;
@@ -25,7 +25,9 @@ public class LocationP {
     @Override
 	public String toString(){
     	
-		String txt = DateFormat.format("MM/dd/yy h:mm:ssaa ", time).toString();
+		String txt = DateFormat.format("dd/MM/yy h:mm:ssaa ", time).toString();
+		txt += ", ";
+		txt += Integer.toString((int)workoutTime);
 		return (txt);
 	}
 	
@@ -43,7 +45,7 @@ public class LocationP {
 		this.workout_id = workout_id;
 	}
 
-	public int getTime(){
+	public long getTime(){
 		return	this.time;
 	}
 	public void setTime( int time ){

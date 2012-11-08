@@ -1,157 +1,56 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:gravity="top" >
+    android:layout_height="match_parent" >
 
     <LinearLayout
-        android:id="@+id/linearLayout1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="73dp"
         android:orientation="vertical" >
 
         <TextView
-            android:id="@+id/TimeHeader"
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:text="Current Time"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textColor="#2341A4" />
-
-        <TextView
-            android:id="@+id/TimeValue"
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:text="Medium Text"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
-
-        <TextView
-            android:id="@+id/LatHeader"
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:text="Current Latitude"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textColor="#2341A4" />
-
-        <TextView
-            android:id="@+id/LatValue"
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:text="Medium Text"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
-
-        <TextView
-            android:id="@+id/LongHeader"
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:text="Current Longitude"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textColor="#2341A4" />
-
-        <TextView
-            android:id="@+id/LongValue"
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:text="Medium Text"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
-
-        <TextView
-            android:id="@+id/AltValue"
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:text="Medium Text"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
-        
-</LinearLayout>
-
-    <TextView
-        android:id="@+id/GroupName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"
-        android:text="Team Two"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textColor="#A47D23" />
-
-    <Button
-        android:id="@+id/button1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignRight="@+id/GroupName"
-        android:layout_below="@+id/linearLayout1"
-        android:layout_marginTop="29dp"
-        android:onClick="onUserClick"
-        android:text="Change User" />
-
-    <TextView
-        android:id="@+id/chronoTimer"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/button1"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="22dp"
-        android:text="No Timer"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/chronoTimer"
-        android:layout_marginTop="22dp" >
-
-        <Button
-            android:id="@+id/startChrono"
-            android:layout_width="wrap_content"
+            android:id="@+id/textView1"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:onClick="onStartClick"
-            android:text="Start Timer" />
+            android:layout_gravity="center_horizontal"
+            android:text="TextView" />
 
         <Button
-            android:id="@+id/stopChrono"
+            android:id="@+id/button1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="onStopClick"
-            android:text="Stop Timer" />
-
+            android:layout_gravity="center_horizontal"
+            android:onClick="onNewWorkoutClick"
+            android:text="Start new workout" />
+
         <Button
-            android:id="@+id/resetChrono"
+            android:id="@+id/button2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="onResetClick"
-            android:text="Reset Timer" />
+            android:layout_gravity="center_horizontal"
+            android:onClick="onWorkoutClick"
+            android:text="Saved workouts" />
+
+        <Button
+            android:id="@+id/button3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:onClick="onUserClick"
+            android:text="Change default user" />
+
+        <Button
+            android:id="@+id/button4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:onClick="onTestClick"
+            android:text="Test Area" />
 
     </LinearLayout>
-
-    <Button
-        android:id="@+id/button2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/chronoTimer"
-        android:layout_toLeftOf="@+id/GroupName"
-        android:onClick="onMapClick"
-        android:text="Show Map" />
-
-    <Button
-        android:id="@+id/button3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/button1"
-        android:layout_toRightOf="@+id/button1"
-        android:onClick="onWorkoutClick"
-        android:text="Workouts" />
-    
+
 </RelativeLayout>

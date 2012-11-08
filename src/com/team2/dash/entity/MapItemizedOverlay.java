@@ -1,4 +1,4 @@
-package com.team2.dash;
+package com.team2.dash.entity;
 
 import java.util.ArrayList;
 

@@ -4,7 +4,6 @@ import java.util.List;
 import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.format.DateFormat;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -84,9 +83,9 @@ public class WorkoutActivity extends ListActivity {
     public void onClick(View view) {
         switch (view.getId()) {
         case R.id.add:
-        	Workout workout = new Workout( 0, activeUserID, 0, 0, 0, DateFormat.format("MM/dd/yy h:mmaa", new java.util.Date()).toString() );
-        	db.addWorkout(workout);
-        	refreshList();
+//        	Workout workout = new Workout( 0, activeUserID, 0, 0, 0, DateFormat.format("MM/dd/yy h:mmaa", new java.util.Date()).toString() );
+//        	db.addWorkout(workout);
+//        	refreshList();
           break;
         case R.id.cancel:
         	finish();

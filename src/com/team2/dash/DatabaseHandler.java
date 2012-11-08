@@ -329,7 +329,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         if (cursor.moveToFirst()) {
             do {
         	    LocationP location = new LocationP(Integer.parseInt(cursor.getString(0)), Integer.parseInt(cursor.getString(1)),
-        	    		Integer.parseInt(cursor.getString(2)), Integer.parseInt(cursor.getString(3)), 
+        	    		Long.parseLong(cursor.getString(2)), Integer.parseInt(cursor.getString(3)), 
     	                Double.parseDouble(cursor.getString(4)), Double.parseDouble(cursor.getString(5)), 
     	                Double.parseDouble(cursor.getString(6)));
                 // Adding contact to list

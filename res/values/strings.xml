@@ -20,5 +20,7 @@
     <string name="overlay_finish_title">Finish</string>
     <string name="title_activity_workout">Workouts</string>
     <string name="title_activity_location">Locations</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="title_activity_tracker">Tracker</string>
 
 </resources>

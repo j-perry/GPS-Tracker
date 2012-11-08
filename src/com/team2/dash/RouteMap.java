@@ -5,7 +5,6 @@ import java.util.List;
 import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.os.Bundle;
-import android.text.format.DateFormat;
 import android.view.Menu;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -18,6 +17,7 @@ import com.google.android.maps.Overlay;
 import com.google.android.maps.OverlayItem;
 import com.team2.dash.entity.DirectionPathOverlay;
 import com.team2.dash.entity.LocationP;
+import com.team2.dash.entity.MapItemizedOverlay;
 
 public class RouteMap extends MapActivity {
 	
@@ -33,8 +33,6 @@ public class RouteMap extends MapActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_route_map);
-//        Bundle bundle = getIntent().getExtras();
-//        runPoints =  bundle.getParcelableArrayList("com.team2.dash.entity.LocationPoint");
 
         db = new DatabaseHandler(this);
         Bundle extras = getIntent().getExtras();
