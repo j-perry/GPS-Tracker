@@ -15,9 +15,15 @@ import com.team2.dash.entity.User;
 
 public class UserActivity extends ListActivity {
 
-    List<User> values;
-    DatabaseHandler db;
+	/**
+	 * Private members
+	 */
+    private List<User> 		values;		// 
+    private DatabaseHandler db;			// 
     
+    /**
+     * 
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,6 +48,9 @@ public class UserActivity extends ListActivity {
         );
     }
     
+    /**
+     * 
+     */
     @Override
     public void onRestart() {
         super.onRestart();
@@ -49,6 +58,9 @@ public class UserActivity extends ListActivity {
         refreshList();     
     }
 
+    /**
+     * 
+     */
     @Override
     public void onListItemClick( ListView l, View v, int position, long id) {
     	User user = (User)l.getItemAtPosition(position);
@@ -58,6 +70,13 @@ public class UserActivity extends ListActivity {
     	finish();
     }
     
+    /**
+     * 
+     * @param v
+     * @param position
+     * @param id
+     * @return
+     */
     public boolean  onLongListItemClick(View v, int position, long id) {
     	ListView l = getListView();
     	User user = (User)l.getItemAtPosition(position);
@@ -65,30 +84,41 @@ public class UserActivity extends ListActivity {
     	refreshList();
     	String txt = "User " + user + " deleted";
     	Toast.makeText(this, txt, Toast.LENGTH_SHORT).show();
+    	
     	return true;
     }
     
+    /**
+     * 
+     * @param view
+     */
     public void onClick(View view) {
         switch (view.getId()) {
         case R.id.add:
             Intent intent = new Intent(this, AddUserActivity.class);
             startActivityForResult(intent, 0);
-          break;
+            break;
         case R.id.cancel:
         	finish();
-          break;
+        	break;
+        default:
+        	break;
         }
     }
 
+    /**
+     * 
+     */
     private void refreshList(){
         @SuppressWarnings("unchecked")      
         ArrayAdapter<User> adapter = (ArrayAdapter<User>) getListAdapter();
         values = db.getAllUsers();
         adapter.clear();
-        for(int i=0; i<values.size(); i++)
+        
+        for(int i = 0; i < values.size(); i++) {
         	adapter.add(values.get(i));
+        }
+        
         adapter.notifyDataSetChanged();   	
-    }
-    
-    
+    }    
 }

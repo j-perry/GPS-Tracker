@@ -1,6 +1,5 @@
 package com.team2.dash;
 
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,12 +11,17 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-
-
 public class DatabaseHandler extends SQLiteOpenHelper {
 
-	public String text;
-    // All Static variables
+	/**
+	 * 	Private members
+	 */
+	public String text;		// 
+	
+    /**
+     * All Static variables
+     */
+	
     // Database Version
     private static final int DATABASE_VERSION = 1;
  
@@ -33,7 +37,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     static final int USER_ACTIVE = 		1;
     static final int USER_NON_ACTIVE = 	0;
     
- 
     // Table Users
     private static final String[] TableUsersColumnNames = { 	"_id", 		"active", 	"fname", 	"sname", 	"email", 	"age", 		"weight", 	"height" };
     private static final String[] TableUsersColumnTypes = { 	"INTEGER", 	"INTEGER", 	"TEXT", 	"TEXT", 	"TEXT", 	"INTEGER", 	"INTEGER", 	"INTEGER" };
@@ -49,52 +52,77 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private static final String[] TableLocationsColumnTypes = { "INTEGER", 	"INTEGER", 		"INTEGER", 	"INTEGER", 		"REAL",		"REAL", 		"REAL" };
     private static final String[] TableLocationsColumnKeys  = {	"PRIMARY KEY AUTOINCREMENT", "", "", "", "", "", "" };
     	
+    /**
+     * 
+     * @param context
+     */
     public DatabaseHandler(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
     
- 	
+ 	/**
+ 	 * 
+ 	 */
  	@Override
 	public void onCreate(SQLiteDatabase db) {
  		// creating users table
  		String CREATE_TABLE;
 
  		CREATE_TABLE = "CREATE TABLE " + TABLE_USERS + " ( ";
-		for( int i=0; i<TableUsersColumnNames.length; i++){
+		for( int i = 0; i < TableUsersColumnNames.length; i++) {
 			String txt = TableUsersColumnNames[i] + " " + TableUsersColumnTypes[i] + " " + TableUsersColumnKeys[i];
-			if( i < TableUsersColumnNames.length-1)
+			
+			if( i < TableUsersColumnNames.length-1) {
 				txt += ", ";
-			else
+			}
+			else {
 				txt += ");";
+			}
+			
 			CREATE_TABLE += txt;
 		}
+		
 		db.execSQL(CREATE_TABLE);
 
 		// creating workouts table
  		CREATE_TABLE = "CREATE TABLE " + TABLE_WORKOUTS + " ( ";
-		for( int i=0; i<TableWorkoutsColumnNames.length; i++){
+ 		
+		for( int i = 0; i < TableWorkoutsColumnNames.length; i++) {
 			String txt = TableWorkoutsColumnNames[i] + " " + TableWorkoutsColumnTypes[i] + " " + TableWorkoutsColumnKeys[i];
-			if( i < TableWorkoutsColumnNames.length-1)
+			
+			if( i < TableWorkoutsColumnNames.length-1) {
 				txt += ", ";
-			else
+			}
+			else {
 				txt += ");";
+			}
 			CREATE_TABLE += txt;
 		}
+		
 		db.execSQL(CREATE_TABLE);
 	
 		// creating locations table
  		CREATE_TABLE = "CREATE TABLE " + TABLE_LOCATIONS + " ( ";
-		for( int i=0; i<TableLocationsColumnNames.length; i++){
+ 		
+		for( int i = 0; i < TableLocationsColumnNames.length; i++) {
 			String txt = TableLocationsColumnNames[i] + " " + TableLocationsColumnTypes[i] + " " + TableLocationsColumnKeys[i];
-			if( i < TableLocationsColumnNames.length-1)
+			
+			if( i < TableLocationsColumnNames.length - 1) {
 				txt += ", ";
-			else
+			}
+			else {
 				txt += ");";
+			}
+			
 			CREATE_TABLE += txt;
 		}
+		
 		db.execSQL(CREATE_TABLE);
 }
 
+ 	/**
+ 	 * 
+ 	 */
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         // Drop older table if existed
@@ -105,14 +133,11 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         // Create tables again
         onCreate(db);
 	}
-
-	/* =======================
+	
+	/**
 	 * Adding new user to table users
-	 * parameters:
-	 * 	user
-	 * returns:
-	 * 	the row ID of the newly inserted row, or -1 if an error occurred 
-	 * 
+	 * @param user
+	 * @return the row ID of the newly inserted row, or -1 if an error occurred 
 	 */
 	public int addUser(User user) {
 		SQLiteDatabase db = this.getWritableDatabase();
@@ -127,11 +152,18 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         values.put("height",	user.getHeight());	
  
         // Inserting Row
-        int id = (int)db.insert(TABLE_USERS, null, values);
+        int id = (int) db.insert(TABLE_USERS, null, values);
+        
         db.close(); // Closing database connection
-        return	id;
+        
+        return id;
     }
 
+	/**
+	 * 
+	 * @param user
+	 * @return
+	 */
 	public int updateUser(User user) {
 		SQLiteDatabase db = this.getWritableDatabase();
  
@@ -148,33 +180,42 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         // Inserting Row
         int id = db.update(TABLE_USERS, values, TableUsersColumnNames[0] + " = ?",
                 new String[] { String.valueOf(user.getID()) });
+        
         db.close(); // Closing database connection
+        
         return	id;
     }
 
-
+	/**
+	 * 
+	 * @param id
+	 * @return
+	 */
 	public User getUser(int id) {
 		SQLiteDatabase db = this.getReadableDatabase();
 	 
 		Cursor cursor = db.query(TABLE_USERS, TableUsersColumnNames, TableUsersColumnNames[0] + "=" + String.valueOf(id),
 	                null, null, null, null, null );
 
-		if ( !cursor.moveToFirst() )
-		{
+		if ( !cursor.moveToFirst() ) {
 			db.close();
 			return null;
 		}
 
-    	 
 	    User user = new User(Integer.parseInt(cursor.getString(0)), Integer.parseInt(cursor.getString(1)),
 	                cursor.getString(2), cursor.getString(3), cursor.getString(4),
 	                Integer.parseInt(cursor.getString(5)), Integer.parseInt(cursor.getString(6)), Integer.parseInt(cursor.getString(7)));
-	        // return user
+	    
+	    // return user
         db.close(); // Closing database connection
+        
 	    return user;
 	}
 	
-	
+	/**
+	 * 
+	 * @return
+	 */
 	public User getActiveUser() {
 		SQLiteDatabase db = this.getReadableDatabase();
 		Cursor	cursor;
@@ -182,23 +223,26 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 		cursor = db.query(TABLE_USERS, TableUsersColumnNames, TableUsersColumnNames[1] + "=" + String.valueOf(USER_ACTIVE),
 	                null, null, null, null, null );
 
-		if ( !cursor.moveToFirst() )
-		{
+		if ( !cursor.moveToFirst() ) {
 			db.close();
 			return null;
 		}
-  
-	 
+  	 
 	    User user = new User(Integer.parseInt(cursor.getString(0)), Integer.parseInt(cursor.getString(1)),
 	                cursor.getString(2), cursor.getString(3), cursor.getString(4),
 	                Integer.parseInt(cursor.getString(5)), Integer.parseInt(cursor.getString(6)), Integer.parseInt(cursor.getString(7)));
-	        // return user
+	    
+	    // return user
         db.close(); // Closing database connection
-	    return user;
+	    
+        return user;
 
 	}
 	
-	
+	/**
+	 * 
+	 * @return
+	 */
     public List<User> getAllUsers() {
         List<User> userList = new ArrayList<User>();
         // Select All Query
@@ -221,17 +265,15 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         // return contact list
         return userList;
     }
-    
-	/* =======================
-	 * Making one of the user active (only one can be active at any moment )
-	 * parameters:
-	 * 	user id
-	 * 
-	 */
-	public void setUserActive( int id ){
-
+    	    
+    /**
+     * Making one of the user active (only one can be active at any moment)
+     * @param id
+     */
+	public void setUserActive(int id) {
 		User user = getActiveUser();
-		if( user != null ){				/* if active user exist set him non active */
+		
+		if( user != null ) { /* if active user exist set him non active */	
 			user.setActive(USER_NON_ACTIVE);
 			updateUser(user);
 		}
@@ -240,20 +282,26 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 		user.setActive(USER_ACTIVE);
 		updateUser(user);
 	}
-    
-    // Deleting single user
-    public void deleteUser( int id ) {
+        
+	/**
+	 * Deleting single user
+	 * @param id
+	 */
+    public void deleteUser(int id) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(TABLE_USERS, TableUsersColumnNames[0] + " = ?",
                 new String[] { String.valueOf(id) });
         db.close();
     }
     
-        
+    /**
+     * 
+     * @param workout
+     * @return
+     */
 	public int addWorkout(Workout workout) {
 		SQLiteDatabase db = this.getWritableDatabase();
  
-
 		ContentValues values = new ContentValues();
         values.put("user_id", 		workout.getUserID());		
         values.put("start", 		workout.getStart());
@@ -264,9 +312,13 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         // Inserting Row
         int id = (int)db.insert(TABLE_WORKOUTS, null, values);
         db.close(); // Closing database connection
-        return	id;
+        return id;
     }
 	
+	/**
+	 * 
+	 * @param id
+	 */
     public void deleteWorkout( int id ) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(TABLE_WORKOUTS, TableUsersColumnNames[0] + " = ?",
@@ -274,9 +326,13 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         db.close();
     }
 	
+    /**
+     * 
+     * @param workout
+     * @return
+     */
 	public int updateWorkout(Workout workout) {
-		SQLiteDatabase db = this.getWritableDatabase();
- 
+		SQLiteDatabase db = this.getWritableDatabase(); 
 
 		ContentValues values = new ContentValues();
         values.put("_id", 			workout.getID());		
@@ -290,10 +346,14 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         int id = db.update(TABLE_WORKOUTS, values, "_id = ?",
                 new String[] { String.valueOf(workout.getID()) });
         db.close(); // Closing database connection
-        return	id;
+        return id;
     }
 	
-    
+    /**
+     * 
+     * @param userID
+     * @return
+     */
     public List<Workout> getAllWorkouts(int userID) {
         List<Workout> workoutList = new ArrayList<Workout>();
         // Select All Query
@@ -302,7 +362,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
  
- // looping through all rows and adding to list
+        // looping through all rows and adding to list
         if (cursor.moveToFirst()) {
             do {
         	    Workout workout = new Workout(Integer.parseInt(cursor.getString(0)), Integer.parseInt(cursor.getString(1)),
@@ -317,6 +377,11 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return workoutList;
     }
     
+    /**
+     * 
+     * @param workoutID
+     * @return
+     */
     public List<LocationP> getAllLocations( int workoutID ) {
         List<LocationP> locationList = new ArrayList<LocationP>();
         // Select All Query
@@ -341,6 +406,11 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return locationList;
     }
     
+    /**
+     * 
+     * @param location
+     * @return
+     */
 	public int addLocation(LocationP location) {
 		SQLiteDatabase db = this.getWritableDatabase();
  
@@ -353,15 +423,23 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         values.put("altitude", 		location.getAltitude());
          
         // Inserting Row
-        int id = (int)db.insert(TABLE_LOCATIONS, null, values);
-        db.close(); // Closing database connection
-        return	id;
+        int id = (int) db.insert(TABLE_LOCATIONS, null, values);
+        
+        // Closing database connection
+        db.close();
+        
+        return id;
     }
 	
+	/**
+	 * 
+	 * @param id
+	 */
     public void deleteLocation( int id ) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(TABLE_LOCATIONS, TableUsersColumnNames[0] + " = ?",
                 new String[] { String.valueOf(id) });
+        
         db.close();
     }
 }

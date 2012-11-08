@@ -3,18 +3,31 @@ package com.team2.dash.entity;
 import android.text.format.DateFormat;
 
 public class LocationP {
-	int		_id;			// primary key
-	int		workout_id;		// 
+	
+	/**
+	 * Private members
+	 */
+	int		id;				// primary key
+	int		workoutId;		// 
 	long 	time;			// real time of the reading
 	int		workoutTime;	// time since workout started excluding breaks
-	double	latitude;
-	double 	longtitude;
-	double	altitude;
+	double	latitude;		// 
+	double 	longtitude;		// 
+	double	altitude;		// 
 	
-	public LocationP( int _id, int workout_id, long time, int workoutTime, double latitude, 
-			double longtitude, double altitude){
-		this._id = _id;
-		this.workout_id = workout_id;
+	/**
+	 * 
+	 * @param _id
+	 * @param workout_id
+	 * @param time
+	 * @param workoutTime
+	 * @param latitude
+	 * @param longtitude
+	 * @param altitude
+	 */
+	public LocationP(int id, int workoutId, long time, int workoutTime, double latitude, double longtitude, double altitude) {
+		this.id = id;
+		this.workoutId = workoutId;
 		this.time = time;
 		this.workoutTime = workoutTime;
 		this.latitude = latitude;
@@ -22,63 +35,126 @@ public class LocationP {
 		this.altitude = altitude;
 	}
 	
+	/**
+	 * @return 
+	 */
     @Override
-	public String toString(){
-    	
+	public String toString() {    	
 		String txt = DateFormat.format("dd/MM/yy h:mm:ssaa ", time).toString();
 		txt += ", ";
 		txt += Integer.toString((int)workoutTime);
 		return (txt);
 	}
 	
-	public int getID(){
-		return	this._id;
+    /**
+     * 
+     * @return
+     */
+	public int getID() {
+		return	this.id;
 	}
-	public void setID( int _id ){
-		this._id = _id;
+	
+	/**
+	 * 
+	 * @param id
+	 */
+	public void setID(int id ){
+		this.id = id;
 	}
 
-	public int getWorkoutID(){
-		return	this.workout_id;
+	/**
+	 * 
+	 * @return
+	 */
+	public int getWorkoutID() {
+		return this.workoutId;
 	}
-	public void setWorkoutID( int workout_id ){
-		this.workout_id = workout_id;
+	
+	/**
+	 * 
+	 * @param workoutId
+	 */
+	public void setWorkoutID( int workoutId ){
+		this.workoutId = workoutId;
 	}
 
-	public long getTime(){
+	/**
+	 * 
+	 * @return
+	 */
+	public long getTime() {
 		return	this.time;
 	}
-	public void setTime( int time ){
+	
+	/**
+	 * 
+	 * @param time
+	 */
+	public void setTime(int time) {
 		this.time = time;
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public int getWorkoutTime(){
 		return	this.workoutTime;
 	}
-	public void setWorkoutTime( int workoutTime ){
+	
+	/**
+	 * 
+	 * @param workoutTime
+	 */
+	public void setWorkoutTime(int workoutTime) {
 		this.workoutTime = workoutTime;
 	}
 
-	public double getLatitude(){
+	/**
+	 * 
+	 * @return
+	 */
+	public double getLatitude() {
 		return	this.latitude;
 	}
-	public void setLatitude( double latitude ){
+	
+	/**
+	 * 
+	 * @param latitude
+	 */
+	public void setLatitude(double latitude) {
 		this.latitude = latitude;
 	}
 
-	public double getLongtitude(){
-		return	this.longtitude;
+	/**
+	 * 
+	 * @return
+	 */
+	public double getLongtitude() {
+		return this.longtitude;
 	}
-	public void setLongtitude( double longtitude ){
+	
+	/**
+	 * 
+	 * @param longtitude
+	 */
+	public void setLongtitude(double longtitude) {
 		this.longtitude = longtitude;
 	}
 
-	public double getAltitude(){
-		return	this.altitude;
+	/**
+	 * 
+	 * @return
+	 */
+	public double getAltitude() {
+		return this.altitude;
 	}
-	public void setAltitude( double altitude ){
+	
+	/**
+	 * 
+	 * @param altitude
+	 */
+	public void setAltitude(double altitude) {
 		this.altitude = altitude;
 	}
-
-
 }

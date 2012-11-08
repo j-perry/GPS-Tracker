@@ -21,14 +21,18 @@ import com.team2.dash.entity.MapItemizedOverlay;
 
 public class RouteMap extends MapActivity {
 	
-	List<LocationP> runPoints ;
-	MapView mapView;
-    DatabaseHandler db;
-    int		workoutID;
-    double  distance = 0;
+	/**
+	 * Private members
+	 */
+	private List<LocationP> 	runPoints;		// 
+	private MapView 			mapView;		// 
+    private DatabaseHandler 	db;				// 
+    private int					workoutID;		// 
+    private double  			distance = 0;	// 
 	
-	
-
+    /**
+     * 
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,16 +40,16 @@ public class RouteMap extends MapActivity {
 
         db = new DatabaseHandler(this);
         Bundle extras = getIntent().getExtras();
-        if (extras != null)
+        
+        if (extras != null) {
         	workoutID = extras.getInt("workoutID");
-        else
-        {
+        }
+        else {
         	Toast.makeText(this, "No workout choosen...", Toast.LENGTH_SHORT).show();
         	finish();
         }
         	
         runPoints = db.getAllLocations( workoutID );
-
         
         mapView = (MapView)findViewById(R.id.mapview);
         mapView.setBuiltInZoomControls(true);
@@ -54,15 +58,23 @@ public class RouteMap extends MapActivity {
         double  maxLat = runPoints.get(0).getLatitude();
         double  minLong = runPoints.get(0).getLongtitude();
         double  maxLong = runPoints.get(0).getLongtitude();
-        for( int i=1; i<runPoints.size(); i++){
-			if( runPoints.get(i).getLatitude() < minLat )
+        
+        for( int i = 1; i < runPoints.size(); i++) {
+			if( runPoints.get(i).getLatitude() < minLat ) {
 				minLat = runPoints.get(i).getLatitude(); 
-			if( runPoints.get(i).getLatitude() > maxLat )
+			}
+			
+			if( runPoints.get(i).getLatitude() > maxLat ) {
 				maxLat = runPoints.get(i).getLatitude(); 
-			if( runPoints.get(i).getLongtitude() < minLong )
+			}
+			
+			if( runPoints.get(i).getLongtitude() < minLong ) {
 				minLong = runPoints.get(i).getLongtitude(); 
-			if( runPoints.get(i).getLongtitude() > maxLong )
+			}
+			
+			if( runPoints.get(i).getLongtitude() > maxLong ) {
 				maxLong = runPoints.get(i).getLongtitude(); 
+			}
 		}
 
         
@@ -77,21 +89,30 @@ public class RouteMap extends MapActivity {
         
     }
 
+    /**
+     * 
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.activity_route_map, menu);
         return true;
     }   
     
-
+    /**
+     * 
+     */
 	@Override
 	protected boolean isRouteDisplayed() {
 		// TODO Auto-generated method stub
 		return false;
 	}
 	
-		
-	private void displayMarkers(MapView map, List<LocationP> pts){
+	/**
+	 * 
+	 * @param map
+	 * @param pts
+	 */
+	private void displayMarkers(MapView map, List<LocationP> pts) {
 		Drawable startMarker = this.getResources().getDrawable(R.drawable.cycling);
 		Drawable finishMarker = this.getResources().getDrawable(R.drawable.stop);		
 		List<Overlay> mapOverlays = map.getOverlays();
@@ -103,38 +124,35 @@ public class RouteMap extends MapActivity {
 		//create start and end marker overlay
 		MapItemizedOverlay startMarkerOverlay = new MapItemizedOverlay(startMarker,this);
 		MapItemizedOverlay finishMarkerOverlay = new MapItemizedOverlay(finishMarker,this);		
-		
-		
-		
-		for( int i=0; i<pts.size(); i++){
+					
+		for( int i = 0; i < pts.size(); i++) {
 			/* get Coordinate and convert to integer */
 			int x = (int) (pts.get(i).getLatitude() * 1E6);
 			int y = (int)(pts.get(i).getLongtitude() * 1E6);	
 			gp2 = gp1;
-			gp1 = new GeoPoint(x,y);		
-			if( gp2 != null )
-			{
-				
+			gp1 = new GeoPoint(x,y);	
+			
+			if( gp2 != null ) {
 				Location.distanceBetween(gp1.getLatitudeE6()/1E6 , gp1.getLongitudeE6()/1E6, 
 										gp2.getLatitudeE6()/1E6, gp2.getLongitudeE6()/1E6, dist);
 				distance += dist[0];  
 				mapView.getOverlays().add(new DirectionPathOverlay(gp1, gp2));
 			}
-			if( i==0 ){				
+			
+			if( i==0 ) {				
 				map.getController().setCenter(gp1);
 				OverlayItem	startOverlay = new OverlayItem(gp1, "Start", "");
 				startMarkerOverlay.addOverlay(startOverlay);
 				mapOverlays.add(startMarkerOverlay);
-			}else if ( i == (pts.size()-1)){
+			} 
+			else if ( i == (pts.size()-1)) {
 				OverlayItem finishOverlay = new OverlayItem(gp1,"Finish", "");
 				finishMarkerOverlay.addOverlay(finishOverlay);
 				mapOverlays.add(finishMarkerOverlay);
-			}else{
-				
+			} 
+			else {				
 				//TODO: Add points for intermediate locations here
 			}
 		}
 	}
-	
-
 }

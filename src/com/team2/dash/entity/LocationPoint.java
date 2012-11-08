@@ -12,57 +12,28 @@ import android.text.format.Time;
  */
 public class LocationPoint implements Parcelable {
 	
-	/* Private Members */
-	
-	private double longitude;
-	private double latitude;
-	private Time   timeAtPosition;
+	/**
+	 *  Private Members 
+	 */
+	private double 	longitude;
+	private double 	latitude;
+	private Time   	timeAtPosition;
 	private boolean isStartLocation;
 	private boolean isFinishLocation;
-	private String description;
+	private String 	description;	
 	
-	
-	
-	
-	public String getDescription() {
-		return description;
-	}
-	public void setDescription(String description) {
-		this.description = description;
-	}
-	public double getLongitude() {
-		return longitude;
-	}
-	public void setLongitude(double longitude) {
-		this.longitude = longitude;
-	}
-	public double getLatitude() {
-		return latitude;
-	}
-	public void setLatitude(double latitude) {
-		this.latitude = latitude;
-	}
-	public Time getTimeAtPosition() {
-		return timeAtPosition;
-	}
-	public void setTimeAtPosition(Time timeAtPosition) {
-		this.timeAtPosition = timeAtPosition;
-	}
-	public boolean isStartLocation() {
-		return isStartLocation;
-	}
-	public void setStartLocation(boolean isStartLocation) {
-		this.isStartLocation = isStartLocation;
-	}
-	public boolean isFinishLocation() {
-		return isFinishLocation;
-	}
-	public void setFinishLocation(boolean isFinishLocation) {
-		this.isFinishLocation = isFinishLocation;
+	/**
+	 * Default constructor for comfort
+	 */
+	public LocationPoint() {
+		
 	}
 	
-	/*Constructor to accept parcel */
-	public LocationPoint(Parcel in){
+	/**
+	 * 
+	 * @param in
+	 */
+	public LocationPoint(Parcel in) {
 		longitude = in.readDouble();
 		latitude = in.readDouble();
 
@@ -77,42 +48,6 @@ public class LocationPoint implements Parcelable {
 		
 	}
 	
-	public int describeContents() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-	public void writeToParcel(Parcel dest, int flags) {
-		dest.writeDouble(longitude);
-		dest.writeDouble(latitude);
-		dest.writeLong(timeAtPosition.toMillis(false));
-		dest.writeInt(isStartLocation ? 0 : 1);
-		dest.writeInt(isFinishLocation?0:1);	
-		dest.writeString(description);
-	}
-	
-	public static final Parcelable.Creator<LocationPoint> CREATOR = new Creator<LocationPoint>() {
-		
-		public LocationPoint[] newArray(int size) {
-			// TODO Auto-generated method stub
-			return new LocationPoint[size];
-		}
-		
-		public LocationPoint createFromParcel(Parcel source) {
-			// TODO Auto-generated method stub
-			return new LocationPoint(source);
-		}
-		
-		
-	};
-	
-
-	/**
-	 * Default constructor for comfort
-	 */
-	public LocationPoint(){
-		
-	}
-	
 	/**
 	 * This class is used to hold the position of the phone/runner at during movement. Always ensure you set the start and finish location carefully.
 	 * E.g a location cannot or shouldn't be both the start and finish on a regular day. 
@@ -123,7 +58,7 @@ public class LocationPoint implements Parcelable {
 	 * @param isFinishLocation this indicates that the locationpoint is the finish point of the race. This is when the user stops moving.
 	 * 
 	 */
-	public LocationPoint(double longitude, double latitude, Time time,boolean isStartLocation, boolean isFinishLocation,String description){
+	public LocationPoint(double longitude, double latitude, Time time, boolean isStartLocation, boolean isFinishLocation,String description){
 		this.longitude = longitude;
 		this.latitude = latitude;
 		this.timeAtPosition = time;
@@ -131,4 +66,144 @@ public class LocationPoint implements Parcelable {
 		this.isFinishLocation = isFinishLocation;
 		this.description = description;
 	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public String getDescription() {
+		return description;
+	}
+	
+	/**
+	 * 
+	 * @param description
+	 */
+	public void setDescription(String description) {
+		this.description = description;
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public double getLongitude() {
+		return longitude;
+	}
+	
+	/**
+	 * 
+	 * @param longitude
+	 */
+	public void setLongitude(double longitude) {
+		this.longitude = longitude;
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public double getLatitude() {
+		return latitude;
+	}
+	
+	/**
+	 * 
+	 * @param latitude
+	 */
+	public void setLatitude(double latitude) {
+		this.latitude = latitude;
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public Time getTimeAtPosition() {
+		return timeAtPosition;
+	}
+	
+	/**
+	 * 
+	 * @param timeAtPosition
+	 */
+	public void setTimeAtPosition(Time timeAtPosition) {
+		this.timeAtPosition = timeAtPosition;
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public boolean isStartLocation() {
+		return isStartLocation;
+	}
+	
+	/**
+	 * 
+	 * @param isStartLocation
+	 */
+	public void setStartLocation(boolean isStartLocation) {
+		this.isStartLocation = isStartLocation;
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public boolean isFinishLocation() {
+		return isFinishLocation;
+	}
+	
+	/**
+	 * 
+	 * @param isFinishLocation
+	 */
+	public void setFinishLocation(boolean isFinishLocation) {
+		this.isFinishLocation = isFinishLocation;
+	}
+	
+	/**
+	 * 
+	 */
+	public int describeContents() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+	
+	/**
+	 * 
+	 * @return 
+	 * @return 
+	 */
+	public void writeToParcel(Parcel dest, int flags) {
+		dest.writeDouble(longitude);
+		dest.writeDouble(latitude);
+		dest.writeLong(timeAtPosition.toMillis(false));
+		dest.writeInt(isStartLocation ? 0 : 1);
+		dest.writeInt(isFinishLocation?0:1);	
+		dest.writeString(description);
+	}
+	
+	/**
+	 * 
+	 */
+	public static final Parcelable.Creator<LocationPoint> CREATOR = new Creator<LocationPoint>() {
+		
+		/**
+		 * 
+		 */
+		public LocationPoint[] newArray(int size) {
+			// TODO Auto-generated method stub
+			return new LocationPoint[size];
+		}
+		
+		/**
+		 * 
+		 */
+		public LocationPoint createFromParcel(Parcel source) {
+			// TODO Auto-generated method stub
+			return new LocationPoint(source);
+		}	
+	};	
 }

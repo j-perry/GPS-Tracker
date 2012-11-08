@@ -15,10 +15,15 @@ import android.widget.Toast;
 
 public class MainActivity extends Activity {
 
-	private User		activeUser = null;		// keep active user in here
-    DatabaseHandler 	db;
+	/**
+	 * Private members
+	 */
+	private User				activeUser = null;		// keep active user in here
+    private DatabaseHandler 	db;						// 
 
-	
+    /**
+     * 
+     */
 	@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,67 +35,88 @@ public class MainActivity extends Activity {
         fastTost();   
    }
 
-    @Override
-    public void onResume() {
-        super.onResume();
+   /**
+    * 
+    */
+   @Override
+   public void onResume() {
+	   super.onResume();
             
-        activeUser = db.getActiveUser();
-        if( activeUser == null)
-        {
-        	String txt = "Please choose active user\n or create a new one!";
-        	Toast.makeText(this, txt, Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(this, UserActivity.class); 
-        	startActivity(intent);
-        	
-        }
-        TextView tv = (TextView)findViewById(R.id.textView1);
-        tv.setText( "Welcome " + activeUser );
-    }
+       activeUser = db.getActiveUser();
+       if( activeUser == null) {
+    	   String txt = "Please choose active user\n or create a new one!";
+    	   Toast.makeText(this, txt, Toast.LENGTH_SHORT).show();
+           Intent intent = new Intent(this, UserActivity.class); 
+           startActivity(intent);
+       }
+       
+       TextView tv = (TextView)findViewById(R.id.textView1);
+       tv.setText( "Welcome " + activeUser );
+   }
 
+   /**
+    * 
+    */
+   @Override
+   public boolean onCreateOptionsMenu(Menu menu) {
+       getMenuInflater().inflate(R.menu.activity_main, menu);
+       return true;
+   }
+   
+   /**
+    * 
+    */
+   public void fastTost(){
+       LinearLayout v = new LinearLayout(this);
+       ImageView iv = new ImageView(this);
+       iv.setImageResource(R.drawable.dash_logo);
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.activity_main, menu);
-        return true;
-    }
+       v.addView(iv);
+       //populate layout with your image and text or whatever you want to put in here
+
+       Toast toast = new Toast(getApplicationContext());
+       toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0);
+       toast.setDuration(Toast.LENGTH_SHORT);
+       toast.setView(v);
+       toast.show();    	
+   }
     
-    public void fastTost(){
-        LinearLayout v = new LinearLayout(this);
-        ImageView iv = new ImageView(this);
-        iv.setImageResource(R.drawable.dash_logo);
+   /**
+    * 
+    * @param view
+    */
+   public void onUserClick(View view) {
+       Intent intent = new Intent(this, UserActivity.class); 
+       startActivity(intent);
+   }
 
-        v.addView(iv);
-        //populate layout with your image and text or whatever you want to put in here
+   /**
+    * 
+    * @param view
+    */
+   public void onNewWorkoutClick(View view) {
+	   Intent intent = new Intent(this, TrackerActivity.class);
+       intent.putExtra("activeUserID", activeUser.getID());        
+       startActivity(intent);
+   }
 
-        Toast toast = new Toast(getApplicationContext());
-        toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0);
-        toast.setDuration(Toast.LENGTH_SHORT);
-        toast.setView(v);
-        toast.show();    	
-    }
-    
-    public void onUserClick(View view) {
-        Intent intent = new Intent(this, UserActivity.class); 
-    	startActivity(intent);
-    }
+   /**
+    * 
+    * @param view
+    */
+   public void onWorkoutClick(View view) {
+       Intent intent = new Intent(this, WorkoutActivity.class);
+       intent.putExtra("activeUserID", activeUser.getID());        
+   	   startActivity(intent);
+   }
 
-    public void onNewWorkoutClick(View view) {
-        Intent intent = new Intent(this, TrackerActivity.class);
-        intent.putExtra("activeUserID", activeUser.getID());        
-    	startActivity(intent);
-    }
-
-    public void onWorkoutClick(View view) {
-        Intent intent = new Intent(this, WorkoutActivity.class);
-        intent.putExtra("activeUserID", activeUser.getID());        
-    	startActivity(intent);
-    }
-
-    public void onTestClick(View view) {
-        Intent intent = new Intent(this, TestActivity.class);
-        intent.putExtra("activeUserID", activeUser.getID());        
-    	startActivity(intent);
-    }
-
-    
+   /**
+    * 
+    * @param view
+    */
+   public void onTestClick(View view) {
+       Intent intent = new Intent(this, TestActivity.class);
+       intent.putExtra("activeUserID", activeUser.getID());        
+       startActivity(intent);
+   }   
 }
