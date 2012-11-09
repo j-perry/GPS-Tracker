@@ -11,32 +11,39 @@
         android:orientation="vertical" >
 
         <TextView
-            android:id="@+id/textView1"
+            android:id="@+id/textGPS"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="GPS"
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
         <TextView
-            android:id="@+id/textView2"
+            android:id="@+id/textTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Actual Time"
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
         <TextView
-            android:id="@+id/textView3"
+            android:id="@+id/textWorkoutTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Workout Time"
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
         <TextView
-            android:id="@+id/textView4"
+            android:id="@+id/textDistance"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Distance"
             android:textAppearance="?android:attr/textAppearanceLarge" />
+
+        <ProgressBar
+            android:id="@+id/progressBar1"
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal" />
 
         <Button
             android:id="@+id/button1"
@@ -52,7 +59,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:onClick="onStopClick"
-            android:text="STOP" />
+            android:text="PAUSE" />
 
         <Button
             android:id="@+id/button3"
@@ -60,7 +67,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:onClick="onResetClick"
-            android:text="RESET" />
+            android:text="END" />
 
     </LinearLayout>
 

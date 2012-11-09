@@ -1,5 +1,6 @@
 package com.team2.dash;
 
+import com.google.android.maps.GeoPoint;
 import com.team2.dash.entity.LocationP;
 import com.team2.dash.entity.User;
 import com.team2.dash.entity.Workout;
@@ -15,6 +16,7 @@ import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.location.Criteria;
@@ -25,7 +27,8 @@ import android.location.LocationManager;
 
 public class TrackerActivity  extends Activity implements LocationListener {
 
-	private LocationManager locationManager = null;	
+	private LocationManager locationManager = null;
+	private Location location;
 	private Handler handleTimer, handleChrono;
 	private long startTime, elapsedTime;
 	private boolean stopChrono = false;
@@ -33,6 +36,7 @@ public class TrackerActivity  extends Activity implements LocationListener {
 	private int runTimerCount = 0;
 	String	currentTime, provider;
     int		activeUserID;
+    GeoPoint	gp1, gp2;
 
 	private	Workout		workout = null; // active workout, null if not in use
     DatabaseHandler 	db;
@@ -48,6 +52,9 @@ public class TrackerActivity  extends Activity implements LocationListener {
         setContentView(R.layout.activity_tracker);
 
         db = new DatabaseHandler(this);
+
+        ProgressBar progressBar = (ProgressBar) findViewById(R.id.progressBar1);
+        progressBar.setVisibility(ProgressBar.INVISIBLE);
 
         Bundle extras = getIntent().getExtras();
         if (extras != null)
@@ -127,7 +134,7 @@ public class TrackerActivity  extends Activity implements LocationListener {
     {        
     	public void run() {
     		UpdateTime();
-        	if( (workout != null) && (stopChrono == false))
+        	if( (workout != null) && (stopChrono == false) && (location != null) )
         		SaveLocation();
         }
     };
@@ -141,33 +148,49 @@ public class TrackerActivity  extends Activity implements LocationListener {
 
     private void UpdateTime()
     {
-		TextView t = (TextView)findViewById(R.id.textView2);
-		currentTime = DateFormat.format("h:mm:ssaa ", new java.util.Date()).toString();
+		TextView t = (TextView)findViewById(R.id.textTime);
+		currentTime = DateFormat.format("hh:mm:ss ", new java.util.Date()).toString();
 		t.setText(currentTime);
    }
     
-    private void SaveLocation() {	   
+    private void SaveLocation() {	
+    	float[]	dist = new float[3];
     	LocationP loc = new LocationP( 0, workout.getID(), System.currentTimeMillis(), (int)elapsedTime, latitude, longitude, altitude );
     	db.addLocation(loc);
+    	gp2 = gp1;
+		gp1 = new GeoPoint((int)(latitude*1E6),(int)(longitude*1E6));		
+		if( gp2 != null )
+		{
+			
+			Location.distanceBetween(gp1.getLatitudeE6()/1E6 , gp1.getLongitudeE6()/1E6, 
+									gp2.getLatitudeE6()/1E6, gp2.getLongitudeE6()/1E6, dist);
+			distance += dist[0];
+		}
+		TextView t = (TextView)findViewById(R.id.textDistance);
+		String	txt = "Distance : " + String.valueOf((int)distance);
+		t.setText(txt);
+
     }
     
     private void UpdateGPS()
-    {    	    	    
+    {
+    	String		txt;
     	Criteria hdCrit = new Criteria();
     	hdCrit.setAccuracy(Criteria.ACCURACY_FINE);
         provider = locationManager.getBestProvider(hdCrit, false);
-        Location location = locationManager.getLastKnownLocation(provider);
+        location = locationManager.getLastKnownLocation(provider);
         if (location != null) 
         {
-          System.out.println("Provider " + provider + " has been selected.");
-          onLocationChanged(location);
+//          System.out.println("Provider " + provider + " has been selected.");
+        	onLocationChanged(location);
+        	txt = "GPS working";
         } 
         else 
         {
-//          latituteField.setText("Location not available");
-//          longitudeField.setText("Location not available");
-//          altitudeField.setText("Location not available");
+            txt = "Location not available";
+
         }
+     	((TextView)findViewById(R.id.textGPS)).setText(txt);
     	
     }        
         
@@ -251,7 +274,7 @@ public class TrackerActivity  extends Activity implements LocationListener {
      		milliseconds = milliseconds.substring(milliseconds.length()- 3 , milliseconds.length()-1);
  		    
     
- 		((TextView)findViewById(R.id.textView3)).setText(hours + ":" + minutes + ":" + seconds + "." + milliseconds);		
+ 		((TextView)findViewById(R.id.textWorkoutTime)).setText(hours + ":" + minutes + ":" + seconds + "." + milliseconds);		
  	}    
 
      private Runnable startTimer = new Runnable() 
@@ -268,6 +291,7 @@ public class TrackerActivity  extends Activity implements LocationListener {
       	int id = db.addWorkout(workout);
       	workout.setID( id );
       	distance = 0;
+      	gp1 = null;
 
       	String txt = "New workout started\n" + workout;
     	Toast.makeText(this, txt, Toast.LENGTH_SHORT).show();
@@ -288,6 +312,8 @@ public class TrackerActivity  extends Activity implements LocationListener {
      	}
      	handleChrono.removeCallbacks(startTimer);
      	handleChrono.postDelayed(startTimer, 0);
+        ProgressBar progressBar = (ProgressBar) findViewById(R.id.progressBar1);
+        progressBar.setVisibility(ProgressBar.VISIBLE);
      	
      	
      }
@@ -301,7 +327,7 @@ public class TrackerActivity  extends Activity implements LocationListener {
      public void onResetClick(View view)
      {
      	stopChrono = false;
-//     	((TextView)findViewById(R.id.chronoTimer)).setText("No Timer");
+     	((TextView)findViewById(R.id.textWorkoutTime)).setText("No Timer");
  // ================================================
      	workout = null;
  // ================================================

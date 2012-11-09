@@ -15,7 +15,8 @@ public final class R {
         public static final int dash_logo=0x7f020001;
         public static final int ic_action_search=0x7f020002;
         public static final int ic_launcher=0x7f020003;
-        public static final int stop=0x7f020004;
+        public static final int running6=0x7f020004;
+        public static final int stop=0x7f020005;
     }
     public static final class id {
         public static final int AltValue=0x7f070019;
@@ -44,14 +45,17 @@ public final class R {
         public static final int linearLayout1=0x7f070000;
         public static final int linearLayout2=0x7f070007;
         public static final int mapview=0x7f070012;
-        public static final int menu_settings=0x7f070021;
+        public static final int menu_settings=0x7f070024;
+        public static final int progressBar1=0x7f070023;
         public static final int resetChrono=0x7f07001e;
         public static final int startChrono=0x7f07001c;
         public static final int stopChrono=0x7f07001d;
+        public static final int textDistance=0x7f070022;
+        public static final int textGPS=0x7f07001f;
+        public static final int textTime=0x7f070020;
         public static final int textView1=0x7f07000a;
         public static final int textView2=0x7f070010;
-        public static final int textView3=0x7f07001f;
-        public static final int textView4=0x7f070020;
+        public static final int textWorkoutTime=0x7f070021;
     }
     public static final class layout {
         public static final int activity_add_user=0x7f030000;
