@@ -16,10 +16,16 @@ import com.team2.dash.entity.Workout;
 
 public class WorkoutActivity extends ListActivity {
 
-    List<Workout> values;
-    DatabaseHandler db;
-    int		activeUserID;
+	/**
+	 * Private members
+	 */
+    private List<Workout> 	values;			// 
+    private DatabaseHandler db;				// 
+    private int				activeUserID;	// 
     
+    /**
+     * 
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,10 +34,11 @@ public class WorkoutActivity extends ListActivity {
         
         db = new DatabaseHandler(this);
         Bundle extras = getIntent().getExtras();
-        if (extras != null)
+        
+        if (extras != null) {
         	activeUserID = extras.getInt("activeUserID");
-        else
-        {
+        }        
+        else {
         	User user = db.getActiveUser();
         	activeUserID = user.getID();
         }
@@ -52,6 +59,9 @@ public class WorkoutActivity extends ListActivity {
         );
     }
     
+    /**
+     * 
+     */
     @Override
     public void onRestart() {
         super.onRestart();
@@ -59,6 +69,9 @@ public class WorkoutActivity extends ListActivity {
         refreshList();     
     }
 
+    /**
+     * 
+     */
     @Override
     public void onListItemClick( ListView l, View v, int position, long id) {
     	Workout workout = (Workout)l.getItemAtPosition(position);
@@ -70,6 +83,13 @@ public class WorkoutActivity extends ListActivity {
     	startActivity(intent);
     }
     
+    /**
+     * 
+     * @param v
+     * @param position
+     * @param id
+     * @return
+     */
     public boolean  onLongListItemClick(View v, int position, long id) {
     	ListView l = getListView();
     	Workout workout = (Workout)l.getItemAtPosition(position);
@@ -80,28 +100,38 @@ public class WorkoutActivity extends ListActivity {
     	return true;
     }
     
+    /**
+     * 
+     * @param view
+     */
     public void onClick(View view) {
         switch (view.getId()) {
         case R.id.add:
 //        	Workout workout = new Workout( 0, activeUserID, 0, 0, 0, DateFormat.format("MM/dd/yy h:mmaa", new java.util.Date()).toString() );
 //        	db.addWorkout(workout);
 //        	refreshList();
-          break;
+        	break;
         case R.id.cancel:
         	finish();
-          break;
+        	break;
+        default:
+        	break;
         }
     }
 
-    private void refreshList(){
+    /**
+     * 
+     */
+    private void refreshList() {
         @SuppressWarnings("unchecked")      
         ArrayAdapter<Workout> adapter = (ArrayAdapter<Workout>) getListAdapter();
         values = db.getAllWorkouts(activeUserID);
         adapter.clear();
-        for(int i=0; i<values.size(); i++)
+        
+        for(int i=0; i<values.size(); i++) {
         	adapter.add(values.get(i));
+        }
+        
         adapter.notifyDataSetChanged();   	
     }
-    
-    
 }

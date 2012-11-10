@@ -13,22 +13,32 @@ import com.team2.dash.entity.User;
 
 public class AddUserActivity extends Activity {
 
+	/**
+	 * 
+	 */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_user);
     }
 
+    /**
+     * 
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.activity_add_user, menu);
         return true;
     }
     
-    
+    /**
+     * 
+     * @param view
+     */
     public void onClick(View view) {
-    	String 	txt;
-        switch (view.getId()) {
+    	String txt;
+    	
+        switch (view.getId()) {        
         case R.id.add:
         	User user = new User();
         	user.setID(0);
@@ -36,11 +46,12 @@ public class AddUserActivity extends Activity {
 
         	EditText editText = (EditText) findViewById(R.id.edit_fname);
         	txt = editText.getText().toString();
-        	if( txt.length() == 0 )
-        	{
+        	
+        	if(txt.length() == 0) {
             	Toast.makeText(this, "Please enter first name", Toast.LENGTH_SHORT).show();
         		return;
         	}
+        	
         	user.setFname(txt);
 
         	editText = (EditText) findViewById(R.id.edit_sname);
@@ -53,18 +64,27 @@ public class AddUserActivity extends Activity {
 
         	editText = (EditText) findViewById(R.id.edit_age);
         	txt = editText.getText().toString();
-        	if( txt.length() == 0 )
+        	
+        	if( txt.length() == 0 ) {
         		txt = "0";
+        	}
+        	
         	user.setAge(Integer.parseInt(txt));
 
         	editText = (EditText) findViewById(R.id.edit_weight);
-        	if( txt.length() == 0 )
+        	
+        	if( txt.length() == 0 ) {
         		txt = "0";
+        	}
+        	
         	user.setWeight(Integer.parseInt(txt));
 
         	editText = (EditText) findViewById(R.id.edit_height);
-        	if( txt.length() == 0 )
+        	
+        	if( txt.length() == 0 ) {
         		txt = "0";
+        	}
+        	
         	user.setHeight(Integer.parseInt(txt));
 
         	DatabaseHandler db = new DatabaseHandler(this);
@@ -72,8 +92,10 @@ public class AddUserActivity extends Activity {
         	break;
         case R.id.cancel:
         	break;
+        default:
+        	break;
         }
+        
     	finish();
-    }
-    
+    }    
 }
