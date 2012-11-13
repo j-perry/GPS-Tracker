@@ -43,12 +43,11 @@
             android:text="0:00s" />
 
     </RelativeLayout>
-    
-    <com.google.android.maps.MapView
+        <com.google.android.maps.MapView
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/mapview"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="480px"
         android:layout_marginLeft="14px"
         android:layout_marginRight="14px"
         android:layout_marginTop="50px"
@@ -56,5 +55,12 @@
         android:clickable="true" >
         
     </com.google.android.maps.MapView>
+
+    <Button
+        android:id="@+id/btnCheckin"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="3px"
+        android:text="@string/checkin" />
 
 </LinearLayout>

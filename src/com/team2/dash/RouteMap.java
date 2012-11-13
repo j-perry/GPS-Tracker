@@ -1,15 +1,36 @@
 package com.team2.dash;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.List;
 
+import org.apache.http.HttpResponse;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.params.BasicHttpParams;
+import org.apache.http.params.HttpConnectionParams;
+import org.apache.http.params.HttpParams;
+
+import android.app.ProgressDialog;
+import android.app.WallpaperManager;
+import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.location.Location;
+import android.net.http.AndroidHttpClient;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.team2.dash.R;
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapActivity;
 import com.google.android.maps.MapView;
@@ -28,7 +49,8 @@ public class RouteMap extends MapActivity {
 	private MapView 			mapView;		// 
     private DatabaseHandler 	db;				// 
     private int					workoutID;		// 
-    private double  			distance = 0;	// 
+    private double  			distance = 0;	//
+    private static String serviceEndPoint = "";
 	
     /**
      * 
@@ -37,7 +59,7 @@ public class RouteMap extends MapActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_route_map);
-
+        
         db = new DatabaseHandler(this);
         Bundle extras = getIntent().getExtras();
         
@@ -82,13 +104,22 @@ public class RouteMap extends MapActivity {
 
         mapView.getController().animateTo(new GeoPoint(  (int)((maxLat+minLat)*1E6/2), (int)((maxLong+minLong)*1E6/2) ));
        
-        displayMarkers(mapView, runPoints);
+        //displayMarkers(mapView, runPoints);
               
 		TextView t = (TextView)findViewById(R.id.lblDistanceCovered);
 		t.setText(Integer.toString((int)distance) + " m");
+		
+		//TODO: Handle button click event.
+		Button btnChekin = (Button)findViewById(R.id.btnCheckin);
+		btnChekin.setOnClickListener(new CheckinHandler());
         
     }
 
+    @Override
+    protected void onStart() {
+    	super.onStart();
+    	serviceEndPoint = getResources().getString(R.string.webServiceEndPoint);
+    }
     /**
      * 
      */
@@ -154,5 +185,166 @@ public class RouteMap extends MapActivity {
 				//TODO: Add points for intermediate locations here
 			}
 		}
+	}
+	
+	private class CheckinHandler implements OnClickListener{
+
+		public void onClick(View v) {
+			try{
+				LocationP checkinpoint = runPoints.get(runPoints.size() - 1);
+				//Query webservice and fetch result and display in list. Then allow checkin
+				String latLng =   checkinpoint.getLatitude() + "," + checkinpoint.getLongtitude();
+				//get foursquare url 
+				String webServiceEndPoint = getResources().getString(R.string.webServiceEndPoint);
+				FourSquareThread fsq = new FourSquareThread(latLng, FourSquareThread.GET_PLACES,RouteMap.this, "contacting foursquare ...");
+				fsq.execute(new String[]{webServiceEndPoint});				
+				
+			}catch(IndexOutOfBoundsException ex){
+				Toast.makeText(RouteMap.this,"No available workout data",Toast.LENGTH_SHORT).show();
+			}
+			
+		}
+		
+	}
+	
+	public void handleResponse (String response){
+		//TODO: method stub -- handle json data returned.
+	}
+	
+	private class FourSquareThread extends AsyncTask<String, Integer, String>{
+
+		public static final int POST_CHECKIN = 1;
+		public static final int GET_PLACES = 2;
+		
+		private static final  String TAG = "FourSquareThread";
+		//connection time out
+		private static final int CONN_TIMEOUT = 3000;
+		
+		//socket timeout 
+		private static final int SOCKET_TIMEOUT = 5000;
+		
+		
+		private ProgressDialog pDlg = null;
+		private Context mContext = null;
+		private String processMessage = "processing ...";
+		private String latLng = "";
+		private int taskType = GET_PLACES;
+		
+		
+		
+		
+		
+		public FourSquareThread(String latLng,int taskType, Context mContext,
+				String processMessage) {
+			super();
+			this.latLng = latLng;
+			this.mContext = mContext;
+			this.processMessage = processMessage;
+		}
+		
+		private void showProgressDialog(){
+			pDlg = new ProgressDialog(mContext);
+			pDlg.setMessage(processMessage);
+			pDlg.setProgressDrawable(WallpaperManager.getInstance(mContext).getDrawable());
+			pDlg.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+			pDlg.setCancelable(false);
+			pDlg.show();
+		}
+
+
+
+
+		@Override
+		protected String doInBackground(String... params) {
+			String result = "";
+			String url = params[0];
+			
+			HttpResponse response = doResponse(url);
+			if(response == null)
+				return result;
+			try{
+				
+				result = inputStreamToString(response.getEntity().getContent());
+				
+			}catch (IllegalStateException ex){
+				Log.e(TAG, ex.getLocalizedMessage());
+			}catch (IOException ex) {
+				Log.e(TAG, ex.getLocalizedMessage());
+			}
+			
+			
+			return result;
+		}
+		
+		 private String inputStreamToString(InputStream is) {
+			 
+	            String line = "";
+	            StringBuilder total = new StringBuilder();
+	 
+	            // Wrap a BufferedReader around the InputStream
+	            BufferedReader rd = new BufferedReader(new InputStreamReader(is));
+	 
+	            try {
+	                // Read response until the end
+	                while ((line = rd.readLine()) != null) {
+	                    total.append(line);
+	                }
+	            } catch (IOException e) {
+	                Log.e(TAG, e.getLocalizedMessage(), e);
+	            }
+	 
+	            // Return full string
+	            return total.toString();
+	        }
+	 
+		
+		@Override
+		protected void onPreExecute() {
+			super.onPreExecute();
+			showProgressDialog();
+		}
+		@Override
+		protected void onPostExecute(String result) {
+			// TODO Auto-generated method stub
+			super.onPostExecute(result);
+			handleResponse(result);
+			pDlg.dismiss();
+		}
+		
+		private  HttpResponse doResponse (String url){
+					
+			
+			//configure connection parameters ..connection timeouts
+			HttpParams httpp = new BasicHttpParams();			
+			HttpConnectionParams.setConnectionTimeout(httpp,CONN_TIMEOUT);
+			HttpConnectionParams.setSoTimeout(httpp, SOCKET_TIMEOUT);
+			
+			HttpClient httpClient = AndroidHttpClient.newInstance("dashmobileapp");
+			HttpResponse httpResponse = null;
+			try{
+			switch(taskType){
+			//fetch locations by the ll
+			case GET_PLACES:
+				url += getResources().getString(R.string.getVenues);
+				//set lat and lng 
+				url += "/"+latLng.substring(0, latLng.lastIndexOf(','))+"/"+ latLng.substring(latLng.lastIndexOf(',')+1,latLng.length());
+				url += +15;
+				HttpGet httpGet = new HttpGet(url);
+				httpResponse = httpClient.execute(httpGet);				
+				break;
+			//post checkin data to server
+			case POST_CHECKIN:
+					
+				break;
+			}
+			}catch(ClientProtocolException ex){
+				Log.e(TAG, ex.getLocalizedMessage());
+			}catch(IOException ex){
+				Log.e(TAG, ex.getLocalizedMessage());
+			}
+			return httpResponse;
+			
+		}
+		
 	}
 }
