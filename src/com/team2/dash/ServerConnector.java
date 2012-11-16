@@ -26,10 +26,11 @@ import android.util.Log;
  * This should theortically support CodeIgniter, but it's untested currently
  */	
 
-public class ServerConnector 
+public class ServerConnector
 {
 	//Current website URL
-	public static final String ServerURL = "http://192.168.0.4/WebServer/PHP";	
+	private static final String ServerURL = "http://ec2-54-242-181-128.compute-1.amazonaws.com";	
+	private String responseString;
 	
 	/*
 	 * This is the method that we will call to send, then receive data.
@@ -39,20 +40,20 @@ public class ServerConnector
 	 *@webPage = Page for data to be sent to
 	 *@useCodeIgniter = Are we using CodeIgniter or Simple PHP?
 	 */	
-	public JSONObject ConnectAndSendHTML(String[][] vars, String webPage, boolean useCodeIgniter)
-	{
-		//use Code Igniter (just using URL) in PHP... this method doesn't (yet) support POST, but can do
+	public ServerConnector (String[][] vars, String webPage, boolean useCodeIgniter)
+	{			
 		if(useCodeIgniter == true) 
 		{
-			return ConnectAndSendUsingCodeIgniter(vars, webPage);
+			ConnectAndSendUsingCodeIgniter(vars, webPage);
 		}
 		//Use PHP's native POST / GET rather than a framework
 		else 
 		{
-			return ConnectAndSendSimplePHP(vars, webPage);
-		}
-	}
+			ConnectAndSendSimplePHP(vars, webPage);
+		}		
+	}	
 	
+
 	/*
 	 * This will build a codeigniter url (as it takes GET variables differently to simple PHP) and then call that URL
 	 * PHP files should always return some form of a response, even if it's just json_decode(Array("success" => false));
@@ -60,10 +61,10 @@ public class ServerConnector
 	 *@vars = Data to sent via URL in CodeIgniter (only uses vars[i][1])
 	 *@webPage = Page for data to be sent to
 	 */
-	private JSONObject ConnectAndSendUsingCodeIgniter(String[][] vars, String webPage)
+	private void ConnectAndSendUsingCodeIgniter(String[][] vars, String webPage)
 	{
 		String temp = null;	
-    	HttpClient httpclient = new DefaultHttpClient();
+		HttpClient httpclient = new DefaultHttpClient();
     	String newURL = "";
 		
     	//Lets build our code igniter URL here
@@ -86,12 +87,13 @@ public class ServerConnector
 
     	    if(entity != null)
     	    {	
-    	    	JSONObject CIResults = new JSONObject(temp);
-        	    return CIResults;
+    	    	//JSONObject CIResults = new JSONObject(temp);
+        	    //return CIResults;
+    	    	responseString = temp;
     	    } 
     	    else 
     	    {
-    	    	return null;    	    	
+    	    	return;    	    	
     	    }
     	
     	} 
@@ -99,25 +101,19 @@ public class ServerConnector
     	{ 
     		e.printStackTrace(); 
     		Log.v("Error", "SC ClientProtocol " + e.getMessage()); 
-    		return null; 
+    		return; 
     	}    	
     	catch (IOException e) 
     	{ 
     		e.printStackTrace(); 
     		Log.v("Error", "SC IOException " + e.getMessage());     		
-    		return null;
+    		return;
     	} 
-    	catch (JSONException e) 
-    	{
-			e.printStackTrace(); 
-			Log.v("Error", "SC JSONException " + e.getMessage());    			
-			return null;
-    	}
     	catch (Exception e) 
     	{ 
     		e.printStackTrace(); 
     		Log.v("Error", "SC Exception " + e.getMessage());        		
-    		return null;
+    		return;
     	}  
 	}
 	
@@ -128,7 +124,7 @@ public class ServerConnector
 	 *@vars = Data to sent via URL in CodeIgniter (only uses vars[i][1])
 	 *@webPage = Page for data to be sent to
 	 */	
-	private JSONObject ConnectAndSendSimplePHP(String[][] vars, String webPage)
+	private void ConnectAndSendSimplePHP(String[][] vars, String webPage)
 	{	
 		String temp = null;	
     	HttpClient httpclient = new DefaultHttpClient();
@@ -153,12 +149,14 @@ public class ServerConnector
 
     	    if(entity != null)
     	    {	
-    	    	JSONObject SimpleResults = new JSONObject(temp);
-        	    return SimpleResults;
+    	    	//JSONObject SimpleResults = new JSONObject(temp);
+        	    //return SimpleResults;
+    	    	responseString = temp;    	    	
     	    } 
     	    else 
     	    {
-    	    	return null;    	    	
+    	    	responseString = null;
+    	    	return;    	    	
     	    }
     	
     	} 
@@ -166,25 +164,38 @@ public class ServerConnector
     	{ 
     		e.printStackTrace(); 
     		Log.v("Error", "SC ClientProtocol " + e.getMessage()); 
-    		return null; 
+    		return; 
     	}    	
     	catch (IOException e) 
     	{ 
     		e.printStackTrace(); 
     		Log.v("Error", "SC IOException " + e.getMessage());     		
-    		return null;
+    		return;
     	} 
-    	catch (JSONException e) 
-    	{
-			e.printStackTrace(); 
-			Log.v("Error", "SC JSONException " + e.getMessage());    			
-			return null;
-    	}
     	catch (Exception e) 
     	{ 
     		e.printStackTrace(); 
     		Log.v("Error", "SC Exception " + e.getMessage());        		
-    		return null;
+    		return;
     	}     	
-	}	
+	}
+	
+	public JSONObject ConvertStringToObject(String response)
+	{
+		if(response == null)
+		{
+			response = responseString;
+		}
+		try
+		{
+	    	JSONObject SimpleResults = new JSONObject(response);
+    	    return SimpleResults;				
+		}
+		catch (JSONException e)
+		{
+    		e.printStackTrace(); 
+    		Log.v("Error", "SC JSONException " + e.getMessage());   
+		}
+		return null;
+	}
 }

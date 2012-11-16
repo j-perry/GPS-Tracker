@@ -1,8 +1,5 @@
 package com.team2.dash;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import com.team2.dash.R;
 import com.team2.dash.entity.*;
 
@@ -312,54 +309,9 @@ public class TestActivity extends Activity implements LocationListener
     }  
     
     public void onResetClick(View view)
-    {
-    	//stopChrono = false;
-    	
-// ================================================
-    	//workout = null;
-// ================================================
-    	ServerConnector sc = new ServerConnector();
-    	//String[][] vars = new String[7][2];
-    	String[][] vars = new String[1][2];
-    	vars[0][0] = "test";
-    	vars[0][1] = "C93gNIbIRr8lzdYjjiw0";
-    	//vars[1][0] = "u";
-    	//vars[1][1] = "C93gNIbIRr8lzdYjjiw0";
-    	//vars[2][0] = "p";
-    	//vars[2][1] = "C93gNIbIRr8lzdYjjiw0";
-    	//vars[3][0] = "f";
-    	//vars[3][1] = "C93gNIbIRr8lzdYjjiw0";
-    	//vars[4][0] = "s";
-    	//vars[4][1] = "C93gNIbIRr8lzdYjjiw0";
-    	//vars[5][0] = "e";
-    	//vars[5][1] = "C93gNIbIRr8lzdYjjiw0";    	
-    	//vars[6][0] = "a";
-    	//vars[6][1] = "addRunner";       	
-    	//String webPage = "AddRunner.php";
-    	String webPage = "GetUserId.php?user_id=1";
-    	
-    	try
-    	{
-    		JSONObject j1 = sc.ConnectAndSendHTML(vars, webPage, false);
-    	
-	    	if (j1 == null)
-	    	{
-	    		((TextView)findViewById(R.id.chronoTimer)).setText("Something went wrong with the server");
-	    	} 
-	    	else 
-	    	{
-		    	String quoteText = j1.getString("success");
-		    	String quoteAuthor = j1.getString("result");
-		    	String quoteAuthor2 = j1.getString("result2");
-		    	
-		    	((TextView)findViewById(R.id.chronoTimer)).setText(quoteText + " - " + quoteAuthor + " - " + quoteAuthor2);
-	    	}
-    	}      	
-	    catch (JSONException e)
-	    {
-			e.printStackTrace(); 
-			Log.v("Error", "JSONException " + e.getMessage());    			
-			return;
-	    }
+    {   
+       Intent intent = new Intent(this, CheckIn.class);
+       //intent.putExtra("activeUserID", activeUser.getID());        
+       startActivity(intent);
     }    
 }
