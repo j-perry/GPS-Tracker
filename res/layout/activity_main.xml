@@ -1,7 +1,9 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent"
+    android:background="#E2E2E2" >
+    <!-- 3C9F -->
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -12,44 +14,114 @@
         android:layout_alignParentTop="true"
         android:orientation="vertical" >
 
-        <TextView
-            android:id="@+id/textView1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:text="TextView" />
-
+	    <!-- 'New Run' button -->
+	    <Button
+	        android:id="@+id/new_run_btn"
+	        android:layout_width="match_parent"
+	        android:layout_height="50dp"
+	        android:layout_marginBottom="0dp"
+	        android:layout_marginLeft="15dp"
+	        android:layout_marginRight="15dp"
+	        android:layout_marginTop="15dp"
+	        android:onClick="onClick"
+	        android:background="#3CF"
+	        android:paddingLeft="15dp"
+	        android:paddingRight="15dp"
+	        android:text="@string/new run"
+	        android:textColor="#FFF"
+	        android:typeface="sans"
+	        android:textAllCaps="true"
+	        android:textSize="18dp" />
+	
+		<!-- 'Previous Runs' button -->
+	    <Button
+	        android:id="@+id/previous_runs_btn"
+	        android:layout_width="match_parent"
+	        android:layout_height="50dp"
+	        android:layout_marginLeft="15dp"
+	        android:layout_marginRight="15dp"
+	        android:layout_marginTop="10dp"
+	        android:layout_marginBottom="0dp"
+	        android:onClick="onClick"
+	        android:background="#3CF"
+	        android:text="@string/previous runs"
+	        android:textColor="#FFF"
+	        android:typeface="sans"
+	        android:textAllCaps="true"
+	        android:textSize="18dp" />
+        
+        
         <Button
             android:id="@+id/button1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
             android:layout_gravity="center_horizontal"
+            android:layout_height="50dp"
+	        android:layout_marginBottom="0dp"
+	        android:layout_marginLeft="15dp"
+	        android:layout_marginRight="15dp"
+	        android:layout_marginTop="10dp"
+	        android:background="#3CF"
+	        android:paddingLeft="15dp"
+	        android:paddingRight="15dp"
             android:onClick="onNewWorkoutClick"
-            android:text="Start new workout" />
+            android:text="@string/start new workout"
+            android:textColor="#FFF"
+	        android:typeface="sans"
+	        android:textSize="18dp" />
 
         <Button
             android:id="@+id/button2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
             android:layout_gravity="center_horizontal"
+            android:layout_height="50dp"
+	        android:layout_marginBottom="0dp"
+	        android:layout_marginLeft="15dp"
+	        android:layout_marginRight="15dp"
+	        android:layout_marginTop="10dp"
+	        android:background="#3CF"
+	        android:paddingLeft="15dp"
+	        android:paddingRight="15dp"
             android:onClick="onWorkoutClick"
-            android:text="Saved workouts" />
+            android:text="@string/saved workouts"
+            android:textColor="#FFF"
+	        android:typeface="sans"
+	        android:textSize="18dp" />
 
         <Button
             android:id="@+id/button3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
             android:layout_gravity="center_horizontal"
+            android:layout_height="50dp"
+	        android:layout_marginBottom="0dp"
+	        android:layout_marginLeft="15dp"
+	        android:layout_marginRight="15dp"
+	        android:layout_marginTop="10dp"
+	        android:background="#3CF"
+	        android:paddingLeft="15dp"
+	        android:paddingRight="15dp"
             android:onClick="onUserClick"
-            android:text="Change default user" />
+            android:text="@string/change default user"
+            android:textColor="#FFF"
+	        android:typeface="sans"
+	        android:textSize="18dp" />
 
         <Button
             android:id="@+id/button4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
             android:layout_gravity="center_horizontal"
+            android:layout_height="50dp"
+	        android:layout_marginBottom="0dp"
+	        android:layout_marginLeft="15dp"
+	        android:layout_marginRight="15dp"
+	        android:layout_marginTop="10dp"
+	        android:background="#3CF"
+	        android:paddingLeft="15dp"
+	        android:paddingRight="15dp"
             android:onClick="onTestClick"
-            android:text="Test Area" />
+            android:text="@string/Test Area"
+            android:textColor="#FFF"
+	        android:typeface="sans"
+	        android:textSize="18dp" />
 
     </LinearLayout>
 

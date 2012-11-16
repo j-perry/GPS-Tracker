@@ -2,11 +2,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#E2E2E2"
     android:orientation="vertical"  >
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="52dp" android:layout_marginTop="10px" >
+        android:layout_height="52dp" 
+        android:layout_marginTop="10dp" >
 
         <TextView
             android:id="@+id/textView1"
@@ -14,6 +16,10 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
+        	android:layout_marginLeft="10dp"
+        	android:layout_marginRight="10dp"
+        	android:textColor="#222"
+        	android:textSize="18dp"
             android:text="Distance Covered" />
 
         <TextView
@@ -21,8 +27,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
-            android:layout_marginLeft="24dp"
+        	android:layout_marginLeft="10dp"
+        	android:layout_marginRight="10dp"
             android:layout_toRightOf="@+id/textView1"
+        	android:textColor="#222"
+        	android:textSize="18dp"
             android:text="0m" />
 
         <TextView
@@ -31,6 +40,10 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
+        	android:layout_marginLeft="10dp"
+        	android:layout_marginRight="10dp"
+        	android:textColor="#222"
+        	android:textSize="18dp"
             android:text="Race Time" />
 
         <TextView
@@ -40,27 +53,40 @@
             android:layout_alignBaseline="@+id/textView2"
             android:layout_alignBottom="@+id/textView2"
             android:layout_alignLeft="@+id/lblDistanceCovered"
+            android:layout_marginLeft="0dp"
+        	android:layout_marginRight="10dp"
+        	android:textColor="#222"
+        	android:textSize="18dp"
             android:text="0:00s" />
 
     </RelativeLayout>
-        <com.google.android.maps.MapView
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/mapview"
-        android:layout_width="fill_parent"
-        android:layout_height="480px"
-        android:layout_marginLeft="14px"
-        android:layout_marginRight="14px"
-        android:layout_marginTop="50px"
-        android:apiKey="0ebjO8jIeeuJmkaqSnOOfbXKFSR3_pz_m1x7RAQ"
-        android:clickable="true" >
+    
+		<!-- Google Maps - Map View -->
+	    <com.google.android.maps.MapView
+	        xmlns:android="http://schemas.android.com/apk/res/android"
+	        android:id="@+id/mapview"
+	        android:layout_width="fill_parent"
+	        android:layout_height="360dp"
+	        android:layout_marginLeft="10dp"
+	        android:layout_marginRight="10dp"
+	        android:layout_marginTop="0dp"
+	        android:apiKey="0ebjO8jIeeuJmkaqSnOOfbXKFSR3_pz_m1x7RAQ"
+	        android:clickable="true" >
+	        
+	    </com.google.android.maps.MapView>
+	
+	    <Button
+	        android:id="@+id/btnCheckin"
+	        android:background="#3CF"
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_marginTop="5dp"
+	        android:layout_marginLeft="10dp"
+	        android:layout_marginRight="10dp"
+	        android:paddingTop="10dp"
+	        android:paddingBottom="10dp"
+	        android:text="@string/Check-in"
+	        android:textSize="18dp"
+	        android:textColor="#FFF" />        
         
-    </com.google.android.maps.MapView>
-
-    <Button
-        android:id="@+id/btnCheckin"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="3px"
-        android:text="@string/checkin" />
-
 </LinearLayout>

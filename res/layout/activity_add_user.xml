@@ -1,8 +1,10 @@
+
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    >
+    android:background="#E2E2E2">
+    <!-- #39F -->
 
     <LinearLayout
         android:id="@+id/linearLayout1"
@@ -10,25 +12,35 @@
         android:layout_height="wrap_content" 
         android:orientation="vertical" >
         
+        <!-- Please Enter -->
         <TextView
         	android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
+            android:layout_margin="10dp"
             android:text="@string/please_enter"
+            android:textSize="14dp"
+            android:textColor="#3CF"
+            android:textStyle="bold"
+			android:textAllCaps="false"
             tools:context=".AddUserActivity" />
 
         <EditText
             android:id="@+id/edit_fname"
         	android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="5dp"
             android:singleLine="true"
+            android:textColorHint="#CCC"
             android:hint="@string/edit_fname" />
 
         <EditText
             android:id="@+id/edit_sname"
         	android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="5dp"
             android:singleLine="true"
+            android:textColorHint="#3CF"
             android:hint="@string/edit_sname" />
 
         <EditText
@@ -36,7 +48,9 @@
             android:inputType="textEmailAddress"
         	android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="5dp"
             android:singleLine="true"
+            android:textColorHint="#3CF"
             android:hint="@string/edit_email" />
 
         <EditText
@@ -44,7 +58,9 @@
             android:inputType="numberDecimal"
         	android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="5dp"
             android:singleLine="true"
+            android:textColorHint="#3CF"
             android:hint="@string/edit_age" />
 
         <EditText
@@ -52,7 +68,9 @@
             android:inputType="numberDecimal"
         	android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="5dp"
             android:singleLine="true"
+            android:textColorHint="#3CF"
             android:hint="@string/edit_weight" />
 
         <EditText
@@ -60,7 +78,9 @@
             android:inputType="numberDecimal"
         	android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="5dp"
             android:singleLine="true"
+            android:textColorHint="#3CF"
             android:hint="@string/edit_height" />
     </LinearLayout>
 
@@ -70,21 +90,38 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/linearLayout1"
-        android:orientation="horizontal" >
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:orientation="horizontal"
+        android:gravity="center_horizontal" >
 
+        <!-- 'Add User' button -->
         <Button
             android:id="@+id/add"
-            android:layout_width="wrap_content"
+            android:layout_width="150dp"
             android:layout_height="wrap_content"
+            android:padding="15dp"
+			android:layout_marginRight="2dp"
+            android:background="#3CF"
             android:onClick="onClick"
-            android:text="@string/add_user" />
+            android:text="@string/add_user"
+            android:textSize="14dp"
+            android:textAllCaps="true"
+            android:textColor="#FFF" />
 
+        <!-- 'Cancel' button -->
         <Button
             android:id="@+id/cancel"
-            android:layout_width="wrap_content"
+            android:layout_width="150dp"
             android:layout_height="wrap_content"
+            android:padding="15dp"
+            android:background="#3CF"
             android:onClick="onClick"
-            android:text="@string/cancel" />
+            android:text="@string/cancel"
+            android:textSize="14dp"
+            android:textAllCaps="true"
+            android:textColor="#FFF" />
     </LinearLayout>
     
 </RelativeLayout>
