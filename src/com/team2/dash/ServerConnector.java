@@ -23,7 +23,7 @@ import android.util.Log;
  * This class has sends html off to the server specified in ServerURL to have something done with it
  * An example call to this could be:
  * JSONObject j1 = sc.ConnectAndSendHTML(null, "GetTime.php?TimeZone=England, false); 
- * This should theortically support CodeIgniter, but it's untested currently
+ * This should theoretically support CodeIgniter, but it's untested currently
  */	
 
 public class ServerConnector 

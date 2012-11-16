@@ -16,7 +16,6 @@ import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.location.Criteria;
@@ -27,24 +26,27 @@ import android.location.LocationManager;
 
 public class TrackerActivity  extends Activity implements LocationListener {
 
-	private LocationManager locationManager = null;
-	private Location location;
-	private Handler handleTimer, handleChrono;
-	private long startTime, elapsedTime;
-	private boolean stopChrono = false;
-	private boolean terminateCount = false;
-	private int runTimerCount = 0;
-	String	currentTime, provider;
-    int		activeUserID;
-    GeoPoint	gp1, gp2;
+	/**
+	 * Private members
+	 */
+	private LocationManager 	locationManager = null;
+	private Location 			location;
+	private Handler 			handleTimer, handleChrono;
+	private long 				startTime, elapsedTime;
+	private boolean 			stopChrono = false;
+	private boolean 			terminateCount = false;
+	private int 				runTimerCount = 0;
+	String						currentTime, provider;
+    int							activeUserID;
+    GeoPoint					gp1, gp2;
 
-	private	Workout		workout = null; // active workout, null if not in use
-    DatabaseHandler 	db;
+	private	Workout				workout = null; // active workout, null if not in use
+    private DatabaseHandler 	db;
 
-	double 		latitude;
-	double 		longitude;
-	double 		altitude;
-	double 		distance;
+	private double		 		latitude;
+	private double 				longitude;
+	private double 				altitude;
+	private double 				distance;
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -53,12 +55,14 @@ public class TrackerActivity  extends Activity implements LocationListener {
 
         db = new DatabaseHandler(this);
 
-        ProgressBar progressBar = (ProgressBar) findViewById(R.id.progressBar1);
-        progressBar.setVisibility(ProgressBar.INVISIBLE);
+        // NO LONGER EXISTS
+        //ProgressBar progressBar = (ProgressBar) findViewById(R.id.progressBar1);
+        //progressBar.setVisibility(ProgressBar.INVISIBLE);
 
         Bundle extras = getIntent().getExtras();
-        if (extras != null)
+        if (extras != null) {
         	activeUserID = extras.getInt("activeUserID");
+        }
         else
         {
         	User user = db.getActiveUser();
@@ -312,8 +316,10 @@ public class TrackerActivity  extends Activity implements LocationListener {
      	}
      	handleChrono.removeCallbacks(startTimer);
      	handleChrono.postDelayed(startTimer, 0);
-        ProgressBar progressBar = (ProgressBar) findViewById(R.id.progressBar1);
-        progressBar.setVisibility(ProgressBar.VISIBLE);
+     	
+     	// CONTROL DOESN'T EXIST
+        //ProgressBar progressBar = (ProgressBar) findViewById(R.id.progressBar1);
+        //progressBar.setVisibility(ProgressBar.VISIBLE);
      	
      	
      }

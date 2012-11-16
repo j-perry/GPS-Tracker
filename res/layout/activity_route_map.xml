@@ -85,7 +85,7 @@
 	        android:layout_marginRight="10dp"
 	        android:paddingTop="10dp"
 	        android:paddingBottom="10dp"
-	        android:text="@string/Check-in"
+	        android:text="@string/check_in"
 	        android:textSize="18dp"
 	        android:textColor="#FFF" />        
         

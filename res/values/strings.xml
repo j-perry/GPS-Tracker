@@ -22,7 +22,7 @@
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_tracker">Tracker</string>
     <string name="checkinbtn">Checkin</string>
-    <string name="checkin">Checkin</string>
+    <string name="check">check</string>
     <string name="webServiceEndPoint">http://ec2-54-242-181-128.compute-1.amazonaws.com/dashwebsvc/dashwebsvc/index.php</string>
     <string name = "getVenues">/LocationSearch/index</string>
 
