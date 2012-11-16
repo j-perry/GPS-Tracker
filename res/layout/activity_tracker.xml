@@ -1,161 +1,74 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#E2E2E2"
-    android:orientation="vertical" >
+    android:layout_height="match_parent" >
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="7"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
-        android:layout_marginTop="60dp"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
         android:orientation="vertical" >
 
-        
-        
-        <!-- 'Workout Time' -->
-        <!--  Display format:
-        	  
-        	  e.g., 15:52 mins
-         -->
         <TextView
-            android:id="@+id/textView3"
-            android:layout_width="wrap_content"
+            android:id="@+id/textGPS"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
-            android:layout_marginBottom="25dp"
-            android:layout_gravity="center_horizontal"
-            android:text="@string/run_duration"
-            android:textColor="#222"
-            android:textSize="48dp"
-            android:textStyle="bold"
+            android:text="GPS"
             android:textAppearance="?android:attr/textAppearanceLarge" />
-        
-        
-        
-        <!-- Actual 'Time' -->
-        <!-- Current time:
-        
-        	e.g., 21:19PM
-         -->
-        <TextView
-            android:id="@+id/textView2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="25dp"
-            android:layout_gravity="center_horizontal"
-            android:text="@string/run_clock_time"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textColor="#222"
-            android:textSize="24dp"
-            android:textStyle="bold" />
 
-        
-        
-        <!-- 'Distance' -->
-        <!-- Milage:
-        
-        	e.g., 1.56 miles
-         -->
         <TextView
-            android:id="@+id/textView4"
+            android:id="@+id/textTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="25dp"
-            android:layout_gravity="center_horizontal"
-            android:text="@string/run_distance"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textColor="#222"
-            android:textSize="24dp"
-            android:textStyle="bold" />
-        
-        
-        
-        <!-- 'GPS' -->
-        <!-- Current co-ordinate
-        
-        	e.g., University of Sussex, Falmer (or there abouts in that format)
-         -->
-        <TextView
-            android:id="@+id/textView1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="35dp"
-            android:layout_gravity="center_horizontal"
-            android:text="@string/run_gps"
-            android:textColor="#222"
-            android:textSize="24dp"
-            android:textStyle="bold"
-            android:gravity="top"
+            android:text="Actual Time"
             android:textAppearance="?android:attr/textAppearanceLarge" />
-                
-    </LinearLayout>
 
-    <!-- Buttons! -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"        
-        android:layout_margin="15dp"
-        android:orientation="horizontal" >
+        <TextView
+            android:id="@+id/textWorkoutTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Workout Time"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
 
-        <!-- Start button -->
+        <TextView
+            android:id="@+id/textDistance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Distance"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+        <ProgressBar
+            android:id="@+id/progressBar1"
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal" />
+
         <Button
             android:id="@+id/button1"
-            android:background="#3CF"
-            android:layout_width="140dp"
-            android:layout_height="50dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:paddingLeft="5dp"
-            android:paddingRight="5dp" 
-            android:paddingTop="5dp" 
-            android:paddingBottom="5dp"
-            android:layout_marginLeft="2dp"
             android:onClick="onStartClick"
-            android:text="@string/Start"
-            android:textSize="18dp"
-            android:textColor="#FFF" />
+            android:text="START" />
 
-        <!-- Stop button -->
         <Button
             android:id="@+id/button2"
-            android:background="#3CF"
-            android:layout_width="140dp"
-            android:layout_height="50dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:paddingLeft="5dp"
-            android:paddingRight="5dp" 
-            android:paddingTop="5dp" 
-            android:paddingBottom="5dp"
-            android:layout_marginLeft="2dp"
             android:onClick="onStopClick"
-            android:text="@string/Stop"
-            android:textSize="18dp"
-            android:textColor="#FFF" />
+            android:text="PAUSE" />
 
-        
-        <!-- Pause button -->
         <Button
-            android:id="@+id/pauseBtn"
-            android:background="#3CF"
-            android:layout_width="140dp"
-            android:layout_height="50dp"
+            android:id="@+id/button3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:paddingLeft="5dp"
-            android:paddingRight="5dp" 
-            android:paddingTop="5dp" 
-            android:paddingBottom="5dp"
-            android:layout_marginLeft="2dp"
-            android:onClick="onStartClick"
-            android:text="@string/pause"
-            android:textSize="18dp"
-            android:textAllCaps="true"
-            android:textColor="#FFF" />
+            android:onClick="onResetClick"
+            android:text="END" />
 
-        -->
-        
     </LinearLayout>
-</LinearLayout>
+
+</RelativeLayout>

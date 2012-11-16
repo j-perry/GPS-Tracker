@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="new run">new run</string>
-    <string name="previous runs">previous runs</string>
-    <string name="start new workout">start new workout</string>
-    <string name="saved workouts">saved workouts</string>
-    <string name="change default user">change default user</string>
-    <string name="Test Area">Test Area</string>
-</resources>
