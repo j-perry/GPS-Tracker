@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="new_run">new_run</string>
-    <string name="previous_runs">previous_runs</string>
-    <string name="start_new_workout">start_new_workout</string>
-    <string name="saved_workouts">saved_workouts</string>
-    <string name="change_default_user">change_default_user</string>
-    <string name="test_area">test_area</string>
+    <string name="new run">new run</string>
+    <string name="previous runs">previous runs</string>
+    <string name="start new workout">start new workout</string>
+    <string name="saved workouts">saved workouts</string>
+    <string name="change default user">change default user</string>
+    <string name="Test Area">Test Area</string>
 </resources>

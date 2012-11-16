@@ -27,7 +27,7 @@
 	        android:background="#3CF"
 	        android:paddingLeft="15dp"
 	        android:paddingRight="15dp"
-	        android:text="@string/new_run"
+	        android:text="@string/new run"
 	        android:textColor="#FFF"
 	        android:typeface="sans"
 	        android:textAllCaps="true"
@@ -44,7 +44,7 @@
 	        android:layout_marginBottom="0dp"
 	        android:onClick="onClick"
 	        android:background="#3CF"
-	        android:text="@string/previous_runs"
+	        android:text="@string/previous runs"
 	        android:textColor="#FFF"
 	        android:typeface="sans"
 	        android:textAllCaps="true"
@@ -64,7 +64,7 @@
 	        android:paddingLeft="15dp"
 	        android:paddingRight="15dp"
             android:onClick="onNewWorkoutClick"
-            android:text="@string/start_new_workout"
+            android:text="@string/start new workout"
             android:textColor="#FFF"
 	        android:typeface="sans"
 	        android:textSize="18dp" />
@@ -82,7 +82,7 @@
 	        android:paddingLeft="15dp"
 	        android:paddingRight="15dp"
             android:onClick="onWorkoutClick"
-            android:text="@string/saved_workouts"
+            android:text="@string/saved workouts"
             android:textColor="#FFF"
 	        android:typeface="sans"
 	        android:textSize="18dp" />
@@ -100,7 +100,7 @@
 	        android:paddingLeft="15dp"
 	        android:paddingRight="15dp"
             android:onClick="onUserClick"
-            android:text="@string/change_default_user"
+            android:text="@string/change default user"
             android:textColor="#FFF"
 	        android:typeface="sans"
 	        android:textSize="18dp" />
@@ -118,7 +118,7 @@
 	        android:paddingLeft="15dp"
 	        android:paddingRight="15dp"
             android:onClick="onTestClick"
-            android:text="@string/test_area"
+            android:text="@string/Test Area"
             android:textColor="#FFF"
 	        android:typeface="sans"
 	        android:textSize="18dp" />

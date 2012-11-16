@@ -36,11 +36,9 @@
                 android:value="com.google.android.maps.MapActivity" />
         </activity>
 
-        <!-- 
         <uses-library
             android:name="com.google.android.maps"
             android:required="true" />
-		 -->
 
         <activity
             android:name=".WorkoutActivity"

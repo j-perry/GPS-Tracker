@@ -45,12 +45,12 @@ public class RouteMap extends MapActivity {
 	/**
 	 * Private members
 	 */
-	private List<LocationP> 	runPoints;				// 
-	private MapView 			mapView;				// 
-    private DatabaseHandler 	db;						// 
-    private int					workoutID;				// 
-    private double  			distance = 0;			// 
-    private static String 		serviceEndPoint = "";	// 
+	private List<LocationP> 	runPoints;		// 
+	private MapView 			mapView;		// 
+    private DatabaseHandler 	db;				// 
+    private int					workoutID;		// 
+    private double  			distance = 0;	//
+    private static String serviceEndPoint = "";
 	
     /**
      * 

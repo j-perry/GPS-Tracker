@@ -22,7 +22,7 @@
         	  e.g., 15:52 mins
          -->
         <TextView
-            android:id="@+id/textWorkoutTime"
+            android:id="@+id/textView3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="50dp"
@@ -42,7 +42,7 @@
         	e.g., 21:19PM
          -->
         <TextView
-            android:id="@+id/textTime"
+            android:id="@+id/textView2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="25dp"
@@ -61,7 +61,7 @@
         	e.g., 1.56 miles
          -->
         <TextView
-            android:id="@+id/textDistance"
+            android:id="@+id/textView4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="25dp"
@@ -80,7 +80,7 @@
         	e.g., University of Sussex, Falmer (or there abouts in that format)
          -->
         <TextView
-            android:id="@+id/textGPS"
+            android:id="@+id/textView1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="35dp"
