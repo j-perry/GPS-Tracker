@@ -104,7 +104,7 @@ public class RouteMap extends MapActivity {
 
         mapView.getController().animateTo(new GeoPoint(  (int)((maxLat+minLat)*1E6/2), (int)((maxLong+minLong)*1E6/2) ));
        
-        displayMarkers(mapView, runPoints);
+        //displayMarkers(mapView, runPoints);
               
 		TextView t = (TextView)findViewById(R.id.lblDistanceCovered);
 		t.setText(Integer.toString((int)distance) + " m");
