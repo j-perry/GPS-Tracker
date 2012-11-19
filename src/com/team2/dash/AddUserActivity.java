@@ -1,10 +1,13 @@
 package com.team2.dash;
 
 
+import android.R.color;
 import android.app.Activity;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -43,7 +46,7 @@ public class AddUserActivity extends Activity {
         	User user = new User();
         	user.setID(0);
         	user.setActive(DatabaseHandler.USER_NON_ACTIVE);
-
+        	
         	EditText editText = (EditText) findViewById(R.id.edit_fname);
         	txt = editText.getText().toString();
         	
@@ -86,7 +89,7 @@ public class AddUserActivity extends Activity {
         	}
         	
         	user.setHeight(Integer.parseInt(txt));
-
+        	        	
         	DatabaseHandler db = new DatabaseHandler(this);
         	db.addUser(user);
         	break;

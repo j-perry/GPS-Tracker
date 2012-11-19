@@ -1,36 +1,66 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical"
+    android:background="#EEE" >
 
+    <!-- Users -->
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="400dp"
+        android:layout_margin="5dp" >
+        
+	    <ListView
+			android:id="@android:id/list"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content">
+	         
+	        <!-- 
+	        android:layout_alignParentLeft="true"
+	        android:layout_below="@+id/linearLayout1"
+	         -->
+	
+	    </ListView>
+	
+	</LinearLayout>
+    
+    <!-- Buttons -->
     <LinearLayout
         android:id="@+id/linearLayout1"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp" >
 
         <Button
             android:id="@+id/add"
-            android:layout_width="wrap_content"
+            android:background="#3CF"
+            android:layout_width="153dp"
             android:layout_height="wrap_content"
+            android:padding="15dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="2dp"
             android:onClick="onClick"
+            android:textColor="#FFF"
             android:text="New User" />
 
         <Button
             android:id="@+id/cancel"
-            android:layout_width="wrap_content"
+            android:background="#3CF"
+            android:layout_width="153dp"
             android:layout_height="wrap_content"
+            android:padding="15dp"
+            android:layout_marginTop="5dp"
             android:onClick="onClick"
+            android:textColor="#FFF"
             android:text="Cancel" />
         
     </LinearLayout>
-
-    <ListView
-		android:id="@android:id/list"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/linearLayout1" >
-
-    </ListView>
+</LinearLayout>
+<!-- 
+<RelativeLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content" >
 
 </RelativeLayout>
+ -->

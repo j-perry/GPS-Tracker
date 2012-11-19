@@ -1,41 +1,76 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#EEE" >
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
+        android:layout_height="0dp"
+        android:layout_weight="6"      
+        android:layout_marginTop="100dp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
         android:orientation="vertical" >
 
-        <TextView
-            android:id="@+id/textGPS"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="GPS"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
-
-        <TextView
-            android:id="@+id/textTime"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Actual Time"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
-
+        <!-- 
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+         -->
+        
+        
+        <!-- Workout Time -->
         <TextView
             android:id="@+id/textWorkoutTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
             android:text="Workout Time"
+            android:textColor="#222"
+            android:textStyle="bold"
+            android:textSize="32dp"
+            android:textAllCaps="true"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+        
+        <!-- Time -->
+        <TextView
+            android:id="@+id/textTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="Actual Time"
+            android:textColor="#222"
+            android:textStyle="bold"
+            android:textSize="32dp"
+            android:textAllCaps="true"
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
+        <!-- Distance -->
         <TextView
             android:id="@+id/textDistance"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Distance"
+            android:layout_gravity="center_horizontal"
+            android:text="0.0m"
+            android:textColor="#222"
+            android:textStyle="bold"
+            android:textSize="32dp"
+            android:textAllCaps="true"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+        
+        <!-- GPS -->
+        <TextView
+            android:id="@+id/textGPS"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="GPS"
+            android:textColor="#222"
+            android:textStyle="bold"
+            android:textSize="32dp"
+            android:textAllCaps="true"
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
         <ProgressBar
@@ -45,30 +80,86 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal" />
 
-        <Button
-            android:id="@+id/button1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:onClick="onStartClick"
-            android:text="START" />
-
-        <Button
-            android:id="@+id/button2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:onClick="onStopClick"
-            android:text="PAUSE" />
-
-        <Button
-            android:id="@+id/button3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:onClick="onResetClick"
-            android:text="END" />
+        
 
     </LinearLayout>
+    
+    <!-- Buttons -->
+    <LinearLayout 
+        android:layout_width="300dp"
+        android:layout_height="0dp"
+        android:layout_weight="2"
+        android:layout_margin="5dp"
+        android:orientation="horizontal">
+        
+        <!-- 
+        <ToggleButton 
+            android:id="@+id/resumeRun"
+            android:background="#3CF"
+            android:layout_width="75dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:layout_marginRight="2dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:onClick="onToggleClick"
+			android:textOn="Pause"
+			android:textOff="Resume"
+			android:textAllCaps="true"
+            android:textColor="#EEE"/>
+            -->
+        
+        <!-- Start -->
+        <Button
+            android:id="@+id/startRun"
+            android:background="#3CF"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:layout_marginRight="2dp"
+            android:gravity="center"
+            android:layout_gravity="left"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:onClick="onStartClick"
+            android:text="START"
+            android:textStyle="bold"
+            android:textColor="#EEE" />
 
-</RelativeLayout>
+        <!-- Pause -->
+        <Button
+            android:id="@+id/pauseRun"
+            android:background="#3CF"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:layout_marginRight="2dp"
+            android:gravity="center"
+            android:layout_gravity="left"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:onClick="onStopClick"
+            android:text="PAUSE"
+            android:textStyle="bold"
+            android:textColor="#EEE" />
+
+        <!-- End -->
+        <Button
+            android:id="@+id/endRun"
+            android:background="#3CF"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:gravity="center"
+            android:layout_gravity="left"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:onClick="onResetClick"
+            android:text="END"
+            android:textStyle="bold"
+            android:textColor="#EEE" />
+        
+        
+    </LinearLayout>
+
+</LinearLayout>

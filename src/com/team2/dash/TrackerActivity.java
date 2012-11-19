@@ -16,9 +16,11 @@ import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
@@ -53,8 +55,18 @@ public class TrackerActivity  extends Activity implements LocationListener {
 
         db = new DatabaseHandler(this);
 
+        // find the progress bar control by id
         ProgressBar progressBar = (ProgressBar) findViewById(R.id.progressBar1);
+        
+        // set the progress bar visibility off
         progressBar.setVisibility(ProgressBar.INVISIBLE);
+        
+        // find the pause button control by id
+        Button pauseRun = (Button) findViewById(R.id.pauseRun);
+        
+        // set the pause button visibility off
+        pauseRun.setVisibility(View.GONE);
+        
 
         Bundle extras = getIntent().getExtras();
         if (extras != null)
@@ -194,7 +206,7 @@ public class TrackerActivity  extends Activity implements LocationListener {
     	
     }        
         
-     private void CheckForGPSEnabled()
+    private void CheckForGPSEnabled()
     {    	
     	locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);    	
         boolean enabled = false;
@@ -312,27 +324,64 @@ public class TrackerActivity  extends Activity implements LocationListener {
      	}
      	handleChrono.removeCallbacks(startTimer);
      	handleChrono.postDelayed(startTimer, 0);
+     	
+     	// find the progress bar control
         ProgressBar progressBar = (ProgressBar) findViewById(R.id.progressBar1);
+        
+        // set the progress bar to visible
         progressBar.setVisibility(ProgressBar.VISIBLE);
      	
-     	
+     	// find the pauseRun control
+        Button pauseRun = (Button) findViewById(R.id.pauseRun);
+        
+        // set the pauseRun control to visible
+        pauseRun.setVisibility(Button.VISIBLE);
+        
+        // find the endRun control
+        Button endRun = (Button) findViewById(R.id.endRun);
+        
+        // set the endRun control to invisible
+        endRun.setVisibility(View.GONE);
      }
 
      public void onStopClick(View view)
      {       
-     	handleChrono.removeCallbacks(startTimer);
-     	stopChrono = true;
+    	 handleChrono.removeCallbacks(startTimer);
+    	 stopChrono = true;
+     	
+    	 // find the pauseRun control
+    	 Button pauseRun = (Button) findViewById(R.id.pauseRun);
+        
+    	 // set the pauseRun control to invisible
+    	 pauseRun.setVisibility(View.GONE);
+        
+    	 // find the endRun control
+    	 Button endRun = (Button) findViewById(R.id.endRun);
+        
+    	 // set the endRun control to visible
+    	 endRun.setVisibility(Button.VISIBLE);
      }  
      
-     public void onResetClick(View view)
+     public void onResetClick(View view) 
      {
-     	stopChrono = false;
-     	((TextView)findViewById(R.id.textWorkoutTime)).setText("No Timer");
+    	 stopChrono = false;
+    	 ((TextView)findViewById(R.id.textWorkoutTime)).setText("No Timer");
  // ================================================
-     	workout = null;
+    	 workout = null;
  // ================================================
 
      }    
         
-	
+     public void onToggleClick(View view) {
+    	 boolean on = ((ToggleButton) view).isChecked();
+    	 
+    	 // is on ('pause')
+    	 if(on) {
+    		 
+    	 }
+    	 // is off ('resume')
+    	 else {
+    		 
+    	 }
+     }
 }

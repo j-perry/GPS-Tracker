@@ -1,10 +1,13 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent"
+    android:background="#EEE" >
+    
+    
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
@@ -12,44 +15,87 @@
         android:layout_alignParentTop="true"
         android:orientation="vertical" >
 
+        <!-- Username  -->
         <TextView
             android:id="@+id/textView1"
+            android:background="#222"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:text="TextView" />
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:paddingLeft="5dp"
+            android:text="TextView"
+            android:textSize="14dp"
+            android:textColor="#FFF" />
 
         <Button
             android:id="@+id/button1"
-            android:layout_width="wrap_content"
+            android:background="#3CF"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:onClick="onNewWorkoutClick"
-            android:text="Start new workout" />
+            android:text="Start new workout"
+            android:textSize="18dp"
+            android:textColor="#EEE" />
 
         <Button
             android:id="@+id/button2"
-            android:layout_width="wrap_content"
+            android:background="#3CF"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
             android:onClick="onWorkoutClick"
-            android:text="Saved workouts" />
+            android:text="Saved workouts"
+            android:textSize="18dp"
+            android:textColor="#EEE" />
 
         <Button
             android:id="@+id/button3"
-            android:layout_width="wrap_content"
+            android:background="#3CF"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
             android:onClick="onUserClick"
-            android:text="Change default user" />
+            android:text="Change default user"
+            android:textSize="18dp"
+            android:textColor="#EEE" />
 
         <Button
             android:id="@+id/button4"
-            android:layout_width="wrap_content"
+            android:background="#3CF"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
             android:onClick="onTestClick"
-            android:text="Test Area" />
+            android:text="Test Area"
+            android:textSize="18dp"
+            android:textColor="#EEE" />
 
     </LinearLayout>
 

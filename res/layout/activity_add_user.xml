@@ -2,18 +2,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    >
+    android:background="#EEE" >
 
     <LinearLayout
         android:id="@+id/linearLayout1"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" 
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
         android:orientation="vertical" >
         
         <TextView
         	android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="5dp"
             android:text="@string/please_enter"
             tools:context=".AddUserActivity" />
 
@@ -22,6 +24,8 @@
         	android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:singleLine="true"
+            android:textColorHint="#CCC"
+            android:textColor="#222"
             android:hint="@string/edit_fname" />
 
         <EditText
@@ -29,6 +33,8 @@
         	android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:singleLine="true"
+            android:textColorHint="#CCC"
+            android:textColor="#222"
             android:hint="@string/edit_sname" />
 
         <EditText
@@ -37,6 +43,8 @@
         	android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:singleLine="true"
+            android:textColorHint="#CCC"
+            android:textColor="#222"
             android:hint="@string/edit_email" />
 
         <EditText
@@ -45,6 +53,8 @@
         	android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:singleLine="true"
+            android:textColorHint="#CCC"
+            android:textColor="#222"
             android:hint="@string/edit_age" />
 
         <EditText
@@ -53,6 +63,8 @@
         	android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:singleLine="true"
+            android:textColorHint="#CCC"
+            android:textColor="#222"
             android:hint="@string/edit_weight" />
 
         <EditText
@@ -61,6 +73,8 @@
         	android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:singleLine="true"
+            android:textColorHint="#CCC"
+            android:textColor="#222"
             android:hint="@string/edit_height" />
     </LinearLayout>
 
@@ -70,20 +84,34 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/linearLayout1"
+        android:layout_margin="8dp"
         android:orientation="horizontal" >
 
         <Button
             android:id="@+id/add"
-            android:layout_width="wrap_content"
+            android:background="#3CF"
+            android:gravity="center"
+            android:layout_width="150dp"
             android:layout_height="wrap_content"
+            android:layout_marginRight="2dp"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp"
             android:onClick="onClick"
+            android:textColor="#FFF"
+            android:textSize="14dp"
             android:text="@string/add_user" />
 
         <Button
             android:id="@+id/cancel"
-            android:layout_width="wrap_content"
+            android:background="#3CF"
+            android:gravity="center"
+            android:layout_width="150dp"
             android:layout_height="wrap_content"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp"
             android:onClick="onClick"
+            android:textColor="#FFF"
+            android:textSize="14dp"
             android:text="@string/cancel" />
     </LinearLayout>
     

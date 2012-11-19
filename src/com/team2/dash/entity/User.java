@@ -5,15 +5,15 @@ public class User {
 	/**
 	 *  Private Members 
 	 */
-	int		id;			// user ID - _id should be used for primary key in android
-	int 	active;		// there will be only one active user in the table when active = 1, otherways active = 0 
-	String	firstName;	// first name
-	String	secondName;	// second name
-	String	email;		// email
-	String  password; 	// password
-	int		age;		// age
-	int		weight;		// weight
-	int 	height;		// height
+	private int		id;			// user ID - _id should be used for primary key in android
+	private int 	active;		// there will be only one active user in the table when active = 1, otherways active = 0 
+	private String	firstName;	// first name
+	private String	secondName;	// second name
+	private String	email;		// email
+	private String  password; 	// password
+	private int		age;		// age
+	private int		weight;		// weight
+	private int 	height;		// height
 	
 	/**
 	 * 
