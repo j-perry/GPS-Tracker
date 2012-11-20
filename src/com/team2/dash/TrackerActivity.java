@@ -19,6 +19,7 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.Button;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
@@ -64,8 +65,17 @@ public class TrackerActivity  extends Activity implements LocationListener {
         	User user = db.getActiveUser();
         	activeUserID = user.getID();
         }
+        
+        Button button_start = (Button) findViewById(R.id.button1);
+        button_start.setEnabled(false);
+        Button button_end = (Button) findViewById(R.id.button2);
+        button_end.setEnabled(false);
+        Button button_restart = (Button) findViewById(R.id.button3);
+        button_restart.setEnabled(false);
 
         CheckForGPSEnabled();
+        
+        
 
         handleTimer = new Handler();
         handleTimer.removeCallbacks(runUpdateTimerTask);
@@ -98,8 +108,7 @@ public class TrackerActivity  extends Activity implements LocationListener {
 	public void onLocationChanged(Location location) {
     	latitude = location.getLatitude();
     	longitude = location.getLongitude();
-    	altitude = location.getAltitude();
-		
+    	altitude = location.getAltitude();		
 	}
 
 	public void onProviderDisabled(String provider) {
@@ -177,18 +186,27 @@ public class TrackerActivity  extends Activity implements LocationListener {
     	String		txt;
     	Criteria hdCrit = new Criteria();
     	hdCrit.setAccuracy(Criteria.ACCURACY_FINE);
-        provider = locationManager.getBestProvider(hdCrit, false);
+        provider = locationManager.getBestProvider(hdCrit, false);        
         location = locationManager.getLastKnownLocation(provider);
+        Button button_start = (Button) findViewById(R.id.button1);
+        Button button_end = (Button) findViewById(R.id.button2);
+        Button button_restart = (Button) findViewById(R.id.button3);        
         if (location != null) 
         {
 //          System.out.println("Provider " + provider + " has been selected.");
         	onLocationChanged(location);
-        	txt = "GPS working";
+        	txt = "GPS working";            
+            button_start.setEnabled(true);            
+            button_end.setEnabled(true);            
+            button_restart.setEnabled(true);                
         } 
         else 
         {
             txt = "Location not available";
-
+            button_start.setEnabled(false);            
+            button_end.setEnabled(false);            
+            button_restart.setEnabled(false);               
+            Toast.makeText(this, txt, Toast.LENGTH_LONG).show();
         }
      	((TextView)findViewById(R.id.textGPS)).setText(txt);
     	
