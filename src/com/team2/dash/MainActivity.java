@@ -5,6 +5,7 @@ import com.team2.dash.entity.User;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.View;
@@ -53,6 +54,12 @@ public class MainActivity extends Activity {
        TextView tv = (TextView)findViewById(R.id.textView1);
        tv.setText( "Welcome " + activeUser );
    }
+   
+   @Override
+protected void onDestroy() {
+	// TODO Auto-generated method stub
+	super.onDestroy();
+}
 
    /**
     * 
@@ -95,9 +102,17 @@ public class MainActivity extends Activity {
     * @param view
     */
    public void onNewWorkoutClick(View view) {
+	   try{
 	   Intent intent = new Intent(this, TrackerActivity.class);
        intent.putExtra("activeUserID", activeUser.getID());        
        startActivity(intent);
+	   }catch(NullPointerException exception){
+		   Toast.makeText(this, "No active user selected", Toast.LENGTH_LONG).show();
+		   Log.e(MainActivity.class.toString(), "Default user for runtime not selected-"+exception.getLocalizedMessage());
+	   }catch(Exception ex){
+		   Log.e(MainActivity.class.toString(),ex.getLocalizedMessage());
+	   }
+   
    }
 
    /**

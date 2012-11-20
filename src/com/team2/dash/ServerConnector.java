@@ -30,7 +30,7 @@ public class ServerConnector
 {
 	//Current website URL
 	private static final String ServerURL = "http://ec2-54-242-181-128.compute-1.amazonaws.com";	
-	private String responseString;
+	private static String  responseString;
 	
 	/*
 	 * This is the method that we will call to send, then receive data.
@@ -180,7 +180,7 @@ public class ServerConnector
     	}     	
 	}
 	
-	public JSONObject ConvertStringToObject(String response)
+	public static JSONObject ConvertStringToObject(String response)
 	{
 		if(response == null)
 		{

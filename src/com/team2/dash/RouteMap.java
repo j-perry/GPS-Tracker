@@ -14,15 +14,18 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.params.HttpParams;
+import org.apache.http.util.EntityUtils;
 
 import android.app.ProgressDialog;
 import android.app.WallpaperManager;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.net.http.AndroidHttpClient;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.renderscript.Int2;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
@@ -191,6 +194,7 @@ public class RouteMap extends MapActivity {
 
 		public void onClick(View v) {
 			try{
+				if(runPoints != null || runPoints.size() > 0){
 				LocationP checkinpoint = runPoints.get(runPoints.size() - 1);
 				//Query webservice and fetch result and display in list. Then allow checkin
 				String latLng =   checkinpoint.getLatitude() + "," + checkinpoint.getLongtitude();
@@ -198,7 +202,9 @@ public class RouteMap extends MapActivity {
 				String webServiceEndPoint = getResources().getString(R.string.webServiceEndPoint);
 				FourSquareThread fsq = new FourSquareThread(latLng, FourSquareThread.GET_PLACES,RouteMap.this, "contacting foursquare ...");
 				fsq.execute(new String[]{webServiceEndPoint});				
-				
+				}else{
+					Toast.makeText(RouteMap.this,"No available run points", Toast.LENGTH_SHORT).show();
+				}
 			}catch(IndexOutOfBoundsException ex){
 				Toast.makeText(RouteMap.this,"No available workout data",Toast.LENGTH_SHORT).show();
 			}
@@ -208,7 +214,9 @@ public class RouteMap extends MapActivity {
 	}
 	
 	public void handleResponse (String response){
-		//TODO: method stub -- handle json data returned.
+		Intent intent = new Intent(this,CheckIn.class);
+		intent.putExtra("locationJson", response);
+		startActivity(intent);
 	}
 	
 	private class FourSquareThread extends AsyncTask<String, Integer, String>{
@@ -265,6 +273,7 @@ public class RouteMap extends MapActivity {
 			try{
 				
 				result = inputStreamToString(response.getEntity().getContent());
+				handleResponse(result);
 				
 			}catch (IllegalStateException ex){
 				Log.e(TAG, ex.getLocalizedMessage());
@@ -328,7 +337,7 @@ public class RouteMap extends MapActivity {
 				url += getResources().getString(R.string.getVenues);
 				//set lat and lng 
 				url += "/"+latLng.substring(0, latLng.lastIndexOf(','))+"/"+ latLng.substring(latLng.lastIndexOf(',')+1,latLng.length());
-				url += +15;
+				url += "/"+15;
 				HttpGet httpGet = new HttpGet(url);
 				httpResponse = httpClient.execute(httpGet);				
 				break;

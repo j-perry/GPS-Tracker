@@ -27,6 +27,9 @@ import android.widget.Toast;
 
 import com.team2.dash.entity.*;
 
+/*
+ * Class to handle the display of checkin locations. Displays Locations in a clickable list.
+ */
 public class CheckIn extends ListActivity implements LocationListener
 {
 
@@ -36,18 +39,23 @@ public class CheckIn extends ListActivity implements LocationListener
 	private JSONObject results;
 	private String provider;
 	private String[][] vars;		
-	private ArrayList<String> listItems;	
+	private ArrayList<String> listItems = new ArrayList<String>();
 	
     @Override
     public void onCreate(Bundle savedInstanceState) 
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_check_in);
-        CheckForGPSEnabled();
-        runOnUiThread(UpdateGPSOnUI);
+        //CheckForGPSEnabled();
+        //runOnUiThread(UpdateGPSOnUI);
+        //retrieve json data from RouteMap after checkin has been clicked.
+        Bundle bundle = getIntent().getExtras();
+        String venueJson = bundle.getString("locationJson");
+        results = ServerConnector.ConvertStringToObject(venueJson);
         RefreshVenueInfo();  
         
-       	ArrayAdapter<VenueInfo> adapter = new ArrayAdapter<VenueInfo>(this, android.R.layout.simple_list_item_1);
+       	ArrayAdapter<VenueInfo> adapter = new ArrayAdapter<VenueInfo>(this, android.R.layout.simple_list_item_1,VenueInformation);
+       	      	
         setListAdapter(adapter);
         
         ListView lv = getListView();
@@ -86,23 +94,23 @@ public class CheckIn extends ListActivity implements LocationListener
     public void onResume() 
     {
         super.onResume();
-       	CheckForGPSEnabled();
-        locationManager.requestLocationUpdates(provider, 400, 1, this);            
+       	//CheckForGPSEnabled();
+        //locationManager.requestLocationUpdates(provider, 400, 1, this);            
     }
 
     @Override
     protected void onPause() 
     {
       super.onPause();
-      locationManager.removeUpdates(this);
+      //locationManager.removeUpdates(this);
     }
     
     public void onLocationChanged(Location location) 
     {
-    	latitude = location.getLatitude();
-    	longitude = location.getLongitude();
-    	Log.v("Latitude", "" + latitude);
-    	Log.v("Longitude", "" + longitude);
+//    	latitude = location.getLatitude();
+//    	longitude = location.getLongitude();
+//    	Log.v("Latitude", "" + latitude);
+//    	Log.v("Longitude", "" + longitude);
     }     
     
     public void onRefreshClick(View view)
@@ -186,23 +194,23 @@ public class CheckIn extends ListActivity implements LocationListener
     
     public void RefreshVenueInfo()
     {    	
-    	
-    	if(latitude == null || longitude == null)
-    	{
-    		Toast.makeText(this, "There are currently no GPS Results", Toast.LENGTH_SHORT).show();
-    		return;
-    	}
+    	//TODO: Considering if location should be fetched here again or location data should be passed form RouteMap
+//    	if(latitude == null || longitude == null)
+//    	{
+//    		Toast.makeText(this, "There are currently no GPS Results", Toast.LENGTH_SHORT).show();
+//    		return;
+//    	}
     	
     	try
     	{    		
-    		vars = new String[2][2];
-    		vars[0][0] = "latitude";
-    		vars[0][1] = latitude.toString();
-    		vars[1][0] = "longitude";
-    		vars[1][1] = longitude.toString();
-    		
+//    		vars = new String[2][2];
+//    		vars[0][0] = "latitude";
+//    		vars[0][1] = latitude.toString();
+//    		vars[1][0] = "longitude";
+//    		vars[1][1] = longitude.toString();
+//    		
     		//AsyncChanges
-    		runOnUiThread(SendAndRecieveFourSquareResponse); 
+    		//runOnUiThread(SendAndRecieveFourSquareResponse); 
     		
     		if (results == null)
 	    	{
