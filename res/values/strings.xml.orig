@@ -1,0 +1,31 @@
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="TypographyDashes">
+
+    <string name="app_name">Dash</string>
+    <string name="menu_settings">Settings</string>
+    <string name="title_activity_main">Dash</string>
+    <string name="title_activity_user">User</string>
+    <string name="title_activity_add_user">Add User</string>
+    <string name="please_enter">Please enter</string>
+    <string name="edit_fname">First Name</string>
+    <string name="edit_sname">Second Name</string>
+    <string name="edit_email">Email</string>
+    <string name="edit_age">Age</string>
+    <string name="edit_weight">Weight</string>
+    <string name="edit_height">Height</string>
+    <string name="add_user">Add user</string>
+    <string name="cancel">Cancel</string>
+    <string name="ViewRoute">View Route Traveled</string>
+    <string name="title_activity_route_map">Route Map</string>
+    <string name="overlay_start_title">Start</string>
+    <string name="overlay_finish_title">Finish</string>
+    <string name="title_activity_workout">Workouts</string>
+    <string name="title_activity_location">Locations</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="title_activity_tracker">Tracker</string>
+    <string name="checkinbtn">Checkin</string>
+    <string name="checkin">Checkin</string>
+    <string name="webServiceEndPoint">http://ec2-54-242-181-128.compute-1.amazonaws.com/dashwebsvc/index.php</string>
+    <string name="getVenues">/LocationSearch/index</string>
+    <string name="title_activity_check_in">CheckIn</string>
+
+</resources>
