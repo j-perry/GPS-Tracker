@@ -8,7 +8,6 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.team2.dash.R;
 import com.team2.dash.entity.User;
 
 public class AddUserActivity extends Activity {

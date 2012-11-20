@@ -8,7 +8,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.team2.dash.R;
+
 import com.team2.dash.entity.LocationP;
 
 public class LocationActivity extends ListActivity {

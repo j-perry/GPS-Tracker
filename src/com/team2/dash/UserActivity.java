@@ -10,7 +10,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.team2.dash.R;
+
 import com.team2.dash.entity.User;
 
 public class UserActivity extends ListActivity {

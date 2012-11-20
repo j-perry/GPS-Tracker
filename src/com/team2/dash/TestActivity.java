@@ -1,6 +1,6 @@
 package com.team2.dash;
 
-import com.team2.dash.R;
+
 import com.team2.dash.entity.*;
 
 import android.os.Bundle;
