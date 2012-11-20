@@ -208,9 +208,7 @@ public class RouteMap extends MapActivity {
 			}catch(IndexOutOfBoundsException ex){
 				Toast.makeText(RouteMap.this,"No available workout data",Toast.LENGTH_SHORT).show();
 			}
-			
 		}
-		
 	}
 	
 	public void handleResponse (String response){
@@ -218,6 +216,8 @@ public class RouteMap extends MapActivity {
 		intent.putExtra("locationJson", response);
 		startActivity(intent);
 	}
+	
+	//TODO: Convert this to use the ServerConnector class
 	
 	private class FourSquareThread extends AsyncTask<String, Integer, String>{
 

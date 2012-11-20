@@ -13,13 +13,14 @@ import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
-import org.apache.http.params.BasicHttpParams;
-import org.apache.http.params.HttpConnectionParams;
-import org.apache.http.params.HttpParams;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.app.ProgressDialog;
+import android.app.WallpaperManager;
+import android.content.Context;
+import android.os.AsyncTask;
 import android.util.Log;
 
 /*
@@ -29,11 +30,16 @@ import android.util.Log;
  * This should theortically support CodeIgniter, but it's untested currently
  */	
 
-public class ServerConnector
+public class ServerConnector extends AsyncTask<String, Integer, String>
 {
 	//Current website URL
-	private static final String ServerURL = "http://ec2-54-242-181-128.compute-1.amazonaws.com";	
-	private static String  responseString;
+	private static String ServerURL;
+	private String mProcessMessage = "processing ...";	
+	public String responseString;	
+	private ProgressDialog pDlg = null;
+	private Context mContext = null;
+	private boolean mUseCodeIgniter;	
+	private String[][] mVars;	
 	
 	/*
 	 * This is the method that we will call to send, then receive data.
@@ -43,20 +49,43 @@ public class ServerConnector
 	 *@webPage = Page for data to be sent to
 	 *@useCodeIgniter = Are we using CodeIgniter or Simple PHP?
 	 */	
-	public ServerConnector (String[][] vars, String webPage, boolean useCodeIgniter)
+	public ServerConnector (String[][] vars, boolean useCodeIgniter, Context thisContext, String processMessage)
 	{			
-		if(useCodeIgniter == true) 
+		mVars = vars;
+		mUseCodeIgniter = useCodeIgniter;
+		mContext = thisContext;			
+		mProcessMessage = processMessage; 		
+		ServerURL = ((Context) thisContext).getString(R.string.webServiceEndPointBen);		
+	}	
+	
+	@Override
+	protected String doInBackground(String... params) 
+	{
+		String mWebPage = params[0];
+		if(mUseCodeIgniter == true) 
 		{
-			ConnectAndSendUsingCodeIgniter(vars, webPage);
+			responseString = ConnectAndSendUsingCodeIgniter(mVars, mWebPage);
 		}
 		//Use PHP's native POST / GET rather than a framework
 		else 
-		{
-			ConnectAndSendSimplePHP(vars, webPage);
-		}		
+		{			
+			responseString = ConnectAndSendSimplePHP(mVars, mWebPage);		
+		}	
+		return responseString;
 	}	
 	
-
+	@Override
+	protected void onPreExecute() {
+		super.onPreExecute();
+		showProgressDialog();
+	}
+	
+	@Override
+	protected void onPostExecute(String result) {
+		super.onPostExecute(result);		
+		pDlg.dismiss();
+	}	
+	
 	/*
 	 * This will build a codeigniter url (as it takes GET variables differently to simple PHP) and then call that URL
 	 * PHP files should always return some form of a response, even if it's just json_decode(Array("success" => false));
@@ -64,7 +93,7 @@ public class ServerConnector
 	 *@vars = Data to sent via URL in CodeIgniter (only uses vars[i][1])
 	 *@webPage = Page for data to be sent to
 	 */
-	private void ConnectAndSendUsingCodeIgniter(String[][] vars, String webPage)
+	private String ConnectAndSendUsingCodeIgniter(String[][] vars, String webPage)
 	{
 		String temp = null;	
 		HttpClient httpclient = new DefaultHttpClient();
@@ -92,11 +121,11 @@ public class ServerConnector
     	    {	
     	    	//JSONObject CIResults = new JSONObject(temp);
         	    //return CIResults;
-    	    	responseString = temp;
+    	    	return temp;
     	    } 
     	    else 
     	    {
-    	    	return;    	    	
+    	    	return null;    	    	
     	    }
     	
     	} 
@@ -104,19 +133,19 @@ public class ServerConnector
     	{ 
     		e.printStackTrace(); 
     		Log.v("Error", "SC ClientProtocol " + e.getMessage()); 
-    		return; 
+    		return null; 
     	}    	
     	catch (IOException e) 
     	{ 
     		e.printStackTrace(); 
     		Log.v("Error", "SC IOException " + e.getMessage());     		
-    		return;
+    		return null;
     	} 
     	catch (Exception e) 
     	{ 
     		e.printStackTrace(); 
     		Log.v("Error", "SC Exception " + e.getMessage());        		
-    		return;
+    		return null;
     	}  
 	}
 	
@@ -127,7 +156,7 @@ public class ServerConnector
 	 *@vars = Data to sent via URL in CodeIgniter (only uses vars[i][1])
 	 *@webPage = Page for data to be sent to
 	 */	
-	private void ConnectAndSendSimplePHP(String[][] vars, String webPage)
+	private String ConnectAndSendSimplePHP(String[][] vars, String webPage)
 	{	
 		String temp = null;	
     	HttpClient httpclient = new DefaultHttpClient();
@@ -153,13 +182,12 @@ public class ServerConnector
     	    if(entity != null)
     	    {	
     	    	//JSONObject SimpleResults = new JSONObject(temp);
-        	    //return SimpleResults;
-    	    	responseString = temp;    	    	
+        	    //return SimpleResults;    	    	
+    	    	return temp;
     	    } 
     	    else 
-    	    {
-    	    	responseString = null;
-    	    	return;    	    	
+    	    {    	    	
+    	    	return null;    	    	
     	    }
     	
     	} 
@@ -167,30 +195,35 @@ public class ServerConnector
     	{ 
     		e.printStackTrace(); 
     		Log.v("Error", "SC ClientProtocol " + e.getMessage()); 
-    		return; 
+    		return null;
     	}    	
     	catch (IOException e) 
     	{ 
     		e.printStackTrace(); 
     		Log.v("Error", "SC IOException " + e.getMessage());     		
-    		return;
+    		return null;
     	} 
     	catch (Exception e) 
     	{ 
     		e.printStackTrace(); 
     		Log.v("Error", "SC Exception " + e.getMessage());        		
-    		return;
+    		return null;
     	}     	
-	}
+	}	
+	
+	private void showProgressDialog(){
+		pDlg = new ProgressDialog(mContext);
+		pDlg.setMessage(mProcessMessage);
+		pDlg.setProgressDrawable(WallpaperManager.getInstance(mContext).getDrawable());
+		pDlg.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+		pDlg.setCancelable(false);
+		pDlg.show();
+	}	
 	
 	public static JSONObject ConvertStringToObject(String response)
 	{
-		if(response == null)
-		{
-			response = responseString;
-		}
 		try
-		{
+		{			
 	    	JSONObject SimpleResults = new JSONObject(response);
     	    return SimpleResults;				
 		}
@@ -200,5 +233,5 @@ public class ServerConnector
     		Log.v("Error", "SC JSONException " + e.getMessage());   
 		}
 		return null;
-	}
+	}	
 }
