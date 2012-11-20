@@ -32,15 +32,25 @@ public class TrackerActivity  extends Activity implements LocationListener {
 	private Location location;
 	private Handler handleTimer, handleChrono;
 	private long startTime, elapsedTime;
-	private boolean stopChrono = false;
+//	private boolean stopChrono = false;
 	private boolean terminateCount = false;
+	
 	private int runTimerCount = 0;
 	String	currentTime, provider;
     int		activeUserID;
     GeoPoint	gp1, gp2;
+    Button		button_start, button_pause, button_end, button_map;
 
 	private	Workout		workout = null; // active workout, null if not in use
     DatabaseHandler 	db;
+
+	// actual status of activity
+    // WAIT  - waiting for start of workout
+	// START - during workout with GPS locked
+	// PAUSE - pause (when pause button pressed or GPS signal lost)
+	// STOP  - end of workout pressed
+	private enum	tStatus { WAIT, PAUSE, START, STOP };
+	tStatus 		trackerStatus;
 
 	double 		latitude;
 	double 		longitude;
@@ -51,8 +61,15 @@ public class TrackerActivity  extends Activity implements LocationListener {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tracker);
+        
+        trackerStatus = tStatus.WAIT;
 
         db = new DatabaseHandler(this);
+
+        button_start = (Button) findViewById(R.id.button1);
+        button_pause = (Button) findViewById(R.id.button2);
+        button_end = (Button) findViewById(R.id.button3);        
+        button_map = (Button) findViewById(R.id.button4);        
 
         ProgressBar progressBar = (ProgressBar) findViewById(R.id.progressBar1);
         progressBar.setVisibility(ProgressBar.INVISIBLE);
@@ -66,12 +83,10 @@ public class TrackerActivity  extends Activity implements LocationListener {
         	activeUserID = user.getID();
         }
         
-        Button button_start = (Button) findViewById(R.id.button1);
         button_start.setEnabled(false);
-        Button button_end = (Button) findViewById(R.id.button2);
         button_end.setEnabled(false);
-        Button button_restart = (Button) findViewById(R.id.button3);
-        button_restart.setEnabled(false);
+        button_pause.setEnabled(false);
+        button_map.setEnabled(false);
 
         CheckForGPSEnabled();
         
@@ -89,6 +104,7 @@ public class TrackerActivity  extends Activity implements LocationListener {
         super.onResume();
        	CheckForGPSEnabled();
         locationManager.requestLocationUpdates(provider, 400, 1, this);
+        trackerStatus = tStatus.WAIT;
             
     }
 
@@ -143,7 +159,8 @@ public class TrackerActivity  extends Activity implements LocationListener {
     {        
     	public void run() {
     		UpdateTime();
-        	if( (workout != null) && (stopChrono == false) && (location != null) )
+//        	if( (workout != null) && (stopChrono == false) && (location != null) )
+            if( (trackerStatus == tStatus.START) && (location != null) )
         		SaveLocation();
         }
     };
@@ -158,7 +175,7 @@ public class TrackerActivity  extends Activity implements LocationListener {
     private void UpdateTime()
     {
 		TextView t = (TextView)findViewById(R.id.textTime);
-		currentTime = DateFormat.format("hh:mm:ss ", new java.util.Date()).toString();
+		currentTime = DateFormat.format("kk:mm:ss ", new java.util.Date()).toString();
 		t.setText(currentTime);
    }
     
@@ -188,24 +205,64 @@ public class TrackerActivity  extends Activity implements LocationListener {
     	hdCrit.setAccuracy(Criteria.ACCURACY_FINE);
         provider = locationManager.getBestProvider(hdCrit, false);        
         location = locationManager.getLastKnownLocation(provider);
-        Button button_start = (Button) findViewById(R.id.button1);
-        Button button_end = (Button) findViewById(R.id.button2);
-        Button button_restart = (Button) findViewById(R.id.button3);        
         if (location != null) 
         {
 //          System.out.println("Provider " + provider + " has been selected.");
         	onLocationChanged(location);
-        	txt = "GPS working";            
-            button_start.setEnabled(true);            
-            button_end.setEnabled(true);            
-            button_restart.setEnabled(true);                
+        	txt = "GPS locked";
+        	switch( trackerStatus )
+        	{
+        		case	WAIT:
+                    button_start.setEnabled(true);            
+                    button_pause.setEnabled(false);            
+                    button_end.setEnabled(false);
+                    break;
+        		case	START:
+                    button_start.setEnabled(false);            
+                    button_pause.setEnabled(true);            
+                    button_end.setEnabled(true);
+                    break;
+        		case	STOP:
+                    button_start.setEnabled(false);            
+                    button_pause.setEnabled(false);            
+                    button_end.setEnabled(false);
+                    break;
+        		case	PAUSE:
+                    button_start.setEnabled(true);            
+                    button_pause.setEnabled(false);            
+                    button_end.setEnabled(true);
+                    break;
+        	}     	
         } 
         else 
         {
+        	switch( trackerStatus )
+        	{
+        		case	WAIT:
+                    button_start.setEnabled(false);            
+                    button_pause.setEnabled(false);            
+                    button_end.setEnabled(false);
+                    break;
+        		case	START:
+                    button_start.setEnabled(false);            
+                    button_pause.setEnabled(true);            
+                    button_end.setEnabled(true);
+                    break;
+        		case	STOP:
+                    button_start.setEnabled(false);            
+                    button_pause.setEnabled(false);            
+                    button_end.setEnabled(false);
+                    break;
+        		case	PAUSE:
+                    button_start.setEnabled(false);            
+                    button_pause.setEnabled(false);            
+                    button_end.setEnabled(true);
+                    break;
+        	}     	
             txt = "Location not available";
-            button_start.setEnabled(false);            
-            button_end.setEnabled(false);            
-            button_restart.setEnabled(false);               
+//            button_start.setEnabled(false);            
+//            button_pause.setEnabled(false);            
+//            button_end.setEnabled(false);               
             Toast.makeText(this, txt, Toast.LENGTH_LONG).show();
         }
      	((TextView)findViewById(R.id.textGPS)).setText(txt);
@@ -317,8 +374,8 @@ public class TrackerActivity  extends Activity implements LocationListener {
      }
      
      public void onStartClick(View view)
-     {    
-     	if(stopChrono == true)
+     {
+/*     	if(stopChrono == true)
      	{    	
      		startTime = System.currentTimeMillis() - elapsedTime;
      	}
@@ -328,29 +385,68 @@ public class TrackerActivity  extends Activity implements LocationListener {
      		startNewWorkout();
      		
      	}
+*/
+    	 switch( trackerStatus )
+    	 {
+    	 	case PAUSE:
+    	 		startTime = System.currentTimeMillis() - elapsedTime;
+    	 		break;
+    	 	case WAIT:
+    	 		startTime = System.currentTimeMillis();
+    	 		startNewWorkout();
+    	 		break;
+    	 }
+
+      	if( workout != null )
+      		trackerStatus = tStatus.START;
      	handleChrono.removeCallbacks(startTimer);
      	handleChrono.postDelayed(startTimer, 0);
         ProgressBar progressBar = (ProgressBar) findViewById(R.id.progressBar1);
         progressBar.setVisibility(ProgressBar.VISIBLE);
+        button_start.setEnabled(false);            
+        button_pause.setEnabled(true);            
+        button_end.setEnabled(true);
      	
      	
      }
 
-     public void onStopClick(View view)
+     public void onPauseClick(View view)
      {       
      	handleChrono.removeCallbacks(startTimer);
-     	stopChrono = true;
-     }  
+//     	stopChrono = true;
+     	trackerStatus = tStatus.PAUSE;
+        button_start.setEnabled(true);            
+        button_pause.setEnabled(false);            
+        button_end.setEnabled(true);
+        ProgressBar progressBar = (ProgressBar) findViewById(R.id.progressBar1);
+        progressBar.setVisibility(ProgressBar.INVISIBLE);
+}  
      
-     public void onResetClick(View view)
+     public void onEndClick(View view)
      {
-     	stopChrono = false;
+//     	stopChrono = false;
+      	handleChrono.removeCallbacks(startTimer);
      	((TextView)findViewById(R.id.textWorkoutTime)).setText("No Timer");
- // ================================================
-     	workout = null;
- // ================================================
+     	trackerStatus = tStatus.STOP;
+        button_start.setEnabled(false);            
+        button_pause.setEnabled(false);            
+        button_end.setEnabled(false);
+        button_map.setEnabled(true);
+        ProgressBar progressBar = (ProgressBar) findViewById(R.id.progressBar1);
+        progressBar.setVisibility(ProgressBar.INVISIBLE);
 
      }    
         
-	
+     public void onMapClick(View view)
+     {
+    	 if( workout == null)
+    		 return;
+    	 Intent intent = new Intent(this, RouteMap.class);
+         intent.putExtra("workoutID", workout.getID());        
+         startActivity(intent);
+   	 
+     }	
 }
+
+
+
