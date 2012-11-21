@@ -337,7 +337,6 @@ public class RouteMap extends MapActivity {
 				url += getResources().getString(R.string.getVenues);
 				//set lat and lng 
 				url += "/"+latLng.substring(0, latLng.lastIndexOf(','))+"/"+ latLng.substring(latLng.lastIndexOf(',')+1,latLng.length());
-				url += "/"+15;
 				HttpGet httpGet = new HttpGet(url);
 				httpResponse = httpClient.execute(httpGet);				
 				break;

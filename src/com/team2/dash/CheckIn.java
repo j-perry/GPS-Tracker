@@ -224,8 +224,7 @@ public class CheckIn extends ListActivity implements LocationListener
 	    		{
 	    			VenueInfo singleVenue = new VenueInfo();
 	    			JSONObject singleJSONVenue = venues.getJSONObject(i);
-	    			singleVenue.setFourSquareCheckins(singleJSONVenue.getInt("nbrCheckins"));
-	    			singleVenue.setFourSquareId(singleJSONVenue.getString("id"));
+	    			singleVenue.setId(singleJSONVenue.getString("id"));
 	    			singleVenue.setLatitude(singleJSONVenue.getDouble("lat"));
 	    			singleVenue.setLongitude(singleJSONVenue.getDouble("lng"));
 	    			singleVenue.setVenueAddress(singleJSONVenue.getString("address"));

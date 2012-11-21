@@ -2,52 +2,47 @@ package com.team2.dash.entity;
 
 public class VenueInfo 
 {
-	public String FourSquareId;
-	public String VenueName;
-	public String VenueAddress;
-	public double Latitude;
-	public double Longitude;
-	public int FourSquareCheckins;
+	public String id;
+	public String venueName;
+	public String venueAddress;
+	public double latitude;
+	public double longitude;
+	
 	
 	public String toString()
 	{
-		return VenueName + "\n" + VenueAddress;
+		return venueName + "\n" + venueAddress + "\nRating:";
 	}
 	
-	public String getFourSquareId() {
-		return FourSquareId;
+	public String getId() {
+		return id;
 	}
-	public void setFourSquareId(String fourSquareId) {
-		FourSquareId = fourSquareId;
+	public void setId(String id) {
+		this.id = id;
 	}
 	public String getVenueName() {
-		return VenueName;
+		return venueName;
 	}
 	public void setVenueName(String venueName) {
-		VenueName = venueName;
+		this.venueName = venueName;
 	}
 	public String getVenueAddress() {
-		return VenueAddress;
+		return venueAddress;
 	}
 	public void setVenueAddress(String venueAddress) {
-		VenueAddress = venueAddress;
+		this.venueAddress = venueAddress;
 	}
 	public double getLatitude() {
-		return Latitude;
+		return latitude;
 	}
 	public void setLatitude(double latitude) {
-		Latitude = latitude;
+		this.latitude = latitude;
 	}
 	public double getLongitude() {
-		return Longitude;
+		return longitude;
 	}
 	public void setLongitude(double longitude) {
-		Longitude = longitude;
+		this.longitude = longitude;
 	}
-	public int getFourSquareCheckins() {
-		return FourSquareCheckins;
-	}
-	public void setFourSquareCheckins(int fourSquareCheckins) {
-		FourSquareCheckins = fourSquareCheckins;
-	}	
+		
 }
