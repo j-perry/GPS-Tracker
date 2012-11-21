@@ -1,31 +1,11 @@
 package com.team2.dash;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.List;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.params.BasicHttpParams;
-import org.apache.http.params.HttpConnectionParams;
-import org.apache.http.params.HttpParams;
-import org.apache.http.util.EntityUtils;
-
-import android.app.ProgressDialog;
-import android.app.WallpaperManager;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.location.Location;
-import android.net.http.AndroidHttpClient;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.renderscript.Int2;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
@@ -52,8 +32,7 @@ public class RouteMap extends MapActivity {
 	private MapView 			mapView;		// 
     private DatabaseHandler 	db;				// 
     private int					workoutID;		// 
-    private double  			distance = 0;	//
-    private static String serviceEndPoint = "";
+    private double  			distance = 0;	//    
 	
     /**
      * 
@@ -120,8 +99,7 @@ public class RouteMap extends MapActivity {
 
     @Override
     protected void onStart() {
-    	super.onStart();
-    	serviceEndPoint = getResources().getString(R.string.webServiceEndPoint);
+    	super.onStart();    	
     }
     /**
      * 
@@ -212,7 +190,7 @@ public class RouteMap extends MapActivity {
 					vars[1][1] = "" + checkinpoint.getLongtitude();
 					vars[2][0] = "";
 					vars[2][1] = "15";					
-					ServerConnector sc = new ServerConnector(vars, true, RouteMap.this, "Contacting Foursquare ...");
+					ServerConnector sc = new ServerConnector(vars, true, RouteMap.this, "Contacting Server ...");
 			    	String response;
 			    	try
 			    	{

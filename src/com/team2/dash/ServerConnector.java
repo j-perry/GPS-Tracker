@@ -23,7 +23,6 @@ import org.json.JSONObject;
 import android.app.ProgressDialog;
 import android.app.WallpaperManager;
 import android.content.Context;
-import android.net.http.AndroidHttpClient;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -60,7 +59,7 @@ public class ServerConnector extends AsyncTask<String, Integer, String>
 		mVars = vars;
 		mUseCodeIgniter = useCodeIgniter;
 		mContext = thisContext;			
-		mProcessMessage = processMessage; 		
+		mProcessMessage = processMessage; 				
 		ServerURL = ((Context) thisContext).getString(R.string.webServiceEndPoint);		
 	}	
 	
@@ -68,6 +67,7 @@ public class ServerConnector extends AsyncTask<String, Integer, String>
 	protected String doInBackground(String... params) 
 	{
 		String mWebPage = params[0];
+
 		if(mUseCodeIgniter == true) 
 		{
 			responseString = ConnectAndSendUsingCodeIgniter(mVars, mWebPage);
@@ -77,6 +77,7 @@ public class ServerConnector extends AsyncTask<String, Integer, String>
 		{			
 			responseString = ConnectAndSendSimplePHP(mVars, mWebPage);		
 		}	
+				
 		return responseString;
 	}	
 	
@@ -123,8 +124,6 @@ public class ServerConnector extends AsyncTask<String, Integer, String>
     	    HttpResponse response = httpclient.execute(httppost);
     	    HttpEntity entity = response.getEntity();    	    
     	    temp = EntityUtils.toString(entity);			
-			
-			    	    
 
     	    if(entity != null)
     	    {	
@@ -165,13 +164,16 @@ public class ServerConnector extends AsyncTask<String, Integer, String>
 	 */	
 	private String ConnectAndSendSimplePHP(String[][] vars, String webPage)
 	{	
-		String temp = null;	
-    	HttpClient httpclient = new DefaultHttpClient();
-    	HttpPost httppost = new HttpPost(ServerURL + "/" + webPage);       	
+		String temp = null;	   	
 		
     	try 
     	{
-    		
+        	HttpClient httpclient = new DefaultHttpClient();
+    		HttpParams httpp = new BasicHttpParams();			
+    		HttpConnectionParams.setConnectionTimeout(httpp,CONN_TIMEOUT);
+    		HttpConnectionParams.setSoTimeout(httpp, SOCKET_TIMEOUT);    	
+        	HttpPost httppost = new HttpPost(ServerURL + "/" + webPage);    
+        	
     		if (vars != null && vars.length > 0)
     		{
 	    	    List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(vars.length);

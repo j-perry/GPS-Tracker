@@ -2,6 +2,7 @@ package com.team2.dash;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -10,6 +11,7 @@ import org.json.JSONObject;
 import android.os.Bundle;
 import android.app.ListActivity;
 import android.content.Intent;
+import android.text.format.Time;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
@@ -25,10 +27,9 @@ import com.team2.dash.entity.*;
 public class CheckIn extends ListActivity
 {
 
-	private List<VenueInfo> VenueInformation;	
-	private JSONObject results;	
 	private ArrayList<String> listItems = new ArrayList<String>();
-	//private VenueInfo testVenue;
+	private List<VenueInfo> VenueInformation;	
+	private JSONObject results;		
 	
     @Override
     public void onCreate(Bundle savedInstanceState) 
@@ -43,15 +44,6 @@ public class CheckIn extends ListActivity
        	ArrayAdapter<VenueInfo> adapter = new ArrayAdapter<VenueInfo>(this, android.R.layout.simple_list_item_1,VenueInformation);
        	      	
         setListAdapter(adapter);
-        
-        //Test data
-//        testVenue = new VenueInfo();
-//        testVenue.setFourSquareId("4c039b9af56c2d7fa3121d66");
-//        testVenue.setVenueName("East Slope Bar");
-//        testVenue.setVenueAddress("University of Sussex");
-//        testVenue.setLatitude(50.869373);
-//        testVenue.setLongitude(-0.088239);
-
     }
 
     @Override
@@ -77,7 +69,6 @@ public class CheckIn extends ListActivity
 	    		{
 	    			VenueInfo singleVenue = new VenueInfo();
 	    			JSONObject singleJSONVenue = venues.getJSONObject(i);
-	    			//singleVenue.setFourSquareCheckins(singleJSONVenue.getInt("nbrCheckins"));
 	    			singleVenue.setId(singleJSONVenue.getString("id"));
 	    			singleVenue.setLatitude(singleJSONVenue.getDouble("lat"));
 	    			singleVenue.setLongitude(singleJSONVenue.getDouble("lng"));
@@ -100,7 +91,6 @@ public class CheckIn extends ListActivity
     public void onListItemClick( ListView l, View v, int position, long id) 
     {
     	VenueInfo venue = (VenueInfo)l.getItemAtPosition(position);
-    	//VenueInfo venue = testVenue;    	
     	Toast.makeText(this, "Checking In at " + venue.toString(), Toast.LENGTH_SHORT).show();
     	
     	String[][] vars = new String[4][2];
@@ -111,37 +101,78 @@ public class CheckIn extends ListActivity
     	vars[2][0] = "f";
     	vars[2][1] = venue.id;
     	vars[3][0] = "a";
-    	vars[3][1] = "addLocation";    	    	
+    	vars[3][1] = "addLocation";    	    
     	
-    	ServerConnector sc = new ServerConnector(vars, false, CheckIn.this, "Contacting Dash Server ...");    	
     	String response;
     	try
     	{
-    		response = sc.execute(new String[] { "AddLocation.php"}).get();    	
+    		ServerConnector sc = new ServerConnector(vars, false, CheckIn.this, "Contacting Dash Server ...");
+    		response = sc.execute(new String[] { "AddLocation.php"}).get(5, TimeUnit.SECONDS);    	
     	} 
     	catch (Exception e)
     	{
+    		e.printStackTrace();
 			Log.v("Error", "CheckIn Exception " + e.getMessage());   
 			return;
     	}
     	
     	try 
     	{   
-
+    		Log.v("Response", response);
     		JSONObject singleVenue = ServerConnector.ConvertStringToObject(response);
 			
 			if (singleVenue.getString("success") == "true")
 			{
 				int result_http = singleVenue.getInt("result");
 				if(result_http > 0)
-				{
-					Toast.makeText(this, "Result: " + result_http, Toast.LENGTH_SHORT).show();
-					//TODO: Check user in to location					
+				{					
+			    	String[][] new_vars = new String[4][2];
+			    	new_vars[0][0] = "n";
+			    	new_vars[0][1] = "" + result_http;
+			    	new_vars[1][0] = "d";
+			    	//new_vars[1][1] = 1; //TODO: Change to to use UserId
+			    	new_vars[1][1] = "" + 1;
+			    	new_vars[2][0] = "f";
+			    	Time now = new Time();
+			    	now.setToNow();
+			    	new_vars[2][1] = now.toString();
+			    	new_vars[3][0] = "a";
+			    	new_vars[3][1] = "addCheckin";    	    
+			    	
+			    	String second_response;
+			    	try
+			    	{
+			    		ServerConnector sc2 = new ServerConnector(new_vars, false, CheckIn.this, "Contacting Dash Server ...");
+			    		second_response = sc2.execute(new String[] { "AddCheckIn.php"}).get(5, TimeUnit.SECONDS);    	
+			    	} 
+			    	catch (Exception e)
+			    	{
+			    		e.printStackTrace();
+						Log.v("Error", "CheckIn Exception " + e.getMessage());   
+						return;
+			    	}	
+			    	
+			    	JSONObject singleCheckIn = ServerConnector.ConvertStringToObject(second_response);
 					
-			    	Intent intent = new Intent(this,CheckIn.class);
-					//intent.putExtra("fourSquareId", venue.FourSquareId);
-					intent.putExtra("dashId", result_http);
-					startActivity(intent);  					
+					if (singleCheckIn.getString("success") == "true")
+					{
+						int result_http_checkin = singleCheckIn.getInt("result");
+						if(result_http_checkin > 0)
+						{
+					    	Intent intent = new Intent(this, VenueActivity.class);
+							intent.putExtra("id", venue.id);
+							intent.putExtra("dashId", result_http);
+							startActivity(intent); 
+						}
+						else 
+						{
+							Log.e("HTTP Result", "Checkin was not created due to DB Problem");
+						}
+					}	
+					else 
+					{
+						Log.e("HTTP Result", "Invalid call to php page");
+					}
 				} 
 				else if (result_http == -1)
 				{
@@ -154,8 +185,9 @@ public class CheckIn extends ListActivity
 			} 
 			else 
 			{
-				Log.e("HTTP Result", "Incorrect Page Call");
+				Log.e("HTTP Result", "Invalid call to php page");
 			}	
+			
 			Toast.makeText(this, "Failed to Check In", Toast.LENGTH_SHORT).show();
 		}     
 	    catch(JSONException e)
