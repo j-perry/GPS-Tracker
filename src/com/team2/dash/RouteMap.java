@@ -197,92 +197,8 @@ public class RouteMap extends MapActivity {
 		startActivity(intent);
 	}
 	
-	private class CheckinHandler implements OnClickListener{
-
-<<<<<<< HEAD
-		@Override
-		protected String doInBackground(String... params) {
-			String result = "";
-			String url = params[0];
-			
-			HttpResponse response = doResponse(url);
-			if(response == null)
-				return result;
-			try{
-				
-				result = inputStreamToString(response.getEntity().getContent());
-				handleResponse(result);
-				
-			}catch (IllegalStateException ex){
-				Log.e(TAG, ex.getLocalizedMessage());
-			}catch (IOException ex) {
-				Log.e(TAG, ex.getLocalizedMessage());
-			}
-			
-			
-			return result;
-		}
-		
-		 private String inputStreamToString(InputStream is) {
-			 
-	            String line = "";
-	            StringBuilder total = new StringBuilder();
-	 
-	            // Wrap a BufferedReader around the InputStream
-	            BufferedReader rd = new BufferedReader(new InputStreamReader(is));
-	 
-	            try {
-	                // Read response until the end
-	                while ((line = rd.readLine()) != null) {
-	                    total.append(line);
-	                }
-	            } catch (IOException e) {
-	                Log.e(TAG, e.getLocalizedMessage(), e);
-	            }
-	 
-	            // Return full string
-	            return total.toString();
-	        }
-	 
-		
-		@Override
-		protected void onPreExecute() {
-			super.onPreExecute();
-			showProgressDialog();
-		}
-		@Override
-		protected void onPostExecute(String result) {
-			// TODO Auto-generated method stub
-			super.onPostExecute(result);
-			handleResponse(result);
-			pDlg.dismiss();
-		}
-		
-		private  HttpResponse doResponse (String url){
-					
-			
-			//configure connection parameters ..connection timeouts
-			HttpParams httpp = new BasicHttpParams();			
-			HttpConnectionParams.setConnectionTimeout(httpp,CONN_TIMEOUT);
-			HttpConnectionParams.setSoTimeout(httpp, SOCKET_TIMEOUT);
-			
-			HttpClient httpClient = AndroidHttpClient.newInstance("dashmobileapp");
-			HttpResponse httpResponse = null;
-			try{
-			switch(taskType){
-			//fetch locations by the ll
-			case GET_PLACES:
-				url += getResources().getString(R.string.getVenues);
-				//set lat and lng 
-				url += "/"+latLng.substring(0, latLng.lastIndexOf(','))+"/"+ latLng.substring(latLng.lastIndexOf(',')+1,latLng.length());
-				HttpGet httpGet = new HttpGet(url);
-				httpResponse = httpClient.execute(httpGet);				
-				break;
-			//post checkin data to server
-			case POST_CHECKIN:
-					
-				break;
-=======
+	private class CheckinHandler implements OnClickListener
+	{
 		public void onClick(View v) {
 			try
 			{
@@ -313,7 +229,6 @@ public class RouteMap extends MapActivity {
 				{
 					Toast.makeText(RouteMap.this,"No available run points", Toast.LENGTH_SHORT).show();
 				}
->>>>>>> e0d4b8c01ef69b43f0957b817a00ac99e0c513c7
 			}
 			catch(IndexOutOfBoundsException ex)
 			{

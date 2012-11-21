@@ -45,14 +45,8 @@
         android:layout_marginLeft="14px"
         android:layout_marginRight="14px"
         android:layout_marginTop="50px"
-<<<<<<< HEAD
-        android:apiKey="09KSqdg6VuYqhtOOjFH2hGG33OdSFf8Dvcjl-3g"
-        android:clickable="true" >
-        
-=======
         android:apiKey="06O4TwmxLVKkKfGc_K3edtRqU2MeuxHcC1_awcA"
         android:clickable="true" >        
->>>>>>> e0d4b8c01ef69b43f0957b817a00ac99e0c513c7
     </com.google.android.maps.MapView>
     <Button
         android:id="@+id/btnCheckin"
