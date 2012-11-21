@@ -19,6 +19,7 @@
         <uses-library
             android:name="com.google.android.maps"
             android:required="true" />
+
         <activity
             android:name=".MainActivity"
             android:label="@string/title_activity_main" >
@@ -27,7 +28,7 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>        
+        </activity>
         <activity
             android:name=".TestActivity"
             android:label="@string/title_activity_main" >
@@ -47,11 +48,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.google.android.maps.MapActivity" />
         </activity>
-
-        <uses-library
-            android:name="com.google.android.maps"
-            android:required="true" />
-
         <activity
             android:name=".WorkoutActivity"
             android:label="@string/title_activity_workout" >
@@ -71,6 +67,13 @@
         <activity
             android:name=".CheckIn"
             android:label="@string/title_activity_check_in" >
+        </activity>
+        <activity
+            android:name=".VenueActivity"
+            android:label="@string/title_activity_venue" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.team2.dash.CheckIn" />
         </activity>
     </application>
 
