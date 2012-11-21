@@ -190,170 +190,50 @@ public class RouteMap extends MapActivity {
 		}
 	}
 	
-	private class CheckinHandler implements OnClickListener{
-
-		public void onClick(View v) {
-			try{
-				if(runPoints != null || runPoints.size() > 0){
-				LocationP checkinpoint = runPoints.get(runPoints.size() - 1);
-				//Query webservice and fetch result and display in list. Then allow checkin
-				String latLng =   checkinpoint.getLatitude() + "," + checkinpoint.getLongtitude();
-				//get foursquare url 
-				String webServiceEndPoint = getResources().getString(R.string.webServiceEndPoint);
-				FourSquareThread fsq = new FourSquareThread(latLng, FourSquareThread.GET_PLACES,RouteMap.this, "contacting foursquare ...");
-				fsq.execute(new String[]{webServiceEndPoint});				
-				}else{
-					Toast.makeText(RouteMap.this,"No available run points", Toast.LENGTH_SHORT).show();
-				}
-			}catch(IndexOutOfBoundsException ex){
-				Toast.makeText(RouteMap.this,"No available workout data",Toast.LENGTH_SHORT).show();
-			}
-		}
-	}
-	
-	public void handleResponse (String response){
-		Intent intent = new Intent(this,CheckIn.class);
+	public void handleResponse (String response)
+	{
+		Intent intent = new Intent(this, CheckIn.class);
 		intent.putExtra("locationJson", response);
 		startActivity(intent);
 	}
 	
-	//TODO: Convert this to use the ServerConnector class
-	
-	private class FourSquareThread extends AsyncTask<String, Integer, String>{
+	private class CheckinHandler implements OnClickListener{
 
-		public static final int POST_CHECKIN = 1;
-		public static final int GET_PLACES = 2;
-		
-		private static final  String TAG = "FourSquareThread";
-		//connection time out
-		private static final int CONN_TIMEOUT = 3000;
-		
-		//socket timeout 
-		private static final int SOCKET_TIMEOUT = 5000;
-		
-		
-		private ProgressDialog pDlg = null;
-		private Context mContext = null;
-		private String processMessage = "processing ...";
-		private String latLng = "";
-		private int taskType = GET_PLACES;
-		
-		
-		
-		
-		
-		public FourSquareThread(String latLng,int taskType, Context mContext,
-				String processMessage) {
-			super();
-			this.latLng = latLng;
-			this.mContext = mContext;
-			this.processMessage = processMessage;
-		}
-		
-		private void showProgressDialog(){
-			pDlg = new ProgressDialog(mContext);
-			pDlg.setMessage(processMessage);
-			pDlg.setProgressDrawable(WallpaperManager.getInstance(mContext).getDrawable());
-			pDlg.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-			pDlg.setCancelable(false);
-			pDlg.show();
-		}
-
-
-
-
-		@Override
-		protected String doInBackground(String... params) {
-			String result = "";
-			String url = params[0];
-			
-			HttpResponse response = doResponse(url);
-			if(response == null)
-				return result;
-			try{
-				
-				result = inputStreamToString(response.getEntity().getContent());
-				handleResponse(result);
-				
-			}catch (IllegalStateException ex){
-				Log.e(TAG, ex.getLocalizedMessage());
-			}catch (IOException ex) {
-				Log.e(TAG, ex.getLocalizedMessage());
+		public void onClick(View v) {
+			try
+			{
+				if(runPoints != null || runPoints.size() > 0)
+				{
+					LocationP checkinpoint = runPoints.get(runPoints.size() - 1);
+					String vars[][] = new String[3][2];
+					vars[0][0] = "";
+					vars[0][1] = "" + checkinpoint.getLatitude();
+					vars[1][0] = "";
+					vars[1][1] = "" + checkinpoint.getLongtitude();
+					vars[2][0] = "";
+					vars[2][1] = "15";					
+					ServerConnector sc = new ServerConnector(vars, true, RouteMap.this, "Contacting Foursquare ...");
+			    	String response;
+			    	try
+			    	{
+			    		response = sc.execute(new String[] { getResources().getString(R.string.getVenues) }).get();
+			    		handleResponse(response);
+			    	} 
+			    	catch (Exception e)
+			    	{
+						Log.v("Error", "Four Square Exception " + e.getMessage());   
+						return;
+			    	}
+				}
+				else
+				{
+					Toast.makeText(RouteMap.this,"No available run points", Toast.LENGTH_SHORT).show();
+				}
 			}
-			
-			
-			return result;
-		}
-		
-		 private String inputStreamToString(InputStream is) {
-			 
-	            String line = "";
-	            StringBuilder total = new StringBuilder();
-	 
-	            // Wrap a BufferedReader around the InputStream
-	            BufferedReader rd = new BufferedReader(new InputStreamReader(is));
-	 
-	            try {
-	                // Read response until the end
-	                while ((line = rd.readLine()) != null) {
-	                    total.append(line);
-	                }
-	            } catch (IOException e) {
-	                Log.e(TAG, e.getLocalizedMessage(), e);
-	            }
-	 
-	            // Return full string
-	            return total.toString();
-	        }
-	 
-		
-		@Override
-		protected void onPreExecute() {
-			super.onPreExecute();
-			showProgressDialog();
-		}
-		@Override
-		protected void onPostExecute(String result) {
-			// TODO Auto-generated method stub
-			super.onPostExecute(result);
-			handleResponse(result);
-			pDlg.dismiss();
-		}
-		
-		private  HttpResponse doResponse (String url){
-					
-			
-			//configure connection parameters ..connection timeouts
-			HttpParams httpp = new BasicHttpParams();			
-			HttpConnectionParams.setConnectionTimeout(httpp,CONN_TIMEOUT);
-			HttpConnectionParams.setSoTimeout(httpp, SOCKET_TIMEOUT);
-			
-			HttpClient httpClient = AndroidHttpClient.newInstance("dashmobileapp");
-			HttpResponse httpResponse = null;
-			try{
-			switch(taskType){
-			//fetch locations by the ll
-			case GET_PLACES:
-				url += getResources().getString(R.string.getVenues);
-				//set lat and lng 
-				url += "/"+latLng.substring(0, latLng.lastIndexOf(','))+"/"+ latLng.substring(latLng.lastIndexOf(',')+1,latLng.length());
-				url += "/"+15;
-				HttpGet httpGet = new HttpGet(url);
-				httpResponse = httpClient.execute(httpGet);				
-				break;
-			//post checkin data to server
-			case POST_CHECKIN:
-					
-				break;
+			catch(IndexOutOfBoundsException ex)
+			{
+				Toast.makeText(RouteMap.this,"No available workout data",Toast.LENGTH_SHORT).show();
 			}
-			}catch(ClientProtocolException ex){
-				Log.e(TAG, ex.getLocalizedMessage());
-			}catch(IOException ex){
-				Log.e(TAG, ex.getLocalizedMessage());
-			}
-			return httpResponse;
-			
 		}
-		
-	}
+	}	
 }

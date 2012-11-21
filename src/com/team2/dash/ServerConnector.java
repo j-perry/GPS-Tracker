@@ -13,6 +13,9 @@ import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.params.BasicHttpParams;
+import org.apache.http.params.HttpConnectionParams;
+import org.apache.http.params.HttpParams;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -20,6 +23,7 @@ import org.json.JSONObject;
 import android.app.ProgressDialog;
 import android.app.WallpaperManager;
 import android.content.Context;
+import android.net.http.AndroidHttpClient;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -33,12 +37,14 @@ import android.util.Log;
 public class ServerConnector extends AsyncTask<String, Integer, String>
 {
 	//Current website URL
-	private static String ServerURL;
 	private String mProcessMessage = "processing ...";	
-	public String responseString;	
+	private static final int SOCKET_TIMEOUT = 5000;	
+	private static final int CONN_TIMEOUT = 3000;	
 	private ProgressDialog pDlg = null;
+	private static String ServerURL;
 	private Context mContext = null;
 	private boolean mUseCodeIgniter;	
+	public String responseString;	
 	private String[][] mVars;	
 	
 	/*
@@ -55,7 +61,7 @@ public class ServerConnector extends AsyncTask<String, Integer, String>
 		mUseCodeIgniter = useCodeIgniter;
 		mContext = thisContext;			
 		mProcessMessage = processMessage; 		
-		ServerURL = ((Context) thisContext).getString(R.string.webServiceEndPointBen);		
+		ServerURL = ((Context) thisContext).getString(R.string.webServiceEndPoint);		
 	}	
 	
 	@Override
@@ -108,19 +114,20 @@ public class ServerConnector extends AsyncTask<String, Integer, String>
     	    }	    	    	    	        	    
 		}
 		
-		HttpPost httppost = new HttpPost(ServerURL + "/" + webPage + newURL);   	
-		
     	try 
-    	{
-
-    	    HttpResponse response = httpclient.execute(httppost);    	        	    
+    	{    		
+			HttpParams httpp = new BasicHttpParams();			
+			HttpConnectionParams.setConnectionTimeout(httpp,CONN_TIMEOUT);
+			HttpConnectionParams.setSoTimeout(httpp, SOCKET_TIMEOUT);
+			HttpPost httppost = new HttpPost(ServerURL + webPage + newURL);
+    	    HttpResponse response = httpclient.execute(httppost);
     	    HttpEntity entity = response.getEntity();    	    
-    	    temp = EntityUtils.toString(entity);
+    	    temp = EntityUtils.toString(entity);			
+			
+			    	    
 
     	    if(entity != null)
     	    {	
-    	    	//JSONObject CIResults = new JSONObject(temp);
-        	    //return CIResults;
     	    	return temp;
     	    } 
     	    else 
@@ -180,9 +187,7 @@ public class ServerConnector extends AsyncTask<String, Integer, String>
     	    temp = EntityUtils.toString(entity);
 
     	    if(entity != null)
-    	    {	
-    	    	//JSONObject SimpleResults = new JSONObject(temp);
-        	    //return SimpleResults;    	    	
+    	    {	  	    	
     	    	return temp;
     	    } 
     	    else 
