@@ -67,7 +67,12 @@ public class ServerConnector extends AsyncTask<String, Integer, String>
 	protected String doInBackground(String... params) 
 	{
 		String mWebPage = params[0];
-
+		if(mWebPage == "CheckIn.php")
+		{
+			ServerURL = ((Context) mContext).getString(R.string.webServiceEndPointBen);
+			mUseCodeIgniter = false;
+		}
+		
 		if(mUseCodeIgniter == true) 
 		{
 			responseString = ConnectAndSendUsingCodeIgniter(mVars, mWebPage);
@@ -111,7 +116,7 @@ public class ServerConnector extends AsyncTask<String, Integer, String>
 		{    	    
     	    for(String[] singleString : vars)
     	    {
-    	    	newURL = newURL + "/" + singleString[1];		    	    
+    	    	newURL = newURL + "/" + singleString[1];	    	    	
     	    }	    	    	    	        	    
 		}
 		
@@ -138,19 +143,19 @@ public class ServerConnector extends AsyncTask<String, Integer, String>
     	catch (ClientProtocolException e) 
     	{ 
     		e.printStackTrace(); 
-    		Log.v("Error", "SC ClientProtocol " + e.getMessage()); 
+    		Log.e("Error", "SC ClientProtocol " + e.getMessage()); 
     		return null; 
     	}    	
     	catch (IOException e) 
     	{ 
     		e.printStackTrace(); 
-    		Log.v("Error", "SC IOException " + e.getMessage());     		
+    		Log.e("Error", "SC IOException " + e.getMessage());     		
     		return null;
     	} 
     	catch (Exception e) 
     	{ 
     		e.printStackTrace(); 
-    		Log.v("Error", "SC Exception " + e.getMessage());        		
+    		Log.e("Error", "SC Exception " + e.getMessage());        		
     		return null;
     	}  
 	}
@@ -179,7 +184,7 @@ public class ServerConnector extends AsyncTask<String, Integer, String>
 	    	    List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(vars.length);
 	    	    for(String[] singleString : vars)
 	    	    {
-		    	    nameValuePairs.add(new BasicNameValuePair(singleString[0], singleString[1]));		    	    
+		    	    nameValuePairs.add(new BasicNameValuePair(singleString[0], singleString[1]));			    	    
 	    	    }	    	    	    	    
 	    	    httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
     		}
@@ -201,19 +206,19 @@ public class ServerConnector extends AsyncTask<String, Integer, String>
     	catch (ClientProtocolException e) 
     	{ 
     		e.printStackTrace(); 
-    		Log.v("Error", "SC ClientProtocol " + e.getMessage()); 
+    		Log.e("Error", "SC ClientProtocol " + e.getMessage()); 
     		return null;
     	}    	
     	catch (IOException e) 
     	{ 
     		e.printStackTrace(); 
-    		Log.v("Error", "SC IOException " + e.getMessage());     		
+    		Log.e("Error", "SC IOException " + e.getMessage());     		
     		return null;
     	} 
     	catch (Exception e) 
     	{ 
     		e.printStackTrace(); 
-    		Log.v("Error", "SC Exception " + e.getMessage());        		
+    		Log.e("Error", "SC Exception " + e.getMessage());        		
     		return null;
     	}     	
 	}	

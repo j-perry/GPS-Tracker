@@ -11,7 +11,6 @@ import org.json.JSONObject;
 import android.os.Bundle;
 import android.app.ListActivity;
 import android.content.Intent;
-import android.text.format.Time;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
@@ -67,8 +66,8 @@ public class CheckIn extends ListActivity
 	    		VenueInformation = new ArrayList<VenueInfo>();
 	    		for(int i = 0; i < venues.length(); i++)
 	    		{
-	    			VenueInfo singleVenue = new VenueInfo();
 	    			JSONObject singleJSONVenue = venues.getJSONObject(i);
+	    			VenueInfo singleVenue = new VenueInfo();	    			
 	    			singleVenue.setId(singleJSONVenue.getString("id"));
 	    			singleVenue.setLatitude(singleJSONVenue.getDouble("lat"));
 	    			singleVenue.setLongitude(singleJSONVenue.getDouble("lng"));
@@ -93,21 +92,28 @@ public class CheckIn extends ListActivity
     	VenueInfo venue = (VenueInfo)l.getItemAtPosition(position);
     	Toast.makeText(this, "Checking In at " + venue.toString(), Toast.LENGTH_SHORT).show();
     	
-    	String[][] vars = new String[4][2];
-    	vars[0][0] = "n";
-    	vars[0][1] = venue.venueName;
-    	vars[1][0] = "d";
-    	vars[1][1] = venue.venueAddress;
-    	vars[2][0] = "f";
-    	vars[2][1] = venue.id;
-    	vars[3][0] = "a";
-    	vars[3][1] = "addLocation";    	    
+    	String[][] vars = new String[7][2];
+    	vars[0][0] = "vn";
+    	vars[0][1] = venue.getVenueName();
+    	vars[1][0] = "va";
+    	vars[1][1] = venue.getVenueAddress();
+    	vars[2][0] = "id";
+    	vars[2][1] = venue.getId().toString();
+    	vars[3][0] = "la";
+    	vars[3][1] = venue.getLatitude() + "";
+    	vars[4][0] = "ln";
+    	vars[4][1] = venue.getLongitude() + "";    	
+    	vars[5][0] = "ud";
+    	//TODO: Fix the below
+    	vars[5][1] = 1 + "";    	    	
+    	vars[6][0] = "a";
+    	vars[6][1] = "LocationAndCheckin";    	    
     	
     	String response;
     	try
     	{
     		ServerConnector sc = new ServerConnector(vars, false, CheckIn.this, "Contacting Dash Server ...");
-    		response = sc.execute(new String[] { "AddLocation.php"}).get(5, TimeUnit.SECONDS);    	
+    		response = sc.execute(new String[] { "CheckIn.php"}).get(5, TimeUnit.SECONDS);    	
     	} 
     	catch (Exception e)
     	{
@@ -117,71 +123,41 @@ public class CheckIn extends ListActivity
     	}
     	
     	try 
-    	{   
-    		Log.v("Response", response);
+    	{       		
     		JSONObject singleVenue = ServerConnector.ConvertStringToObject(response);
 			
 			if (singleVenue.getString("success") == "true")
 			{
-				int result_http = singleVenue.getInt("result");
-				if(result_http > 0)
-				{					
-			    	String[][] new_vars = new String[4][2];
-			    	new_vars[0][0] = "n";
-			    	new_vars[0][1] = "" + result_http;
-			    	new_vars[1][0] = "d";
-			    	//new_vars[1][1] = 1; //TODO: Change to to use UserId
-			    	new_vars[1][1] = "" + 1;
-			    	new_vars[2][0] = "f";
-			    	Time now = new Time();
-			    	now.setToNow();
-			    	new_vars[2][1] = now.toString();
-			    	new_vars[3][0] = "a";
-			    	new_vars[3][1] = "addCheckin";    	    
-			    	
-			    	String second_response;
-			    	try
-			    	{
-			    		ServerConnector sc2 = new ServerConnector(new_vars, false, CheckIn.this, "Contacting Dash Server ...");
-			    		second_response = sc2.execute(new String[] { "AddCheckIn.php"}).get(5, TimeUnit.SECONDS);    	
-			    	} 
-			    	catch (Exception e)
-			    	{
-			    		e.printStackTrace();
-						Log.v("Error", "CheckIn Exception " + e.getMessage());   
-						return;
-			    	}	
-			    	
-			    	JSONObject singleCheckIn = ServerConnector.ConvertStringToObject(second_response);
-					
-					if (singleCheckIn.getString("success") == "true")
-					{
-						int result_http_checkin = singleCheckIn.getInt("result");
-						if(result_http_checkin > 0)
-						{
-					    	Intent intent = new Intent(this, VenueActivity.class);
-							intent.putExtra("id", venue.id);
-							intent.putExtra("dashId", result_http);
-							startActivity(intent); 
-						}
-						else 
-						{
-							Log.e("HTTP Result", "Checkin was not created due to DB Problem");
-						}
-					}	
-					else 
-					{
-						Log.e("HTTP Result", "Invalid call to php page");
-					}
-				} 
-				else if (result_http == -1)
+				int result_location = singleVenue.getInt("Location");
+				int result_checkin = singleVenue.getInt("Checkin");
+				if(result_location > 0 && result_checkin > 0)
 				{
-					Log.e("HTTP Result", "Location was not registered due to DB problem");					
+					Intent intent = new Intent(this, VenueActivity.class);					
+					intent.putExtra("dashId", result_location);
+					intent.putExtra("venueData", venue);
+					startActivity(intent); 
+					return;
 				}
-				else if (result_http == -2)
-				{					
-					Log.e("HTTP Result", "Four Square ID is already in use by other location (ID: " + venue.id +")");					
+				else if(result_checkin == -25)
+				{
+					Log.e("Checkin Error", "Missing Data from Checkin");
 				}
+				else if(result_checkin == -26)
+				{
+					Log.e("Checkin Error", "Unable to add Checkin Data due to DB Error");
+				}
+				else if(result_location == 0)
+				{
+					Log.e("Location Error", "Missing Data from Location");
+				}
+				else if(result_location == -1)
+				{
+					Log.e("Location Error", "Unable to add Location Data due to DB Error");
+				}
+				else if(result_location == -2)
+				{
+					Log.e("Location Error", "API ID is already in use");
+				}								
 			} 
 			else 
 			{
