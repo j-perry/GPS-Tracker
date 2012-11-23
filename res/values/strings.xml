@@ -29,6 +29,7 @@
     <string name="title_activity_check_in">CheckIn</string>
     <string name="title_activity_venue">Venue</string>
     <string name="webServiceEndPointBen">http://192.168.0.5/WebServer/PHP</string>
-    <string name="HTTPResponse"/>
+    <string name="HTTPResponse" />
+    <string name="title_activity_add_review">Add Review</string>
 
 </resources>

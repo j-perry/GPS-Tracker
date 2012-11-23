@@ -19,6 +19,7 @@
         <uses-library
             android:name="com.google.android.maps"
             android:required="true" />
+
         <activity
             android:name=".MainActivity"
             android:label="@string/title_activity_main" >
@@ -73,6 +74,13 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.team2.dash.CheckIn" />
+        </activity>
+        <activity
+            android:name=".AddReview"
+            android:label="@string/title_activity_add_review" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.team2.dash.VenueActivity" />
         </activity>
     </application>
 

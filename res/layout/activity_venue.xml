@@ -3,12 +3,32 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content" >
 
+    <com.google.android.maps.MapView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/mapview"
+        android:layout_width="fill_parent"
+        android:layout_height="360px"
+        android:layout_alignParentLeft="true"
+        android:apiKey="06O4TwmxLVKkKfGc_K3edtRqU2MeuxHcC1_awcA"
+        android:clickable="true" >
+    </com.google.android.maps.MapView>
+
+    <LinearLayout
+        android:id="@+id/linearLayout1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:orientation="vertical" >
+    </LinearLayout>
+
     <RelativeLayout
         android:id="@+id/relativeLayout1"
         android:layout_width="match_parent"
         android:layout_height="52dp"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true" >
+        android:layout_below="@+id/mapview" >
 
         <TextView
             android:id="@+id/textViewName"
@@ -23,18 +43,18 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"
+            android:layout_below="@+id/textViewName"
             android:text="Venue Address" />
-
+
         <TextView
             android:id="@+id/textViewRealName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_above="@+id/textViewAddress"
-            android:layout_marginLeft="36dp"
+            android:layout_marginLeft="23dp"
             android:layout_toRightOf="@+id/textViewAddress"
             android:text="-" />
-
+
         <TextView
             android:id="@+id/textViewRealAddress"
             android:layout_width="wrap_content"
@@ -43,25 +63,63 @@
             android:layout_alignBottom="@+id/textViewAddress"
             android:layout_alignLeft="@+id/textViewRealName"
             android:text="-" />
+
+        <TextView
+            android:id="@+id/textViewCheckin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textViewAddress"
+            android:layout_toLeftOf="@+id/textViewRealName"
+            android:text="Check Ins" />
+
+        <TextView
+            android:id="@+id/textViewRealCheckin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/textViewCheckin"
+            android:layout_alignBottom="@+id/textViewCheckin"
+            android:layout_alignLeft="@+id/textViewRealAddress"
+            android:text="-" />
+
+        <TextView
+            android:id="@+id/textViewRating"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/textViewRealCheckin"
+            android:layout_alignBottom="@+id/textViewRealCheckin"
+            android:layout_marginLeft="39dp"
+            android:layout_toRightOf="@+id/textViewRealCheckin"
+            android:text="Rating" />
+
+        <TextView
+            android:id="@+id/textViewRealRating"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/textViewRating"
+            android:layout_alignBottom="@+id/textViewRating"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="28dp"
+            android:text="-" />
+
     </RelativeLayout>
-
-    <com.google.android.maps.MapView
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/mapview"
-        android:layout_width="fill_parent"
-        android:layout_height="480px"
+
+    <Button
+        android:id="@+id/buttonAdd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/linearLayout1"
         android:layout_alignParentLeft="true"
-        android:layout_below="@+id/relativeLayout1"
-        android:apiKey="06O4TwmxLVKkKfGc_K3edtRqU2MeuxHcC1_awcA"
-        android:clickable="true" >
-    </com.google.android.maps.MapView>
-
+        android:layout_alignParentRight="true"
+        android:onClick="onAddClick"
+        android:text="Add Review" />
+
     <ListView
         android:id="@+id/listView1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_above="@+id/buttonAdd"
         android:layout_alignParentLeft="true"
-        android:layout_below="@+id/mapview" >
+        android:layout_below="@+id/relativeLayout1" >
 
     </ListView>
 

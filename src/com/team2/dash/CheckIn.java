@@ -29,6 +29,7 @@ public class CheckIn extends ListActivity
 	private ArrayList<String> listItems = new ArrayList<String>();
 	private List<VenueInfo> VenueInformation;	
 	private JSONObject results;		
+	private int userId = 1;
 	
     @Override
     public void onCreate(Bundle savedInstanceState) 
@@ -104,8 +105,7 @@ public class CheckIn extends ListActivity
     	vars[4][0] = "ln";
     	vars[4][1] = venue.getLongitude() + "";    	
     	vars[5][0] = "ud";
-    	//TODO: Fix the below
-    	vars[5][1] = 1 + "";    	    	
+    	vars[5][1] = userId + "";    	    	
     	vars[6][0] = "a";
     	vars[6][1] = "LocationAndCheckin";    	    
     	
@@ -134,7 +134,9 @@ public class CheckIn extends ListActivity
 				{
 					Intent intent = new Intent(this, VenueActivity.class);					
 					intent.putExtra("dashId", result_location);
+					intent.putExtra("userId", userId);
 					intent.putExtra("venueData", venue);
+					intent.putExtra("checkIn", true);
 					startActivity(intent); 
 					return;
 				}

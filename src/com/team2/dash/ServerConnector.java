@@ -67,11 +67,6 @@ public class ServerConnector extends AsyncTask<String, Integer, String>
 	protected String doInBackground(String... params) 
 	{
 		String mWebPage = params[0];
-		if(mWebPage == "CheckIn.php")
-		{
-			ServerURL = ((Context) mContext).getString(R.string.webServiceEndPointBen);
-			mUseCodeIgniter = false;
-		}
 		
 		if(mUseCodeIgniter == true) 
 		{
@@ -184,7 +179,7 @@ public class ServerConnector extends AsyncTask<String, Integer, String>
 	    	    List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(vars.length);
 	    	    for(String[] singleString : vars)
 	    	    {
-		    	    nameValuePairs.add(new BasicNameValuePair(singleString[0], singleString[1]));			    	    
+		    	    nameValuePairs.add(new BasicNameValuePair(singleString[0], singleString[1]));	
 	    	    }	    	    	    	    
 	    	    httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
     		}
