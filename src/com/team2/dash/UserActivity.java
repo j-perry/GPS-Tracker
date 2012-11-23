@@ -1,9 +1,17 @@
 package com.team2.dash;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+
 import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -12,6 +20,7 @@ import android.widget.Toast;
 
 
 import com.team2.dash.entity.User;
+import com.team2.dash.entity.VenueInfo;
 
 public class UserActivity extends ListActivity {
 
@@ -87,6 +96,74 @@ public class UserActivity extends ListActivity {
     	
     	return true;
     }
+
+    
+    boolean registerUserOnServer()
+    {
+    	
+    	User user = new User();
+    	DatabaseHandler db = new DatabaseHandler(this);
+    	user = db.getActiveUser();
+    	String txt;
+    	
+		String vars[][] = new String[5][2];
+		vars[0][0] = "firstname";
+		vars[0][1] = user.getFname();
+		vars[1][0] = "surname";
+		vars[1][1] = user.getSname();
+		vars[2][0] = "email";
+		vars[2][1] = user.getEmail();					
+		vars[3][0] = "username";
+		vars[3][1] = user.getEmail();					
+		vars[4][0] = "password";
+		vars[4][1] = user.getPassword();					
+		ServerConnector sc = new ServerConnector(vars, false, UserActivity.this, "Contacting Server ...");
+    	String response;
+    	try	{
+    		response = sc.execute(new String[] { getResources().getString(R.string.registerUser) }).get();
+    		Log.v("Response", response);
+    	} 
+    	catch (Exception e)	{
+			Log.v("Error", " Registering User  " + e.getMessage());   
+			return(false);
+    	}
+
+		JSONObject results = ServerConnector.ConvertStringToObject(response);
+
+		if (results == null) {
+			Toast.makeText(this, "Unable to pull results", Toast.LENGTH_SHORT).show();
+			return(false);
+		}
+
+		try
+    	{    		
+			String status = results.getString("status");
+
+    		if( status.equals("true") ){
+    			JSONObject userdata = results.getJSONObject("userdata");
+    			int userID = userdata.getInt("userid");
+    			user.setServerUserID(userID);
+    			db.updateUser(user);
+    			txt = user + "registered on the server";
+    			Toast.makeText(this, txt, Toast.LENGTH_SHORT).show();
+    		}
+    		else{
+    			txt = "Error: " + status + "\n" + results.getString("error");
+    			Toast.makeText(this, txt, Toast.LENGTH_SHORT).show();
+    			return(false);
+    		}
+    			
+    	}      	
+	    catch (JSONException e)
+	    {
+	    	Toast.makeText(this, "Unable to pull results", Toast.LENGTH_SHORT).show();
+			Log.v("Error", "JSONException " + e.getMessage());    			
+			return( false );
+	    }    	  
+
+    	
+    	return( true );
+    }
     
     /**
      * 
@@ -98,8 +175,8 @@ public class UserActivity extends ListActivity {
             Intent intent = new Intent(this, AddUserActivity.class);
             startActivityForResult(intent, 0);
             break;
-        case R.id.cancel:
-        	finish();
+        case R.id.add_on_server:
+            registerUserOnServer();
         	break;
         default:
         	break;

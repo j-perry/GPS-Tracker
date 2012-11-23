@@ -15,15 +15,16 @@
             android:onClick="onClick"
             android:text="New User" />
 
-        <Button
-            android:id="@+id/cancel"
+       <Button
+            android:id="@+id/add_on_server"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:onClick="onClick"
-            android:text="Cancel" />
+            android:text="Add User on Server" />
         
-    </LinearLayout>
-
+        
+        </LinearLayout>
+        
     <ListView
 		android:id="@android:id/list"
         android:layout_width="match_parent"

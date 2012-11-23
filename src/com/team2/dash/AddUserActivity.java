@@ -2,6 +2,7 @@ package com.team2.dash;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.EditText;
@@ -18,6 +19,7 @@ public class AddUserActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_user);
+        
     }
 
     /**
@@ -35,30 +37,46 @@ public class AddUserActivity extends Activity {
      */
     public void onClick(View view) {
     	String txt;
+    	User user = new User();
+    	DatabaseHandler db;
     	
         switch (view.getId()) {        
         case R.id.add:
-        	User user = new User();
         	user.setID(0);
+        	user.setServerUserID(-1);
         	user.setActive(DatabaseHandler.USER_NON_ACTIVE);
 
         	EditText editText = (EditText) findViewById(R.id.edit_fname);
-        	txt = editText.getText().toString();
-        	
+        	txt = editText.getText().toString();       	
         	if(txt.length() == 0) {
             	Toast.makeText(this, "Please enter first name", Toast.LENGTH_SHORT).show();
         		return;
-        	}
-        	
+        	}       	
         	user.setFname(txt);
 
         	editText = (EditText) findViewById(R.id.edit_sname);
         	txt = editText.getText().toString();
+        	if(txt.length() == 0) {
+            	Toast.makeText(this, "Please enter surname", Toast.LENGTH_SHORT).show();
+        		return;
+        	}       	
         	user.setSname(txt);
 
         	editText = (EditText) findViewById(R.id.edit_email);
         	txt = editText.getText().toString();
+        	if(txt.length() == 0) {
+            	Toast.makeText(this, "Please enter email address", Toast.LENGTH_SHORT).show();
+        		return;
+        	}       	
         	user.setEmail(txt);
+
+        	editText = (EditText) findViewById(R.id.edit_password);
+        	txt = editText.getText().toString();
+        	if(txt.length() == 0) {
+            	Toast.makeText(this, "Please enter password", Toast.LENGTH_SHORT).show();
+        		return;
+        	}       	
+        	user.setPassword(txt);
 
         	editText = (EditText) findViewById(R.id.edit_age);
         	txt = editText.getText().toString();
@@ -84,9 +102,9 @@ public class AddUserActivity extends Activity {
         	}
         	
         	user.setHeight(Integer.parseInt(txt));
-
-        	DatabaseHandler db = new DatabaseHandler(this);
-        	db.addUser(user);
+        	db = new DatabaseHandler(this);
+        	int id = db.addUser(user);
+        	db.setUserActive(id);
         	break;
         case R.id.cancel:
         	break;

@@ -23,7 +23,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
      */
 	
     // Database Version
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
  
     // Database Name
     private static final String DATABASE_NAME = "GPSTracker";
@@ -38,9 +38,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     static final int USER_NON_ACTIVE = 	0;
     
     // Table Users
-    private static final String[] TableUsersColumnNames = { 	"_id", 		"active", 	"fname", 	"sname", 	"email", 	"age", 		"weight", 	"height" };
-    private static final String[] TableUsersColumnTypes = { 	"INTEGER", 	"INTEGER", 	"TEXT", 	"TEXT", 	"TEXT", 	"INTEGER", 	"INTEGER", 	"INTEGER" };
-    private static final String[] TableUsersColumnKeys  = {		"PRIMARY KEY AUTOINCREMENT", "", "", "", "", "", "", "" };
+    private static final String[] TableUsersColumnNames = { 	"_id", 		"active", 	"fname", 	"sname", 	"email", 	"password",	"age", 		"weight", 	"height", "serverUserID" };
+    private static final String[] TableUsersColumnTypes = { 	"INTEGER", 	"INTEGER", 	"TEXT", 	"TEXT", 	"TEXT", 	"TEXT",		"INTEGER", 	"INTEGER", 	"INTEGER", "INTEGER" };
+    private static final String[] TableUsersColumnKeys  = {		"PRIMARY KEY AUTOINCREMENT", "", "", "", "", "", "", "", "", "" };
     	
     // Table Workouts
     private static final String[] TableWorkoutsColumnNames = { 	"_id", 		"user_id", 	"start", 	"stop", 	"distance",	"description" };
@@ -61,7 +61,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     }
     
  	/**
- 	 * 
+ 	 * Creates all tables in the database
  	 */
  	@Override
 	public void onCreate(SQLiteDatabase db) {
@@ -135,7 +135,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 	}
 	
 	/**
-	 * Adding new user to table users
+	 * Adds new user to table users
 	 * @param user
 	 * @return the row ID of the newly inserted row, or -1 if an error occurred 
 	 */
@@ -147,9 +147,11 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         values.put("fname", 	user.getFname());	
         values.put("sname", 	user.getSname());	
         values.put("email", 	user.getEmail());	
+        values.put("password", 	user.getPassword());	
         values.put("age", 		user.getAge());	
         values.put("weight",	user.getWeight());	
         values.put("height",	user.getHeight());	
+        values.put("serverUserID",	user.getServerUserID());	
  
         // Inserting Row
         int id = (int) db.insert(TABLE_USERS, null, values);
@@ -169,13 +171,15 @@ public class DatabaseHandler extends SQLiteOpenHelper {
  
         ContentValues values = new ContentValues();
         values.put("_id", 		user.getID());	
-        values.put("active", 	user.getActive());					// set to non-active
+        values.put("active", 	user.getActive());					
         values.put("fname", 	user.getFname());	
         values.put("sname", 	user.getSname());	
         values.put("email", 	user.getEmail());	
+        values.put("password", 	user.getPassword());	
         values.put("age", 		user.getAge());	
         values.put("weight",	user.getWeight());	
         values.put("height",	user.getHeight());	
+        values.put("serverUserID",	user.getServerUserID());	
  
         // Inserting Row
         int id = db.update(TABLE_USERS, values, TableUsersColumnNames[0] + " = ?",
@@ -203,8 +207,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 		}
 
 	    User user = new User(Integer.parseInt(cursor.getString(0)), Integer.parseInt(cursor.getString(1)),
-	                cursor.getString(2), cursor.getString(3), cursor.getString(4),
-	                Integer.parseInt(cursor.getString(5)), Integer.parseInt(cursor.getString(6)), Integer.parseInt(cursor.getString(7)));
+	                cursor.getString(2), cursor.getString(3), cursor.getString(4), cursor.getString(5),
+	                Integer.parseInt(cursor.getString(6)), Integer.parseInt(cursor.getString(7)), 
+	                Integer.parseInt(cursor.getString(8)), Integer.parseInt(cursor.getString(9)));
 	    
 	    // return user
         db.close(); // Closing database connection
@@ -229,8 +234,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 		}
   	 
 	    User user = new User(Integer.parseInt(cursor.getString(0)), Integer.parseInt(cursor.getString(1)),
-	                cursor.getString(2), cursor.getString(3), cursor.getString(4),
-	                Integer.parseInt(cursor.getString(5)), Integer.parseInt(cursor.getString(6)), Integer.parseInt(cursor.getString(7)));
+                cursor.getString(2), cursor.getString(3), cursor.getString(4), cursor.getString(5),
+                Integer.parseInt(cursor.getString(6)), Integer.parseInt(cursor.getString(7)), 
+                Integer.parseInt(cursor.getString(8)), Integer.parseInt(cursor.getString(9)));
 	    
 	    // return user
         db.close(); // Closing database connection
@@ -255,8 +261,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         if (cursor.moveToFirst()) {
             do {
         	    User user = new User(Integer.parseInt(cursor.getString(0)), Integer.parseInt(cursor.getString(1)),
-    	                cursor.getString(2), cursor.getString(3), cursor.getString(4),
-    	                Integer.parseInt(cursor.getString(5)), Integer.parseInt(cursor.getString(6)), Integer.parseInt(cursor.getString(7)));
+                        cursor.getString(2), cursor.getString(3), cursor.getString(4), cursor.getString(5),
+                        Integer.parseInt(cursor.getString(6)), Integer.parseInt(cursor.getString(7)), 
+                        Integer.parseInt(cursor.getString(8)), Integer.parseInt(cursor.getString(9)));
                 // Adding contact to list
                 userList.add(user);
             } while (cursor.moveToNext());
@@ -267,7 +274,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     }
     	    
     /**
-     * Making one of the user active (only one can be active at any moment)
+     * Makes one of the user active (only one can be active at any moment)
      * @param id
      */
 	public void setUserActive(int id) {
@@ -284,7 +291,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 	}
         
 	/**
-	 * Deleting single user
+	 * Deletes single user
 	 * @param id
 	 */
     public void deleteUser(int id) {
@@ -295,7 +302,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     }
     
     /**
-     * 
+     * Adds new workout
      * @param workout
      * @return
      */
@@ -316,7 +323,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     }
 	
 	/**
-	 * 
+	 * Deletes workout with given workout ID
 	 * @param id
 	 */
     public void deleteWorkout( int id ) {

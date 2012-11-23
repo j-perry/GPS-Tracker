@@ -9,6 +9,7 @@
     <string name="edit_fname">First Name</string>
     <string name="edit_sname">Second Name</string>
     <string name="edit_email">Email</string>
+    <string name="edit_password">Password</string>
     <string name="edit_age">Age</string>
     <string name="edit_weight">Weight</string>
     <string name="edit_height">Height</string>
@@ -26,6 +27,7 @@
     <string name="checkin">Checkin</string>
     <string name="webServiceEndPoint">http://ec2-54-242-181-128.compute-1.amazonaws.com/dashwebsvc/index.php</string>
     <string name="getVenues">/LocationSearch/index</string>
+    <string name="registerUser">/UserAccount/register_user</string>   
     <string name="title_activity_check_in">CheckIn</string>
     <string name="title_activity_venue">Venue</string>
     <string name="webServiceEndPointBen">http://192.168.0.5/WebServer/PHP</string>

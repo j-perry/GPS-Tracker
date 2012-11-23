@@ -14,6 +14,7 @@ public class User {
 	int		age;		// age
 	int		weight;		// weight
 	int 	height;		// height
+	int		serverUserID;
 	
 	/**
 	 * 
@@ -22,19 +23,23 @@ public class User {
 	 * @param firstName
 	 * @param secondName
 	 * @param email
+	 * @param password
 	 * @param age
 	 * @param weight
 	 * @param height
+	 * @param serverUserID
 	 */
-	public User(int id, int active, String firstName, String secondName, String email, int age, int weight, int height) {
+	public User(int id, int active, String firstName, String secondName, String email, String password, int age, int weight, int height, int serverUserID) {
 		this.id = id;
 		this.active = active;
 		this.firstName = firstName;
 		this.secondName = secondName;
 		this.email = email;
+		this.password = password;
 		this.age = age;
 		this.weight = weight;
 		this.height = height;
+		this.serverUserID = serverUserID;
 	}
 	
 	/**
@@ -136,6 +141,22 @@ public class User {
 	 * 
 	 * @return
 	 */
+	public String getPassword(){
+		return this.password;
+	}
+	
+	/**
+	 * 
+	 * @param email
+	 */
+	public void setPassword(String password){
+		this.password = password;
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
 	public int getAge(){		
 		return this.age;	
 	}
@@ -179,4 +200,20 @@ public class User {
 	public void setHeight(int height){		
 		this.height = height;	
 	}
+	/**
+	 * 
+	 * @param serverUserID
+	 */
+
+	public void setServerUserID(int serverUserID){		
+		this.serverUserID = serverUserID;	
+	}
+	/**
+	 * 
+	 * @return
+	 */
+	public int getServerUserID(){		
+		return this.serverUserID;	
+	}
+	
 }
