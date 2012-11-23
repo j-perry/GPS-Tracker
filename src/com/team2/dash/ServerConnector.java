@@ -67,6 +67,11 @@ public class ServerConnector extends AsyncTask<String, Integer, String>
 	protected String doInBackground(String... params) 
 	{
 		String mWebPage = params[0];
+		//if(mWebPage == "CheckIn.php" || mWebPage == "AddReview.php")
+		//{
+		//	ServerURL = ((Context) mContext).getString(R.string.webServiceEndPointBen);
+		//	mUseCodeIgniter = false;
+		//}
 		
 		if(mUseCodeIgniter == true) 
 		{

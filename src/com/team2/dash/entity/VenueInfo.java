@@ -1,15 +1,19 @@
 package com.team2.dash.entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.os.Parcel;
 import android.os.Parcelable;
 
 public class VenueInfo implements Parcelable
 {
-	public String id;
-	public String venueName;
 	public String venueAddress;
+	public String venueName;
 	public double latitude;
 	public double longitude;
+	public String id;
+	public List<VenueReview> reviews;
 	
 	public VenueInfo()
 	{
@@ -23,6 +27,8 @@ public class VenueInfo implements Parcelable
 		this.venueAddress = in.readString();
 		this.latitude = in.readDouble();
 		this.longitude = in.readDouble();
+		this.reviews = new ArrayList<VenueReview>();
+		in.readList(this.reviews, null);
 	}	
 	
 	public String toString()
@@ -92,6 +98,7 @@ public class VenueInfo implements Parcelable
 		dest.writeString(venueAddress);
 		dest.writeDouble(latitude);
 		dest.writeDouble(longitude);
+		dest.writeList(reviews);
 	}
 
 	public static final Parcelable.Creator CREATOR = new Parcelable.Creator() 
