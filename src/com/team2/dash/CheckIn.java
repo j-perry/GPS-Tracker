@@ -95,32 +95,30 @@ public class CheckIn extends ListActivity
     } 
     
     @Override
-    public void onListItemClick( ListView l, View v, int position, long id) 
+    public void onListItemClick(ListView l, View v, int position, long id) 
     {
     	VenueInfo venue = (VenueInfo)l.getItemAtPosition(position);
     	Toast.makeText(this, "Checking In at " + venue.toString(), Toast.LENGTH_SHORT).show();
-    	
-    	String[][] vars = new String[7][2];
-    	vars[0][0] = "vn";
-    	vars[0][1] = venue.getVenueName();
-    	vars[1][0] = "va";
-    	vars[1][1] = venue.getVenueAddress();
-    	vars[2][0] = "id";
-    	vars[2][1] = venue.getId().toString();
-    	vars[3][0] = "la";
-    	vars[3][1] = venue.getLatitude() + "";
-    	vars[4][0] = "ln";
-    	vars[4][1] = venue.getLongitude() + "";    	
-    	vars[5][0] = "ud";
-    	vars[5][1] = userId + "";    	    	
-    	vars[6][0] = "a";
-    	vars[6][1] = "LocationAndCheckin";    	    
+    
+    	String[][] vars = new String[6][2];
+    	vars[0][0] = "user_id"; 
+    	vars[0][1] = userId + "";  
+    	vars[1][0] = "location_id";
+    	vars[1][1] = venue.getId().toString();
+    	vars[2][0] = "location_name";
+    	vars[2][1] = venue.getVenueName();
+    	vars[3][0] = "location_address";     			
+    	vars[3][1] = venue.getVenueAddress();
+    	vars[4][0] = "location_lat";
+    	vars[4][1] = venue.getLatitude() + "";
+    	vars[5][0] = "location_lng";
+    	vars[5][1] = venue.getLongitude() + "";  	    
     	
     	String response;
     	try
     	{
-    		ServerConnector sc = new ServerConnector(vars, false, CheckIn.this, "Contacting Dash Server ...");
-    		response = sc.execute(new String[] { "CheckIn.php"}).get(5, TimeUnit.SECONDS);    	
+    		ServerConnector sc = new ServerConnector(vars, true, CheckIn.this, "Contacting Dash Server ...");
+    		response = sc.execute(new String[] {  getResources().getString(R.string.checkinUser) }).get(5, TimeUnit.SECONDS);    	
     	} 
     	catch (Exception e)
     	{
@@ -133,41 +131,38 @@ public class CheckIn extends ListActivity
     	{       		
     		JSONObject singleVenue = ServerConnector.ConvertStringToObject(response);
 			
-			if (singleVenue.getString("success") == "true")
-			{
-				int result_location = singleVenue.getInt("Location");
-				int result_checkin = singleVenue.getInt("Checkin");
-				if(result_location > 0 && result_checkin > 0)
+			if (singleVenue.getString("status") == "true")
+			{				
+				JSONObject checkInObject = singleVenue.getJSONObject("checkin");
+				JSONObject locationObject = checkInObject.getJSONObject("location");
+				int locationId = locationObject.getInt("locationid");
+				if(locationId > 0)
 				{
 					Intent intent = new Intent(this, VenueActivity.class);					
-					intent.putExtra("dashId", result_location);
+					intent.putExtra("dashId", locationId);
 					intent.putExtra("userId", userId);
 					intent.putExtra("venueData", venue);
 					intent.putExtra("checkIn", true);
 					startActivity(intent); 
 					return;
-				}
-				else if(result_checkin == -25)
+				}	
+				else
 				{
-					Log.e("Checkin Error", "Missing Data from Checkin");
+					Log.e("HTTP Result", "No Location ID was returned");
 				}
-				else if(result_checkin == -26)
-				{
-					Log.e("Checkin Error", "Unable to add Checkin Data due to DB Error");
-				}
-				else if(result_location == 0)
-				{
-					Log.e("Location Error", "Missing Data from Location");
-				}
-				else if(result_location == -1)
-				{
-					Log.e("Location Error", "Unable to add Location Data due to DB Error");
-				}
-				else if(result_location == -2)
-				{
-					Log.e("Location Error", "API ID is already in use");
-				}								
 			} 
+			else if(singleVenue.getString("status") == "NOT_USER")
+			{
+				Log.e("HTTP Result", "Invalid User ID");
+			}
+			else if(singleVenue.getString("status") == "MISSING_PARAMETER")
+			{
+				Log.e("HTTP Result", "Data missing from call");
+			}
+			else if(singleVenue.getString("status") == "EXCEPTION_ERROR")
+			{
+				Log.e("HTTP Result", "Unknown exception error");
+			}		
 			else 
 			{
 				Log.e("HTTP Result", "Invalid call to php page");

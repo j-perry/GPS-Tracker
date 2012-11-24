@@ -113,22 +113,41 @@ public class ServerConnector extends AsyncTask<String, Integer, String>
 		
     	//Lets build our code igniter URL here
     	if (vars != null && vars.length > 0)
-		{    	    
+		{    	       		
     	    for(String[] singleString : vars)
     	    {
-    	    	newURL = newURL + "/" + singleString[1];	    	    	
+    	    	if(singleString[0] == "")
+    	    	{
+    	    		newURL = newURL + "/" + singleString[1];
+    	    	}
     	    }	    	    	    	        	    
-		}
+		}    	
 		
     	try 
     	{    		
+    		Log.v("Info", ServerURL + webPage + newURL);
 			HttpParams httpp = new BasicHttpParams();			
 			HttpConnectionParams.setConnectionTimeout(httpp,CONN_TIMEOUT);
 			HttpConnectionParams.setSoTimeout(httpp, SOCKET_TIMEOUT);
 			HttpPost httppost = new HttpPost(ServerURL + webPage + newURL);
+			
+			if (vars != null && vars.length > 0)
+			{
+	    	    List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(vars.length);
+	    	    for(String[] singleString : vars)
+	    	    {
+	    	    	if(singleString[0] != "")
+	    	    	{
+	    	    		nameValuePairs.add(new BasicNameValuePair(singleString[0], singleString[1]));
+	    	    	}
+	    	    }	    	    	    	    
+	    	    httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+			}			
+			
     	    HttpResponse response = httpclient.execute(httppost);
     	    HttpEntity entity = response.getEntity();    	    
-    	    temp = EntityUtils.toString(entity);			
+    	    temp = EntityUtils.toString(entity);	
+    	    Log.v("Error", temp);
 
     	    if(entity != null)
     	    {	
