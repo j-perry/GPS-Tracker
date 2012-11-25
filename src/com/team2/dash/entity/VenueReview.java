@@ -1,8 +1,11 @@
 package com.team2.dash.entity;
 
+import java.util.*;
+
 public class VenueReview 
 {
 	
+	public Date normalDate;
 	public double ReviewRating;
 	public int ReviewDateTime;
 	public int ReviewPositive;
@@ -11,6 +14,27 @@ public class VenueReview
 	public int DBLocationId;
 	public int DBReviewId;	
 	public int DBUserId;
+	
+	
+	public String toString()
+	{		
+		String fullReturn;
+		fullReturn = normalDate.toString() + " - Rating: ";
+		if(ReviewRating == 0.0)
+		{
+			fullReturn = fullReturn + "No Rating";
+		}
+		else
+		{
+			fullReturn = fullReturn + ReviewRating + "";
+		}
+		fullReturn = fullReturn +"\n" + ReviewText;
+		
+		//fullReturn = fullReturn + "\nPositive:" + ReviewPositive;
+		//fullReturn = fullReturn + "- Negative:" + ReviewNegative;
+		
+		return fullReturn;
+	}	
 	
 	public double getReviewRating() 
 	{
@@ -22,13 +46,15 @@ public class VenueReview
 		ReviewRating = reviewRating;
 	}
 	
-	public int getReviewDateTime() {
+	public int getReviewDateTime() 
+	{
 		return ReviewDateTime;
 	}
 	
 	public void setReviewDateTime(int reviewDateTime) 
 	{
 		ReviewDateTime = reviewDateTime;
+		normalDate = new Date((long)ReviewDateTime*1000);		
 	}
 	
 	public int getReviewPositive() 

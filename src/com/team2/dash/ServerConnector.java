@@ -67,7 +67,7 @@ public class ServerConnector extends AsyncTask<String, Integer, String>
 	protected String doInBackground(String... params) 
 	{
 		String mWebPage = params[0];
-		//if(mWebPage == "CheckIn.php" || mWebPage == "AddReview.php")
+		//if(mWebPage == "AddReview.php")
 		//{
 		//	ServerURL = ((Context) mContext).getString(R.string.webServiceEndPointBen);
 		//	mUseCodeIgniter = false;
@@ -116,7 +116,7 @@ public class ServerConnector extends AsyncTask<String, Integer, String>
 		{    	       		
     	    for(String[] singleString : vars)
     	    {
-    	    	if(singleString[0] == "")
+    	    	if(singleString[0] == null || singleString[0].isEmpty())
     	    	{
     	    		newURL = newURL + "/" + singleString[1];
     	    	}
@@ -124,30 +124,31 @@ public class ServerConnector extends AsyncTask<String, Integer, String>
 		}    	
 		
     	try 
-    	{    		
-    		Log.v("Info", ServerURL + webPage + newURL);
+    	{    		    		
 			HttpParams httpp = new BasicHttpParams();			
 			HttpConnectionParams.setConnectionTimeout(httpp,CONN_TIMEOUT);
 			HttpConnectionParams.setSoTimeout(httpp, SOCKET_TIMEOUT);
-			HttpPost httppost = new HttpPost(ServerURL + webPage + newURL);
+			HttpPost httppost = new HttpPost(ServerURL + webPage + newURL);			
 			
 			if (vars != null && vars.length > 0)
 			{
 	    	    List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(vars.length);
 	    	    for(String[] singleString : vars)
 	    	    {
-	    	    	if(singleString[0] != "")
+	    	    	if(singleString[0] != null && !singleString[0].isEmpty())
 	    	    	{
 	    	    		nameValuePairs.add(new BasicNameValuePair(singleString[0], singleString[1]));
 	    	    	}
-	    	    }	    	    	    	    
-	    	    httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+	    	    }	    	 
+	    	    if(nameValuePairs.size() > 0)
+	    	    {
+	    	    	httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+	    	    }
 			}			
 			
     	    HttpResponse response = httpclient.execute(httppost);
     	    HttpEntity entity = response.getEntity();    	    
-    	    temp = EntityUtils.toString(entity);	
-    	    Log.v("Error", temp);
+    	    temp = EntityUtils.toString(entity);	    	    
 
     	    if(entity != null)
     	    {	
