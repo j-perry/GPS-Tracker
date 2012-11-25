@@ -9,7 +9,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.os.Bundle;
+import android.app.AlertDialog;
 import android.app.ListActivity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.util.Log;
 import android.view.Menu;
@@ -38,13 +40,36 @@ public class CheckIn extends ListActivity
         super.onCreate(savedInstanceState);
         
         DatabaseHandler db = new DatabaseHandler(this);
-        activeUser = db.getActiveUser();
-//        userId = activeUser.getID();
-        userId = 1;
+        activeUser = db.getActiveUser();        
+        userId = activeUser.getServerUserID();  
         
         setContentView(R.layout.activity_check_in);
         Bundle bundle = getIntent().getExtras();
         String venueJson = bundle.getString("locationJson");
+        
+        if(userId == -1)
+        {
+        	AlertDialog alertDialog = new AlertDialog.Builder(this).create();
+			alertDialog.setTitle("Error");
+			alertDialog.setMessage("You have not registered with Dash Servers.\nPlease go to User Maintenance");
+			alertDialog.setButton(DialogInterface.BUTTON_POSITIVE, "OK", new DialogInterface.OnClickListener() 
+			{
+				public void onClick(DialogInterface dialog, int arg1) 
+				{
+					dialog.cancel();
+			        Intent intent = new Intent(CheckIn.this, RouteMap.class);
+			        Bundle bundle = getIntent().getExtras();
+			        intent.putExtra("workoutID", bundle.getInt("workoutID"));        
+			    	startActivity(intent);
+					return;
+	            }
+			});						
+			alertDialog.show();		
+			
+			return;
+        }
+        
+        
     	results = ServerConnector.ConvertStringToObject(venueJson);    	
         RefreshVenueInfo();  
         
@@ -98,7 +123,6 @@ public class CheckIn extends ListActivity
     public void onListItemClick(ListView l, View v, int position, long id) 
     {
     	VenueInfo venue = (VenueInfo)l.getItemAtPosition(position);
-    	Toast.makeText(this, "Checking In at " + venue.toString(), Toast.LENGTH_SHORT).show();
     
     	String[][] vars = new String[6][2];
     	vars[0][0] = "user_id"; 
@@ -129,19 +153,22 @@ public class CheckIn extends ListActivity
     	
     	try 
     	{       		
-    		JSONObject singleVenue = ServerConnector.ConvertStringToObject(response);
-			
-			if (singleVenue.getString("status") == "true")
+    		JSONObject singleVenue = ServerConnector.ConvertStringToObject(response);    		
+    		String statusResponse = singleVenue.getString("status");
+    		
+			if (statusResponse.equals("true"))
 			{				
 				JSONObject checkInObject = singleVenue.getJSONObject("checkin");
 				JSONObject locationObject = checkInObject.getJSONObject("location");
-				int locationId = locationObject.getInt("locationid");
+				//int locationId = locationObject.getInt("locationid");
+				int locationId = 1;
 				if(locationId > 0)
 				{
 					Intent intent = new Intent(this, VenueActivity.class);					
 					intent.putExtra("dashId", locationId);
 					intent.putExtra("userId", userId);
-					intent.putExtra("venueData", venue);
+					venue.setVenueCheckins(locationObject.getInt("location_checkins"));
+					intent.putExtra("venueData", venue);					
 					intent.putExtra("checkIn", true);
 					startActivity(intent); 
 					return;
@@ -151,15 +178,15 @@ public class CheckIn extends ListActivity
 					Log.e("HTTP Result", "No Location ID was returned");
 				}
 			} 
-			else if(singleVenue.getString("status") == "NOT_USER")
-			{
+			else if(statusResponse.equals("NOT_USER"))
+			{				
 				Log.e("HTTP Result", "Invalid User ID");
 			}
-			else if(singleVenue.getString("status") == "MISSING_PARAMETER")
+			else if(statusResponse.equals("MISSING_PARAMETER"))
 			{
 				Log.e("HTTP Result", "Data missing from call");
 			}
-			else if(singleVenue.getString("status") == "EXCEPTION_ERROR")
+			else if(statusResponse.equals("EXCEPTION_ERROR"))
 			{
 				Log.e("HTTP Result", "Unknown exception error");
 			}		

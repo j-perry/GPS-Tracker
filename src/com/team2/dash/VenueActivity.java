@@ -52,7 +52,22 @@ public class VenueActivity extends MapActivity
         textVenue.setText(venue.getVenueName());
         TextView textAddress = (TextView)findViewById(R.id.textViewRealAddress);
         textAddress.setText(venue.getVenueAddress());
+        TextView textCheckin = (TextView)findViewById(R.id.textViewRealCheckin);
+        textCheckin.setText("" + venue.getVenueCheckins());
+        
+        String ratingText;
+        if(venue.isVenueUseRating() == true)
+        {
+        	ratingText = "" + venue.getVenueRating();
+        } 
+        else
+        {
+        	ratingText = "No Ratings";
+        }
 
+        TextView textRating = (TextView)findViewById(R.id.textViewRealRating);
+        textRating.setText(ratingText);
+    	
         venueLocation = new GeoPoint((int)(venue.getLatitude() * 1e6), (int)(venue.getLongitude() * 1e6));
         
         mapView = (MapView) findViewById(R.id.mapview);

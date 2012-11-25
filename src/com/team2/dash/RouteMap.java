@@ -172,6 +172,7 @@ public class RouteMap extends MapActivity {
 	{
 		Intent intent = new Intent(this, CheckIn.class);
 		intent.putExtra("locationJson", response);
+		intent.putExtra("workoutID", workoutID);
 		startActivity(intent);
 	}
 	

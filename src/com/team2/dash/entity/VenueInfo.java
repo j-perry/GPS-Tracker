@@ -12,7 +12,11 @@ public class VenueInfo implements Parcelable
 	public String venueName;
 	public double latitude;
 	public double longitude;
+	public int venueCheckins = 0;
+	public double venueRating;
+	public boolean venueUseRating = false;
 	public String id;
+	public int databaseId;
 	public List<VenueReview> reviews;
 	
 	public VenueInfo()
@@ -27,6 +31,10 @@ public class VenueInfo implements Parcelable
 		this.venueAddress = in.readString();
 		this.latitude = in.readDouble();
 		this.longitude = in.readDouble();
+		this.venueCheckins = in.readInt();
+		this.venueRating = in.readDouble();
+		this.venueUseRating = in.readByte() == 1;
+		this.databaseId = in.readInt();
 		this.reviews = new ArrayList<VenueReview>();
 		in.readList(this.reviews, null);
 	}	
@@ -85,8 +93,59 @@ public class VenueInfo implements Parcelable
 	{
 		this.longitude = longitude;
 	}
+	
+	public int getVenueCheckins() 
+	{
+		return venueCheckins;
+	}
 
-	public int describeContents() {
+	public void setVenueCheckins(int venueCheckins) 
+	{
+		this.venueCheckins = venueCheckins;
+	}
+
+	public double getVenueRating() 
+	{
+		return venueRating;
+	}
+
+	public void setVenueRating(double venueRating) 
+	{
+		this.venueRating = venueRating;
+	}
+
+	public boolean isVenueUseRating() 
+	{
+		return venueUseRating;
+	}
+
+	public void setVenueUseRating(boolean venueUseRating) 
+	{
+		this.venueUseRating = venueUseRating;
+	}
+
+	public List<VenueReview> getReviews() 
+	{
+		return reviews;
+	}
+
+	public void setReviews(List<VenueReview> reviews) 
+	{
+		this.reviews = reviews;
+	}
+		
+	public int getDatabaseId() 
+	{
+		return databaseId;
+	}
+
+	public void setDatabaseId(int databaseId) 
+	{
+		this.databaseId = databaseId;
+	}
+
+	public int describeContents() 
+	{
 		// TODO Auto-generated method stub
 		return 0;
 	}
@@ -98,7 +157,11 @@ public class VenueInfo implements Parcelable
 		dest.writeString(venueAddress);
 		dest.writeDouble(latitude);
 		dest.writeDouble(longitude);
-		dest.writeList(reviews);
+		dest.writeInt(venueCheckins);
+		dest.writeDouble(venueRating);
+		dest.writeByte((byte) (venueUseRating ? 1 : 0));
+		dest.writeInt(databaseId);
+		dest.writeList(reviews);		
 	}
 
 	public static final Parcelable.Creator CREATOR = new Parcelable.Creator() 
@@ -108,7 +171,8 @@ public class VenueInfo implements Parcelable
             return new VenueInfo(in);
         }
 
-		public VenueInfo[] newArray(int size) {
+		public VenueInfo[] newArray(int size) 
+		{
 			// TODO Auto-generated method stub
 			return new VenueInfo[size];
 		} 
