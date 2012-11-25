@@ -54,7 +54,13 @@ public class User {
 	 */
     @Override
 	public String toString() {
-		return( this.getFname() + " " + this.getSname() + " " + this.getActive() );
+    	String txt;
+    	if( this.getActive() == 1 )
+    		txt = "*";
+    	else
+    		txt = " ";
+    		
+		return( txt + this.getFname() + " " + this.getSname() );
 	}
 	
     /**

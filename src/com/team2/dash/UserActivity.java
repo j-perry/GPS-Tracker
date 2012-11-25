@@ -98,7 +98,12 @@ public class UserActivity extends ListActivity {
     }
 
     
-    boolean registerUserOnServer()
+    /**
+     * Registers active user on the server
+     * 
+      * @return true if success and false in case of error
+     */
+   boolean registerUserOnServer()
     {
     	
     	User user = new User();

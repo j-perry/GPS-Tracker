@@ -416,6 +416,7 @@ public class TrackerActivity  extends Activity implements LocationListener {
 //     	stopChrono = true;
      	trackerStatus = tStatus.PAUSE;
         button_start.setEnabled(true);            
+        button_start.setText("RESUME");            
         button_pause.setEnabled(false);            
         button_end.setEnabled(true);
         ProgressBar progressBar = (ProgressBar) findViewById(R.id.progressBar1);

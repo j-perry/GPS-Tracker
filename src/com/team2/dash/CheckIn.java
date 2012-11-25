@@ -29,12 +29,19 @@ public class CheckIn extends ListActivity
 	private ArrayList<String> listItems = new ArrayList<String>();
 	private List<VenueInfo> VenueInformation;	
 	private JSONObject results;		
-	private int userId = 1;
+	private User	activeUser = null;		// keep active user in here
+	int				userId;
 	
     @Override
     public void onCreate(Bundle savedInstanceState) 
     {
         super.onCreate(savedInstanceState);
+        
+        DatabaseHandler db = new DatabaseHandler(this);
+        activeUser = db.getActiveUser();
+//        userId = activeUser.getID();
+        userId = 1;
+        
         setContentView(R.layout.activity_check_in);
         Bundle bundle = getIntent().getExtras();
         String venueJson = bundle.getString("locationJson");
