@@ -28,7 +28,11 @@ public class VenueReview
 		{
 			fullReturn = fullReturn + ReviewRating + "";
 		}
-		fullReturn = fullReturn +"\n" + ReviewText;
+		
+		if(!ReviewText.equals(""))
+		{
+			fullReturn = fullReturn +"\n" + ReviewText;
+		}				
 		
 		//fullReturn = fullReturn + "\nPositive:" + ReviewPositive;
 		//fullReturn = fullReturn + "- Negative:" + ReviewNegative;

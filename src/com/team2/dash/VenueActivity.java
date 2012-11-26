@@ -17,6 +17,8 @@ import com.team2.dash.entity.MapItemizedOverlay;
 import com.team2.dash.entity.VenueInfo;
 import com.team2.dash.entity.VenueReview;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -24,6 +26,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -44,6 +47,10 @@ public class VenueActivity extends MapActivity
 	@Override
     public void onCreate(Bundle savedInstanceState) 
 	{
+		//This onCreate method is crazy.
+		//I apologise for it now, but it's just got so much to do before page load
+		//~Ben
+		
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_venue);
         Bundle bundle = getIntent().getExtras();
@@ -131,6 +138,56 @@ public class VenueActivity extends MapActivity
 			      	
 		       	ListView ourList = (ListView)findViewById(R.id.listView1);
 		       	ourList.setAdapter(adapter);
+		       	
+		       	ourList.setClickable(true);
+		       	ourList.setOnItemClickListener(new AdapterView.OnItemClickListener() 
+		       	{		       	  
+		       		public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) 
+		       		{
+		       			final int pos = position;
+		       			AlertDialog alertDialog = new AlertDialog.Builder(VenueActivity.this).create();
+		    			alertDialog.setTitle("Rate Review");
+		    			alertDialog.setMessage("How would you like to rate this review?");
+		    			alertDialog.setButton(DialogInterface.BUTTON_POSITIVE, "+1 Positive", new DialogInterface.OnClickListener() 
+		    			{
+		    				public void onClick(DialogInterface dialog, int arg1) 
+		    				{
+				       			ListView ourList = (ListView)findViewById(R.id.listView1);
+				       			VenueReview vr = (VenueReview)ourList.getItemAtPosition(pos);				       			
+		    					AddRatingToReview(vr, ourList, false);
+		    					dialog.cancel();	
+		    					return;
+		    	            }
+		    			});	
+		    			alertDialog.setButton(DialogInterface.BUTTON_NEGATIVE, "+1 Negative", new DialogInterface.OnClickListener() 
+		    			{
+		    				public void onClick(DialogInterface dialog, int arg1) 
+		    				{
+				       			ListView ourList = (ListView)findViewById(R.id.listView1);
+				       			VenueReview vr = (VenueReview)ourList.getItemAtPosition(pos);				       			
+		    					AddRatingToReview(vr, ourList, false);
+		    					dialog.cancel();
+		    					return;
+		    	            }
+		    			});				    			
+		    			alertDialog.show();	
+		       		}
+		       	});
+
+		       	ourList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() 
+		       	{
+
+		            public boolean onItemLongClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
+		       			
+		            	ListView ourList = (ListView)findViewById(R.id.listView1);
+		       			VenueReview vr = (VenueReview)ourList.getItemAtPosition(position);
+		       			Intent intent = new Intent(VenueActivity.this, FollowActivity.class);					
+		       			intent.putExtra("followId", vr.DBUserId);
+		       			startActivity(intent); 
+		                return true;
+		            }
+		        }); 
+
 			} 			
 		}     
 	    catch(JSONException e)
@@ -139,11 +196,7 @@ public class VenueActivity extends MapActivity
 			Log.v("Error", "CheckIn Exception " + e.getMessage());   
 			return;
 	    }
-    	
-	
-
-        //TODO: Get Reviews
-        //TODO: On list view, show positive + negative review numbers 
+    	 
     }
 
     @Override
@@ -152,7 +205,6 @@ public class VenueActivity extends MapActivity
         getMenuInflater().inflate(R.menu.activity_venue, menu);
         return true;
     }
-
     
     @Override
     public boolean onOptionsItemSelected(MenuItem item) 
@@ -203,6 +255,7 @@ public class VenueActivity extends MapActivity
 			return;
 	    }    	  
     }    
+    
 
 	@Override
 	protected boolean isRouteDisplayed() 
@@ -218,6 +271,11 @@ public class VenueActivity extends MapActivity
 		intent.putExtra("venueData", venue);
 		intent.putExtra("checkIn", false);
 		startActivity(intent); 
+		return;
+	}	
+	
+	public void AddRatingToReview(VenueReview review, ListView list, boolean usePositive)
+	{
 		return;
 	}	
 }
