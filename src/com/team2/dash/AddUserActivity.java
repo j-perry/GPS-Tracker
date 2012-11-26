@@ -103,7 +103,15 @@ public class AddUserActivity extends Activity {
         	
         	user.setHeight(Integer.parseInt(txt));
         	db = new DatabaseHandler(this);
-        	int id = db.addUser(user);
+        	int id = db.addUser(user);  // trying to add user
+        	if( id == -1 ) { 			// in case of error
+        		User user2 = db.getUserByEmail(user.getEmail());
+        		if( user2 != null )
+                	Toast.makeText(this, "This email is already registered!", Toast.LENGTH_SHORT).show();
+        		else
+                	Toast.makeText(this, "Cannot add user to the database", Toast.LENGTH_SHORT).show();
+        		return;
+        	}
         	db.setUserActive(id);
         	break;
         case R.id.cancel:

@@ -9,7 +9,9 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 public class DatabaseHandler extends SQLiteOpenHelper {
 
@@ -23,7 +25,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
      */
 	
     // Database Version
-    private static final int DATABASE_VERSION = 2;
+    private static final int DATABASE_VERSION = 1;
  
     // Database Name
     private static final String DATABASE_NAME = "GPSTracker";
@@ -40,7 +42,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     // Table Users
     private static final String[] TableUsersColumnNames = { 	"_id", 		"active", 	"fname", 	"sname", 	"email", 	"password",	"age", 		"weight", 	"height", "serverUserID" };
     private static final String[] TableUsersColumnTypes = { 	"INTEGER", 	"INTEGER", 	"TEXT", 	"TEXT", 	"TEXT", 	"TEXT",		"INTEGER", 	"INTEGER", 	"INTEGER", "INTEGER" };
-    private static final String[] TableUsersColumnKeys  = {		"PRIMARY KEY AUTOINCREMENT", "", "", "", "", "", "", "", "", "" };
+    private static final String[] TableUsersColumnKeys  = {		"PRIMARY KEY AUTOINCREMENT", "", "", "", "UNIQUE", "", "", "", "", "" };
     	
     // Table Workouts
     private static final String[] TableWorkoutsColumnNames = { 	"_id", 		"user_id", 	"start", 	"stop", 	"distance",	"description" };
@@ -82,7 +84,13 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 			CREATE_TABLE += txt;
 		}
 		
-		db.execSQL(CREATE_TABLE);
+		try{
+			db.execSQL(CREATE_TABLE);			
+		}
+		catch(SQLiteException e)
+		{
+			Log.e("SQL Error, ", "", e);
+		}
 
 		// creating workouts table
  		CREATE_TABLE = "CREATE TABLE " + TABLE_WORKOUTS + " ( ";
@@ -140,7 +148,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 	 * @return the row ID of the newly inserted row, or -1 if an error occurred 
 	 */
 	public int addUser(User user) {
-		SQLiteDatabase db = this.getWritableDatabase();
+		int id = 0;
  
         ContentValues values = new ContentValues();
         values.put("active", 	USER_NON_ACTIVE);					// set to non-active
@@ -153,10 +161,17 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         values.put("height",	user.getHeight());	
         values.put("serverUserID",	user.getServerUserID());	
  
+
         // Inserting Row
-        int id = (int) db.insert(TABLE_USERS, null, values);
-        
-        db.close(); // Closing database connection
+        try{
+        	SQLiteDatabase db = this.getWritableDatabase();
+        	id = (int) db.insert(TABLE_USERS, null, values);        
+        	db.close(); // Closing database connection
+        }
+		catch(SQLiteException e)
+		{
+			Log.e("SQL Error, ", "", e);
+		}
         
         return id;
     }
@@ -195,6 +210,39 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 	 * @param id
 	 * @return
 	 */
+	public User getUserByEmail(String email) {
+		SQLiteDatabase 	db = null;
+		Cursor			cursor = null;
+		
+        try{
+        	db = this.getReadableDatabase();
+	 
+        	cursor = db.query(TABLE_USERS, TableUsersColumnNames, "email='" + email + "'",
+	                null, null, null, null, null );
+        
+        	if( cursor != null )
+        		if ( !cursor.moveToFirst() ) {
+        			db.close();
+        			return null;
+        		}
+        }
+		catch(SQLiteException e)
+		{
+			Log.e("SQL Error, ", "", e);
+		}
+ 
+
+	    User user = new User(Integer.parseInt(cursor.getString(0)), Integer.parseInt(cursor.getString(1)),
+	                cursor.getString(2), cursor.getString(3), cursor.getString(4), cursor.getString(5),
+	                Integer.parseInt(cursor.getString(6)), Integer.parseInt(cursor.getString(7)), 
+	                Integer.parseInt(cursor.getString(8)), Integer.parseInt(cursor.getString(9)));
+	    
+	    // return user
+        db.close(); // Closing database connection
+        
+	    return user;
+	}
+	
 	public User getUser(int id) {
 		SQLiteDatabase db = this.getReadableDatabase();
 	 
