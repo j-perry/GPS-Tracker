@@ -30,6 +30,7 @@
     <string name="registerUser">/UserAccount/register_user</string>
     <string name="checkinUser">/LocationSearch/checkin</string>
     <string name="fetchLocation">/LocationSearch/fetch_location</string>
+    <string name="rateReview">/unconverted_php/rateReview.php</string>
     <string name="title_activity_check_in">CheckIn</string>
     <string name="title_activity_venue">Venue</string>
     <string name="webServiceEndPointBen">http://192.168.0.5/WebServer/PHP</string>

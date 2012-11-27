@@ -148,7 +148,8 @@ public class ServerConnector extends AsyncTask<String, Integer, String>
 			
     	    HttpResponse response = httpclient.execute(httppost);
     	    HttpEntity entity = response.getEntity();    	    
-    	    temp = EntityUtils.toString(entity);	    	    
+    	    temp = EntityUtils.toString(entity);	
+    	    Log.v("Info", temp);
 
     	    if(entity != null)
     	    {	

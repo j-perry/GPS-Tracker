@@ -109,6 +109,58 @@ public class VenueActivity extends MapActivity
         itemizedoverlay.addOverlay(overlayitem);        
         mapOverlays.add(itemizedoverlay);        
         
+        ListView ourList = (ListView)findViewById(R.id.listView1);
+       	
+       	ourList.setClickable(true);
+       	ourList.setOnItemClickListener(new AdapterView.OnItemClickListener() 
+       	{		       	  
+       		public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) 
+       		{
+       			final int pos = position;
+       			AlertDialog alertDialog = new AlertDialog.Builder(VenueActivity.this).create();
+    			alertDialog.setTitle("Rate Review");
+    			alertDialog.setMessage("How would you like to rate this review?");
+    			alertDialog.setButton(DialogInterface.BUTTON_POSITIVE, "+1 Positive", new DialogInterface.OnClickListener() 
+    			{
+    				public void onClick(DialogInterface dialog, int arg1) 
+    				{
+		       			ListView ourList = (ListView)findViewById(R.id.listView1);
+		       			VenueReview vr = (VenueReview)ourList.getItemAtPosition(pos);				       			
+    					AddRatingToReview(vr, ourList, true);
+    					dialog.cancel();	
+    					return;
+    	            }
+    			});	
+    			alertDialog.setButton(DialogInterface.BUTTON_NEGATIVE, "+1 Negative", new DialogInterface.OnClickListener() 
+    			{
+    				public void onClick(DialogInterface dialog, int arg1) 
+    				{
+		       			ListView ourList = (ListView)findViewById(R.id.listView1);
+		       			VenueReview vr = (VenueReview)ourList.getItemAtPosition(pos);				       			
+    					AddRatingToReview(vr, ourList, false);
+    					dialog.cancel();
+    					return;
+    	            }
+    			});				    			
+    			alertDialog.show();	
+       		}
+       	});
+
+       	ourList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() 
+       	{
+
+            public boolean onItemLongClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
+       			
+            	ListView ourList = (ListView)findViewById(R.id.listView1);
+       			VenueReview vr = (VenueReview)ourList.getItemAtPosition(position);
+       			Intent intent = new Intent(VenueActivity.this, FollowActivity.class);					
+       			intent.putExtra("followId", vr.DBUserId);
+       			startActivity(intent); 
+                return true;
+            }
+        }); 
+    
+        
         String[][] vars = new String[1][2];
         vars[0][1] = venue.getId();
                 
@@ -121,7 +173,7 @@ public class VenueActivity extends MapActivity
     	catch (Exception e)
     	{
     		e.printStackTrace();
-			Log.v("Error", "CheckIn Exception " + e.getMessage());   
+			Log.v("Error", "Venue Exception " + e.getMessage());   
 			return;
     	}
     	    	
@@ -132,63 +184,10 @@ public class VenueActivity extends MapActivity
     		
 			if (statusResponse.equals("true"))
 			{							
-		        RefreshReviewInfo();  
-		    	
+		        RefreshReviewInfo();  		    	
 		       	ArrayAdapter<VenueReview> adapter = new ArrayAdapter<VenueReview>(this, android.R.layout.simple_list_item_1, reviews);
-			      	
-		       	ListView ourList = (ListView)findViewById(R.id.listView1);
 		       	ourList.setAdapter(adapter);
-		       	
-		       	ourList.setClickable(true);
-		       	ourList.setOnItemClickListener(new AdapterView.OnItemClickListener() 
-		       	{		       	  
-		       		public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) 
-		       		{
-		       			final int pos = position;
-		       			AlertDialog alertDialog = new AlertDialog.Builder(VenueActivity.this).create();
-		    			alertDialog.setTitle("Rate Review");
-		    			alertDialog.setMessage("How would you like to rate this review?");
-		    			alertDialog.setButton(DialogInterface.BUTTON_POSITIVE, "+1 Positive", new DialogInterface.OnClickListener() 
-		    			{
-		    				public void onClick(DialogInterface dialog, int arg1) 
-		    				{
-				       			ListView ourList = (ListView)findViewById(R.id.listView1);
-				       			VenueReview vr = (VenueReview)ourList.getItemAtPosition(pos);				       			
-		    					AddRatingToReview(vr, ourList, false);
-		    					dialog.cancel();	
-		    					return;
-		    	            }
-		    			});	
-		    			alertDialog.setButton(DialogInterface.BUTTON_NEGATIVE, "+1 Negative", new DialogInterface.OnClickListener() 
-		    			{
-		    				public void onClick(DialogInterface dialog, int arg1) 
-		    				{
-				       			ListView ourList = (ListView)findViewById(R.id.listView1);
-				       			VenueReview vr = (VenueReview)ourList.getItemAtPosition(pos);				       			
-		    					AddRatingToReview(vr, ourList, false);
-		    					dialog.cancel();
-		    					return;
-		    	            }
-		    			});				    			
-		    			alertDialog.show();	
-		       		}
-		       	});
-
-		       	ourList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() 
-		       	{
-
-		            public boolean onItemLongClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
-		       			
-		            	ListView ourList = (ListView)findViewById(R.id.listView1);
-		       			VenueReview vr = (VenueReview)ourList.getItemAtPosition(position);
-		       			Intent intent = new Intent(VenueActivity.this, FollowActivity.class);					
-		       			intent.putExtra("followId", vr.DBUserId);
-		       			startActivity(intent); 
-		                return true;
-		            }
-		        }); 
-
-			} 			
+			}
 		}     
 	    catch(JSONException e)
 	    {
@@ -276,6 +275,59 @@ public class VenueActivity extends MapActivity
 	
 	public void AddRatingToReview(VenueReview review, ListView list, boolean usePositive)
 	{
-		return;
+		String reviewText;
+		if(usePositive == true)
+		{
+			reviewText = "ReviewPositive";
+		}
+		else
+		{
+			reviewText = "ReviewNegative";
+		}
+		
+        String[][] vars = new String[2][2];
+        vars[0][1] = "ri";
+        vars[0][1] = venue.getId();
+        vars[1][1] = "rr";
+        vars[1][1] = reviewText;
+                
+        String response;
+    	try
+    	{
+    		ServerConnector sc3 = new ServerConnector(vars, false, VenueActivity.this, "Contacting Dash Server ...");
+    		response = sc3.execute(new String[] {  getResources().getString(R.string.rateReview) }).get(5, TimeUnit.SECONDS);    	
+    	} 
+    	catch (Exception e)
+    	{
+    		e.printStackTrace();
+			Log.v("Error", "Venue Exception " + e.getMessage());   
+			return;
+    	}
+    	    	
+    	try 
+    	{       		
+    		results = ServerConnector.ConvertStringToObject(response);    		
+    		String statusResponse = results.getString("status");
+    		
+			if (statusResponse.equals("true"))
+			{	
+		        RefreshReviewInfo();  		    	
+		       	ArrayAdapter<VenueReview> adapter = new ArrayAdapter<VenueReview>(this, android.R.layout.simple_list_item_1, reviews);
+		       	ListView ourList = (ListView)findViewById(R.id.listView1);
+		       	ourList.setAdapter(adapter);
+			}
+			else
+			{			
+				Toast.makeText(this, "Unable to update review with rating", Toast.LENGTH_SHORT).show();				
+			}
+		
+    	}
+    	catch (JSONException e)
+    	{
+    		e.printStackTrace();
+			Log.v("Error", "JSON Exception " + e.getMessage());   
+			return;
+    	}
+
 	}	
 }
