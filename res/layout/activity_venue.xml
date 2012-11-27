@@ -3,16 +3,20 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content" >
 
+<!--  PLEASE DONT DELETE JUST COMMENT API KEYS -->
+<!--  BEN           android:apiKey="06O4TwmxLVKkKfGc_K3edtRqU2MeuxHcC1_awcA"   -->
+<!--  MAREK         android:apiKey="0ebjO8jIeeuJmkaqSnOOfbXKFSR3_pz_m1x7RAQ"   -->
+    
     <com.google.android.maps.MapView
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/mapview"
         android:layout_width="fill_parent"
         android:layout_height="360px"
         android:layout_alignParentLeft="true"
-        android:apiKey="06O4TwmxLVKkKfGc_K3edtRqU2MeuxHcC1_awcA"
+        android:apiKey="0ebjO8jIeeuJmkaqSnOOfbXKFSR3_pz_m1x7RAQ"
         android:clickable="true" >
     </com.google.android.maps.MapView>
-
+    
     <LinearLayout
         android:id="@+id/linearLayout1"
         android:layout_width="wrap_content"
@@ -20,10 +24,12 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
-        android:orientation="vertical" >
-    </LinearLayout>
-
-    <RelativeLayout
+        android:orientation="vertical" > 
+        
+        
+        </LinearLayout>
+        
+        <RelativeLayout
         android:id="@+id/relativeLayout1"
         android:layout_width="match_parent"
         android:layout_height="52dp"
@@ -45,7 +51,7 @@
             android:layout_alignParentLeft="true"
             android:layout_below="@+id/textViewName"
             android:text="Venue Address" />
-
+        
         <TextView
             android:id="@+id/textViewRealName"
             android:layout_width="wrap_content"
@@ -54,7 +60,6 @@
             android:layout_marginLeft="23dp"
             android:layout_toRightOf="@+id/textViewAddress"
             android:text="-" />
-
         <TextView
             android:id="@+id/textViewRealAddress"
             android:layout_width="wrap_content"
@@ -71,7 +76,8 @@
             android:layout_below="@+id/textViewAddress"
             android:layout_toLeftOf="@+id/textViewRealName"
             android:text="Check Ins" />
-
+        
+        
         <TextView
             android:id="@+id/textViewRealCheckin"
             android:layout_width="wrap_content"
@@ -90,7 +96,7 @@
             android:layout_marginLeft="39dp"
             android:layout_toRightOf="@+id/textViewRealCheckin"
             android:text="Rating" />
-
+        
         <TextView
             android:id="@+id/textViewRealRating"
             android:layout_width="wrap_content"
@@ -102,8 +108,8 @@
             android:text="-" />
 
     </RelativeLayout>
-
-    <Button
+    
+        <Button
         android:id="@+id/buttonAdd"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -112,8 +118,9 @@
         android:layout_alignParentRight="true"
         android:onClick="onAddClick"
         android:text="Add Review" />
-
-    <ListView
+        
+        
+<ListView
         android:id="@+id/listView1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

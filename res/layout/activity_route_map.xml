@@ -43,9 +43,12 @@
             android:layout_marginLeft="14px"
             android:layout_marginRight="14px"
             android:layout_marginTop="50px"
-            android:apiKey="06O4TwmxLVKkKfGc_K3edtRqU2MeuxHcC1_awcA"
+	        android:apiKey="0ebjO8jIeeuJmkaqSnOOfbXKFSR3_pz_m1x7RAQ"  
             android:clickable="true" >
         </com.google.android.maps.MapView>
+<!--  PLEASE DONT DELETE JUST COMMENT API KEYS -->
+<!--  BEN           android:apiKey="06O4TwmxLVKkKfGc_K3edtRqU2MeuxHcC1_awcA"   -->
+<!--  MAREK         android:apiKey="0ebjO8jIeeuJmkaqSnOOfbXKFSR3_pz_m1x7RAQ"   -->
 
      </LinearLayout>
        <Button

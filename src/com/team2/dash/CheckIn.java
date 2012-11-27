@@ -160,7 +160,7 @@ public class CheckIn extends ListActivity
 			{				
 				JSONObject checkInObject = singleVenue.getJSONObject("checkin");
 				JSONObject locationObject = checkInObject.getJSONObject("location");
-				String locationId = locationObject.getString("locationid");
+				String locationId = locationObject.getString("LocationId");
 				if(!(locationId.equals("")) && !(locationId.isEmpty()))
 				{
 					Intent intent = new Intent(this, VenueActivity.class);	
@@ -168,7 +168,7 @@ public class CheckIn extends ListActivity
 					//intent.putExtra("dashId", locationId);
 					intent.putExtra("dashId", 1);
 					intent.putExtra("userId", userId);
-					venue.setVenueCheckins(locationObject.getInt("location_checkins"));
+					venue.setVenueCheckins(locationObject.getInt("LocationCheckins"));
 					intent.putExtra("venueData", venue);					
 					intent.putExtra("checkIn", true);
 					startActivity(intent); 
