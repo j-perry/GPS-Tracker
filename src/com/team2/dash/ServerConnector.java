@@ -83,6 +83,21 @@ public class ServerConnector extends AsyncTask<String, Integer, String>
 			responseString = ConnectAndSendSimplePHP(mVars, mWebPage);		
 		}	
 				
+		
+		// cleaning server additions
+		int open=0, close=0;
+		for( int i=0; i<responseString.length(); i++) {
+
+			if( responseString.charAt(i) == '{' )
+				open++;
+			if( responseString.charAt(i) == '}' )
+				close++;
+			if( (open == close) && (i>0) ) {
+				responseString = responseString.substring(0, i+1);
+				break;
+			}
+		}
+		
 		return responseString;
 	}	
 	
@@ -94,7 +109,8 @@ public class ServerConnector extends AsyncTask<String, Integer, String>
 	
 	@Override
 	protected void onPostExecute(String result) {
-		super.onPostExecute(result);		
+		super.onPostExecute(result);
+		
 		pDlg.dismiss();
 	}	
 	
