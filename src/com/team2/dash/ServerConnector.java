@@ -60,7 +60,14 @@ public class ServerConnector extends AsyncTask<String, Integer, String>
 		mUseCodeIgniter = useCodeIgniter;
 		mContext = thisContext;			
 		mProcessMessage = processMessage; 				
-		ServerURL = ((Context) thisContext).getString(R.string.webServiceEndPoint);		
+		if(useCodeIgniter == true)
+		{
+			ServerURL = ((Context) thisContext).getString(R.string.webServiceEndPoint);
+		}
+		else
+		{
+			ServerURL = ((Context) thisContext).getString(R.string.webServiceEndPointNoFile);
+		}
 	}	
 	
 	@Override
@@ -70,11 +77,13 @@ public class ServerConnector extends AsyncTask<String, Integer, String>
 		
 		if(mUseCodeIgniter == true) 
 		{
-			responseString = ConnectAndSendUsingCodeIgniter(mVars, mWebPage);
+			Log.v("Hello", "Hello");
+			responseString = ConnectAndSendUsingCodeIgniter(mVars, mWebPage);			
 		}
 		//Use PHP's native POST / GET rather than a framework
 		else 
 		{			
+			Log.v("Bye", "Bye");
 			responseString = ConnectAndSendSimplePHP(mVars, mWebPage);		
 		}	
 				
@@ -209,14 +218,15 @@ public class ServerConnector extends AsyncTask<String, Integer, String>
     		HttpParams httpp = new BasicHttpParams();			
     		HttpConnectionParams.setConnectionTimeout(httpp,CONN_TIMEOUT);
     		HttpConnectionParams.setSoTimeout(httpp, SOCKET_TIMEOUT);    	
-        	HttpPost httppost = new HttpPost(ServerURL + "/" + webPage);    
+        	HttpPost httppost = new HttpPost(ServerURL + webPage);    
         	
     		if (vars != null && vars.length > 0)
     		{
 	    	    List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(vars.length);
 	    	    for(String[] singleString : vars)
 	    	    {
-		    	    nameValuePairs.add(new BasicNameValuePair(singleString[0], singleString[1]));	
+	    	    	Log.v("Info", singleString[0] + "=>" + singleString[1]);
+	    	    	nameValuePairs.add(new BasicNameValuePair(singleString[0], singleString[1]));		    	    
 	    	    }	    	    	    	    
 	    	    httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
     		}

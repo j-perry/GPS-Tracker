@@ -34,8 +34,8 @@ public class VenueReview
 			fullReturn = fullReturn +"\n" + ReviewText;
 		}				
 		
-		fullReturn = fullReturn + "\nPositive:" + ReviewPositive;
-		fullReturn = fullReturn + "- Negative:" + ReviewNegative;
+		fullReturn = fullReturn + "\nAgree:" + ReviewPositive;
+		fullReturn = fullReturn + " - Disagree:" + ReviewNegative;
 		
 		return fullReturn;
 	}	

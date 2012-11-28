@@ -88,26 +88,20 @@ public class AddReview extends Activity {
     	try 
     	{       		
     		JSONObject singleVenue = ServerConnector.ConvertStringToObject(response);
-			String additionalText = "Failed to Add Review";
 			if (singleVenue.getString("success").equals("true"))
 			{
-				int result = singleVenue.getInt("result");
-				
-				if(result > 0)
-				{
-					Intent intent = new Intent(this, VenueActivity.class);					
-					intent.putExtra("userId", userId);
-					intent.putExtra("venueData", venue);
-					startActivity(intent); 				
-					return;
-				}
+				Intent intent = new Intent(this, VenueActivity.class);					
+				intent.putExtra("userId", userId);
+				intent.putExtra("venueData", venue);
+				startActivity(intent); 				
+				return;
 			} 
 			else 
 			{
 				Log.e("HTTP Result", "Something else went wrong server side");
 			}	
 			
-			Toast.makeText(this, additionalText, Toast.LENGTH_SHORT).show();
+			Toast.makeText(this, "Failed to Add Review", Toast.LENGTH_SHORT).show();
 		}     
 	    catch(JSONException e)
 	    {

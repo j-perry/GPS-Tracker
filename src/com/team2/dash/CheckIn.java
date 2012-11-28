@@ -166,6 +166,8 @@ public class CheckIn extends ListActivity
 					Intent intent = new Intent(this, VenueActivity.class);	
 					venue.setDatabaseId(locationObject.getInt("LocationId"));
 					venue.setVenueCheckins(locationObject.getInt("LocationCheckins"));
+					venue.setVenueUseRating(locationObject.getInt("LocationUseRatings"));
+					venue.setVenueRating(locationObject.getDouble("LocationRatings"));
 					intent.putExtra("userId", userId);
 					intent.putExtra("venueData", venue);					
 					intent.putExtra("checkIn", true);

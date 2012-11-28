@@ -14,7 +14,7 @@ public class VenueInfo implements Parcelable
 	public double longitude;
 	public int venueCheckins = 0;
 	public double venueRating;
-	public boolean venueUseRating = false;
+	public int venueUseRating = 0;
 	public String id;
 	public int databaseId;
 	public List<VenueReview> reviews;
@@ -33,7 +33,7 @@ public class VenueInfo implements Parcelable
 		this.longitude = in.readDouble();
 		this.venueCheckins = in.readInt();
 		this.venueRating = in.readDouble();
-		this.venueUseRating = in.readByte() == 1;
+		this.venueUseRating = in.readInt();		
 		this.databaseId = in.readInt();
 		this.reviews = new ArrayList<VenueReview>();
 		in.readList(this.reviews, null);
@@ -114,12 +114,12 @@ public class VenueInfo implements Parcelable
 		this.venueRating = venueRating;
 	}
 
-	public boolean isVenueUseRating() 
+	public int getVenueUseRating() 
 	{
 		return venueUseRating;
 	}
 
-	public void setVenueUseRating(boolean venueUseRating) 
+	public void setVenueUseRating(int venueUseRating) 
 	{
 		this.venueUseRating = venueUseRating;
 	}
@@ -159,7 +159,7 @@ public class VenueInfo implements Parcelable
 		dest.writeDouble(longitude);
 		dest.writeInt(venueCheckins);
 		dest.writeDouble(venueRating);
-		dest.writeByte((byte) (venueUseRating ? 1 : 0));
+		dest.writeInt(venueUseRating);
 		dest.writeInt(databaseId);
 		dest.writeList(reviews);		
 	}
