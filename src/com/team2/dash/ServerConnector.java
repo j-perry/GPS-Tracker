@@ -20,6 +20,7 @@ import org.apache.http.util.EntityUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.app.WallpaperManager;
 import android.content.Context;
@@ -77,13 +78,11 @@ public class ServerConnector extends AsyncTask<String, Integer, String>
 		
 		if(mUseCodeIgniter == true) 
 		{
-			Log.v("Hello", "Hello");
 			responseString = ConnectAndSendUsingCodeIgniter(mVars, mWebPage);			
 		}
 		//Use PHP's native POST / GET rather than a framework
 		else 
 		{			
-			Log.v("Bye", "Bye");
 			responseString = ConnectAndSendSimplePHP(mVars, mWebPage);		
 		}	
 				
@@ -92,7 +91,7 @@ public class ServerConnector extends AsyncTask<String, Integer, String>
 		int open=0, close=0;
 		for( int i=0; i<responseString.length(); i++) {
 
-			if( responseString.charAt(i) == '{' )
+			if( responseString.charAt(i) == '{')
 				open++;
 			if( responseString.charAt(i) == '}' )
 				close++;
@@ -102,7 +101,6 @@ public class ServerConnector extends AsyncTask<String, Integer, String>
 			}
 		}
 		
-	    Log.v("Info", responseString);
 		return responseString;
 	}	
 	
@@ -170,7 +168,7 @@ public class ServerConnector extends AsyncTask<String, Integer, String>
     	    HttpResponse response = httpclient.execute(httppost);
     	    HttpEntity entity = response.getEntity();    	    
     	    temp = EntityUtils.toString(entity);	
-
+    	    
     	    if(entity != null)
     	    {	
     	    	return temp;
@@ -178,8 +176,7 @@ public class ServerConnector extends AsyncTask<String, Integer, String>
     	    else 
     	    {
     	    	return null;    	    	
-    	    }
-    	
+    	    }    	
     	} 
     	catch (ClientProtocolException e) 
     	{ 
@@ -218,14 +215,13 @@ public class ServerConnector extends AsyncTask<String, Integer, String>
     		HttpParams httpp = new BasicHttpParams();			
     		HttpConnectionParams.setConnectionTimeout(httpp,CONN_TIMEOUT);
     		HttpConnectionParams.setSoTimeout(httpp, SOCKET_TIMEOUT);    	
-        	HttpPost httppost = new HttpPost(ServerURL + webPage);    
+        	HttpPost httppost = new HttpPost(ServerURL + webPage);
         	
     		if (vars != null && vars.length > 0)
     		{
 	    	    List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(vars.length);
 	    	    for(String[] singleString : vars)
 	    	    {
-	    	    	Log.v("Info", singleString[0] + "=>" + singleString[1]);
 	    	    	nameValuePairs.add(new BasicNameValuePair(singleString[0], singleString[1]));		    	    
 	    	    }	    	    	    	    
 	    	    httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));

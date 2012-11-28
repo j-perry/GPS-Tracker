@@ -104,41 +104,8 @@ public class VenueActivity extends MapActivity
         mapOverlays.add(itemizedoverlay);        
         
         ListView ourList = (ListView)findViewById(R.id.listViewMain);
-        
-        String[][] vars = new String[1][2];
-        vars[0][1] = venue.getId();
                 
-        String response;
-    	try
-    	{
-    		ServerConnector sc2 = new ServerConnector(vars, true, VenueActivity.this, "Contacting Dash Server ...");
-    		response = sc2.execute(new String[] {  getResources().getString(R.string.fetchLocation) }).get(5, TimeUnit.SECONDS);    	
-    	} 
-    	catch (Exception e)
-    	{
-    		e.printStackTrace();
-			Log.v("Error", "Venue Exception " + e.getMessage());   
-			return;
-    	}
-    	    	
-    	try 
-    	{       		
-    		results = ServerConnector.ConvertStringToObject(response);    		
-    		String statusResponse = results.getString("status");
-    		
-			if (statusResponse.equals("true"))
-			{							
-		        RefreshReviewInfo();  		    	
-		       	ArrayAdapter<VenueReview> adapter = new ArrayAdapter<VenueReview>(this, android.R.layout.simple_list_item_1, reviews);
-		       	ourList.setAdapter(adapter);
-			}
-		}     
-	    catch(JSONException e)
-	    {
-			e.printStackTrace(); 
-			Log.v("Error", "CheckIn Exception " + e.getMessage());   
-			return;
-	    }        
+        RefreshDataFromServer();       
        	
        	ourList.setClickable(true);
        	ourList.setOnItemClickListener(new AdapterView.OnItemClickListener() 
@@ -207,6 +174,47 @@ public class VenueActivity extends MapActivity
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+    
+    public void RefreshDataFromServer()
+    {
+        ListView ourList = (ListView)findViewById(R.id.listViewMain);
+        
+        String[][] vars = new String[1][2];
+        vars[0][1] = venue.getId();                
+    	
+    	String response;
+    	try
+    	{
+    		ServerConnector sc2 = new ServerConnector(vars, true, VenueActivity.this, "Contacting Dash Server ...");
+    		response = sc2.execute(new String[] {  getResources().getString(R.string.fetchLocation) }).get(5, TimeUnit.SECONDS);    	
+    	} 
+    	catch (Exception e)
+    	{
+    		e.printStackTrace();
+			Log.v("Error", "Venue Exception " + e.getMessage());   
+			return;
+    	}
+    	    	
+    	try 
+    	{       		
+    		results = ServerConnector.ConvertStringToObject(response);    		
+    		String statusResponse = results.getString("status");
+    		
+			if (statusResponse.equals("true"))
+			{							
+		        RefreshReviewInfo();  		    	
+		       	ArrayAdapter<VenueReview> adapter = new ArrayAdapter<VenueReview>(this, android.R.layout.simple_list_item_1, reviews);
+		       	ourList.setAdapter(adapter);
+			}
+		}     
+	    catch(JSONException e)
+	    {
+			e.printStackTrace(); 
+			Log.v("Error", "CheckIn Exception " + e.getMessage());   
+			return;
+	    }     	
+    	
     }
     
     public void RefreshReviewInfo()
@@ -282,10 +290,12 @@ public class VenueActivity extends MapActivity
 		if(usePositive == true)
 		{
 			reviewText = "ReviewPositive";
+			review.setReviewPositive(review.getReviewPositive() + 1);
 		}
 		else
 		{
 			reviewText = "ReviewNegative";
+			review.setReviewNegative(review.getReviewNegative() + 1);
 		}		
 		
         String[][] ratingVars = new String[3][2];
@@ -320,10 +330,7 @@ public class VenueActivity extends MapActivity
 			{	
 				if(PosNegResponse.getInt("result") > 0)
 				{
-					//RefreshReviewInfo();  		    	
-		       		//ArrayAdapter<VenueReview> adapter = new ArrayAdapter<VenueReview>(this, android.R.layout.simple_list_item_1, reviews);
-		       		//ListView ourList = (ListView)findViewById(R.id.listViewMain);
-		       		//ourList.setAdapter(adapter);
+					RefreshDataFromServer();
 				}
 				else
 				{
