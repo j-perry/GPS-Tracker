@@ -67,11 +67,6 @@ public class ServerConnector extends AsyncTask<String, Integer, String>
 	protected String doInBackground(String... params) 
 	{
 		String mWebPage = params[0];
-		//if(mWebPage == "AddReview.php")
-		//{
-		//	ServerURL = ((Context) mContext).getString(R.string.webServiceEndPointBen);
-		//	mUseCodeIgniter = false;
-		//}
 		
 		if(mUseCodeIgniter == true) 
 		{
@@ -98,6 +93,7 @@ public class ServerConnector extends AsyncTask<String, Integer, String>
 			}
 		}
 		
+	    Log.v("Info", responseString);
 		return responseString;
 	}	
 	
@@ -165,7 +161,6 @@ public class ServerConnector extends AsyncTask<String, Integer, String>
     	    HttpResponse response = httpclient.execute(httppost);
     	    HttpEntity entity = response.getEntity();    	    
     	    temp = EntityUtils.toString(entity);	
-    	    Log.v("Info", temp);
 
     	    if(entity != null)
     	    {	

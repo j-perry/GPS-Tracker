@@ -41,7 +41,6 @@ public class VenueActivity extends MapActivity
 	private JSONObject results;
 	private MapView mapView;	
 	private VenueInfo venue;	
-	private int dashId;
 	private int userId;
     
 	@Override
@@ -54,7 +53,6 @@ public class VenueActivity extends MapActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_venue);
         Bundle bundle = getIntent().getExtras();
-        dashId = bundle.getInt("dashId");
         userId = bundle.getInt("userId");
         venue = (VenueInfo)bundle.getParcelable("venueData");
         
@@ -109,7 +107,7 @@ public class VenueActivity extends MapActivity
         itemizedoverlay.addOverlay(overlayitem);        
         mapOverlays.add(itemizedoverlay);        
         
-        ListView ourList = (ListView)findViewById(R.id.listView1);
+        ListView ourList = (ListView)findViewById(R.id.listViewMain);
        	
        	ourList.setClickable(true);
        	ourList.setOnItemClickListener(new AdapterView.OnItemClickListener() 
@@ -124,7 +122,7 @@ public class VenueActivity extends MapActivity
     			{
     				public void onClick(DialogInterface dialog, int arg1) 
     				{
-		       			ListView ourList = (ListView)findViewById(R.id.listView1);
+		       			ListView ourList = (ListView)findViewById(R.id.listViewMain);
 		       			VenueReview vr = (VenueReview)ourList.getItemAtPosition(pos);				       			
     					AddRatingToReview(vr, ourList, true);
     					dialog.cancel();	
@@ -135,7 +133,7 @@ public class VenueActivity extends MapActivity
     			{
     				public void onClick(DialogInterface dialog, int arg1) 
     				{
-		       			ListView ourList = (ListView)findViewById(R.id.listView1);
+		       			ListView ourList = (ListView)findViewById(R.id.listViewMain);
 		       			VenueReview vr = (VenueReview)ourList.getItemAtPosition(pos);				       			
     					AddRatingToReview(vr, ourList, false);
     					dialog.cancel();
@@ -151,7 +149,7 @@ public class VenueActivity extends MapActivity
 
             public boolean onItemLongClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
        			
-            	ListView ourList = (ListView)findViewById(R.id.listView1);
+            	ListView ourList = (ListView)findViewById(R.id.listViewMain);
        			VenueReview vr = (VenueReview)ourList.getItemAtPosition(position);
        			Intent intent = new Intent(VenueActivity.this, FollowActivity.class);					
        			intent.putExtra("followId", vr.DBUserId);
@@ -233,13 +231,13 @@ public class VenueActivity extends MapActivity
 	    		for(int i = 0; i < venues.length(); i++)
 	    		{
 	    			JSONObject singleJSONReview = venues.getJSONObject(i);
-	    			VenueReview singleReview = new VenueReview();	    			
+	    			VenueReview singleReview = new VenueReview();	    
 	    			singleReview.setDBLocationId(singleJSONReview.getInt("LocationId"));
 	    			singleReview.setDBReviewId(singleJSONReview.getInt("ReviewId"));
 	    			singleReview.setDBUserId(singleJSONReview.getInt("UserId"));
 	    			singleReview.setReviewDateTime(singleJSONReview.getInt("DateTime"));
-	    			//singleReview.setReviewNegative(singleJSONReview.getInt(""));
-	    			//singleReview.setReviewPositive(singleJSONReview.getInt(""));
+	    			singleReview.setReviewNegative(singleJSONReview.getInt("ReviewNegative"));
+	    			singleReview.setReviewPositive(singleJSONReview.getInt("ReviewPositive"));
 	    			singleReview.setReviewRating(singleJSONReview.getDouble("ReviewRating"));
 	    			singleReview.setReviewText(singleJSONReview.getString("ReviewText"));
 	    			reviews.add(singleReview);
@@ -265,7 +263,6 @@ public class VenueActivity extends MapActivity
 	public void onAddClick(View view)
 	{
 		Intent intent = new Intent(this, AddReview.class);					
-		intent.putExtra("dashId", dashId);
 		intent.putExtra("userId", userId);
 		intent.putExtra("venueData", venue);
 		intent.putExtra("checkIn", false);
@@ -313,7 +310,7 @@ public class VenueActivity extends MapActivity
 			{	
 		        RefreshReviewInfo();  		    	
 		       	ArrayAdapter<VenueReview> adapter = new ArrayAdapter<VenueReview>(this, android.R.layout.simple_list_item_1, reviews);
-		       	ListView ourList = (ListView)findViewById(R.id.listView1);
+		       	ListView ourList = (ListView)findViewById(R.id.listViewMain);
 		       	ourList.setAdapter(adapter);
 			}
 			else

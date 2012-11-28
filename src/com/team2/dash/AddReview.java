@@ -24,7 +24,6 @@ public class AddReview extends Activity {
 	
 	private VenueInfo venue;
 	private int userId;
-	private int dashId;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -32,7 +31,6 @@ public class AddReview extends Activity {
         setContentView(R.layout.activity_add_review);
         Bundle bundle = getIntent().getExtras();
         userId = bundle.getInt("userId");
-        dashId = bundle.getInt("dashId");
         venue = (VenueInfo)bundle.getParcelable("venueData");
         TextView textVenue = (TextView)findViewById(R.id.textName);
         textVenue.setText(venue.getVenueName());
@@ -64,23 +62,21 @@ public class AddReview extends Activity {
     	RatingBar mBar = (RatingBar) findViewById(R.id.ratingBar);
     	EditText et = (EditText)findViewById(R.id.editText);
     	
-    	String[][] vars = new String[5][2];
-    	vars[0][0] = "ud";
+    	String[][] vars = new String[4][2];
+    	vars[0][0] = "userid";
     	vars[0][1] = userId + "";
-    	vars[1][0] = "ld";
-    	vars[1][1] = dashId + "";
-    	vars[2][0] = "rt";
+    	vars[1][0] = "locationid";
+    	vars[1][1] = venue.getDatabaseId() + "";
+    	vars[2][0] = "reviewText";
     	vars[2][1] = et.getText().toString();
-    	vars[3][0] = "rr";
-    	vars[3][1] = mBar.getRating() + "";   	 	    	
-    	vars[4][0] = "a";
-    	vars[4][1] = "addReview";    	    
+    	vars[3][0] = "fltRating";
+    	vars[3][1] = mBar.getRating() + "";   	 	    	   	    
     	
     	String response;
     	try
     	{
-    		ServerConnector sc = new ServerConnector(vars, false, AddReview.this, "Contacting Dash Server ...");
-    		response = sc.execute(new String[] { "AddReview.php"}).get(5, TimeUnit.SECONDS);    	
+    		ServerConnector sc = new ServerConnector(vars, true, AddReview.this, "Contacting Dash Server ...");
+    		response = sc.execute(new String[] { getResources().getString(R.string.addReview)}).get(5, TimeUnit.SECONDS);    	
     	} 
     	catch (Exception e)
     	{
@@ -93,31 +89,22 @@ public class AddReview extends Activity {
     	{       		
     		JSONObject singleVenue = ServerConnector.ConvertStringToObject(response);
 			String additionalText = "Failed to Add Review";
-			if (singleVenue.getString("success") == "true")
+			if (singleVenue.getString("success").equals("true"))
 			{
 				int result = singleVenue.getInt("result");
 				
-				if(result == 1)
+				if(result > 0)
 				{
 					Intent intent = new Intent(this, VenueActivity.class);					
-					intent.putExtra("dashId", dashId);
 					intent.putExtra("userId", userId);
 					intent.putExtra("venueData", venue);
 					startActivity(intent); 				
 					return;
 				}
-				else if (result == 0)
-				{
-					Log.e("HTTP Result", "Missing Data (LocationId or ");
-				}
-				else if(result == -1)
-				{
-					additionalText = "No review or rating provided";
-				}
 			} 
 			else 
 			{
-				Log.e("HTTP Result", "Invalid call to php page");
+				Log.e("HTTP Result", "Something else went wrong server side");
 			}	
 			
 			Toast.makeText(this, additionalText, Toast.LENGTH_SHORT).show();

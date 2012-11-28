@@ -164,11 +164,9 @@ public class CheckIn extends ListActivity
 				if(!(locationId.equals("")) && !(locationId.isEmpty()))
 				{
 					Intent intent = new Intent(this, VenueActivity.class);	
-					//venue.setDatabaseId(locationObject.getInt("DatabaseId"));
-					//intent.putExtra("dashId", locationId);
-					intent.putExtra("dashId", 1);
-					intent.putExtra("userId", userId);
+					venue.setDatabaseId(locationObject.getInt("LocationId"));
 					venue.setVenueCheckins(locationObject.getInt("LocationCheckins"));
+					intent.putExtra("userId", userId);
 					intent.putExtra("venueData", venue);					
 					intent.putExtra("checkIn", true);
 					startActivity(intent); 
