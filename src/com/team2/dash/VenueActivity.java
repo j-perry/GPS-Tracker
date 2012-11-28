@@ -289,11 +289,11 @@ public class VenueActivity extends MapActivity
 		}		
 		
         String[][] ratingVars = new String[3][2];
-        ratingVars[0][1] = "ri";
+        ratingVars[0][0] = "ri";
         ratingVars[0][1] = review.getDBReviewId() + "";
-        ratingVars[1][1] = "rr";
+        ratingVars[1][0] = "rr";
         ratingVars[1][1] = reviewText;
-        ratingVars[2][1] = "a";
+        ratingVars[2][0] = "a";
         ratingVars[2][1] = "updateReview";
                 
         String ratingResults;
