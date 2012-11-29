@@ -32,6 +32,7 @@
     <string name="registerUser">/UserAccount/register_user</string>
     <string name="checkinUser">/LocationSearch/checkin</string>
     <string name="fetchLocation">/LocationSearch/fetch_location</string>
+    <string name="followUser">/UserAccount/follow_user</string>
     <string name="addReview">/LocationSearch/add_review</string>
     <string name="fetch_following">/LocationSearch/fetch_following</string>
     <string name="fetch_followers">/LocationSearch/fetch_followers</string>
