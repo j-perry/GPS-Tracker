@@ -122,7 +122,7 @@ public class UserActivity extends ListActivity {
 		vars[3][1] = user.getEmail();					
 		vars[4][0] = "password";
 		vars[4][1] = user.getPassword();					
-		ServerConnector sc = new ServerConnector(vars, false, UserActivity.this, "Contacting Server ...");
+		ServerConnector sc = new ServerConnector(vars, true, UserActivity.this, "Contacting Server ...");
     	String response;
     	try	{
     		response = sc.execute(new String[] { getResources().getString(R.string.registerUser) }).get();
