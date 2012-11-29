@@ -14,7 +14,7 @@ public class User {
 	int		age;		// age
 	int		weight;		// weight
 	int 	height;		// height
-	int		serverUserID = -1;
+	int		serverUserID = -1;	
 	
 	/**
 	 * 

@@ -86,6 +86,9 @@
             android:name=".FollowActivity"
             android:label="@string/title_activity_follow" >
         </activity>
+        <activity
+            android:name=".FetchFollowActivity"
+            android:label="@string/title_activity_user_follow" >
+        </activity>
     </application>
-
 </manifest>

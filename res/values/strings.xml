@@ -25,7 +25,7 @@
     <string name="title_activity_tracker">Tracker</string>
     <string name="checkinbtn">Checkin</string>
     <string name="checkin">Checkin</string>
-<!--    <string name="webServiceEndPoint">http://ec2-54-242-181-128.compute-1.amazonaws.com/dashwebsvc/index.php</string>   --> 
+    <!-- <string name="webServiceEndPoint">http://ec2-54-242-181-128.compute-1.amazonaws.com/dashwebsvc/index.php</string> -->
     <string name="webServiceEndPoint">http://dash.bugs3.com/dashwebsvc/index.php</string>
     <string name="webServiceEndPointNoFile">http://dash.bugs3.com/dashwebsvc</string>
     <string name="getVenues">/LocationSearch/index</string>
@@ -33,6 +33,8 @@
     <string name="checkinUser">/LocationSearch/checkin</string>
     <string name="fetchLocation">/LocationSearch/fetch_location</string>
     <string name="addReview">/LocationSearch/add_review</string>
+    <string name="fetch_following">/LocationSearch/fetch_following</string>
+    <string name="fetch_followers">/LocationSearch/fetch_followers</string>
     <string name="rateReview">/uncoverted_php/updateReview.php</string>
     <string name="title_activity_check_in">CheckIn</string>
     <string name="title_activity_venue">Venue</string>
@@ -40,5 +42,6 @@
     <string name="HTTPResponse" />
     <string name="title_activity_add_review">Add Review</string>
     <string name="title_activity_follow">FollowActivity</string>
+    <string name="title_activity_user_follow">UserFollow</string>
 
 </resources>
