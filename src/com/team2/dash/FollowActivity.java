@@ -32,24 +32,14 @@ public class FollowActivity extends Activity {
         followId = bundle.getInt("followId");        
         userId = bundle.getInt("userId");        
         
- /*   	String[][] vars = new String[6][2];
+    	String[][] vars = new String[1][2];
     	vars[0][0] = "user_id"; 
     	vars[0][1] = userId + "";  
-    	vars[1][0] = "location_id";
-    	vars[1][1] = venue.getId().toString();
-    	vars[2][0] = "location_name";
-    	vars[2][1] = venue.getVenueName();
-    	vars[3][0] = "location_address";     			
-    	vars[3][1] = venue.getVenueAddress();
-    	vars[4][0] = "location_lat";
-    	vars[4][1] = venue.getLatitude() + "";
-    	vars[5][0] = "location_lng";
-    	vars[5][1] = venue.getLongitude() + "";  	    
     	
     	String response;
     	try
     	{
-    		ServerConnector sc = new ServerConnector(vars, true, CheckIn.this, "Contacting Dash Server ...");
+    		ServerConnector sc = new ServerConnector(vars, true, FollowActivity.this, "Contacting Dash Server ...");
     		response = sc.execute(new String[] {  getResources().getString(R.string.checkinUser) }).get(5, TimeUnit.SECONDS);    	
     	} 
     	catch (Exception e)
@@ -58,7 +48,7 @@ public class FollowActivity extends Activity {
 			Log.v("Error", "CheckIn Exception " + e.getMessage());   
 			return;
     	}
-    	*/
+    	
        //TODO: Go off and get data.
         
         //TODO: Show list with who this user is following
