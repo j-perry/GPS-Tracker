@@ -16,9 +16,9 @@
         android:layout_height="wrap_content"
         android:text="-"
         android:textAppearance="?android:attr/textAppearanceMedium" />
-
+
     <ListView
-        android:id="@+id/listView1"
+        android:id="@+id/listViewFollow"
         android:layout_width="320dp"
         android:layout_height="wrap_content" >
 

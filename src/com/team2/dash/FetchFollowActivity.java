@@ -26,6 +26,7 @@ public class FetchFollowActivity extends Activity
 {
 	private ArrayList<String> listItems = new ArrayList<String>();
 	private int userActivity = 1; //1 (fetch_following) or 2 (fetch_followers)	
+	private String followUserName;
 	private JSONObject results;
 	private int currentUserId;
 	private List<User> users;
@@ -40,12 +41,12 @@ public class FetchFollowActivity extends Activity
         followId = bundle.getInt("followId");
         userActivity = bundle.getInt("userActivity");
         currentUserId = bundle.getInt("currentUserId");
+        followUserName = bundle.getString("followUserName");
         
-        
-        FetchDisplayUser();
-        
-        
-        ListView ourList = (ListView)findViewById(R.id.listViewMain);
+		TextView textVenue = (TextView)findViewById(R.id.Following);
+        textVenue.setText(followUserName);    
+  
+        ListView ourList = (ListView)findViewById(R.id.listViewFollow);
         
         RefreshUserData();
         
@@ -54,7 +55,7 @@ public class FetchFollowActivity extends Activity
        	{		       	  
        		public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) 
        		{
-            	ListView ourList = (ListView)findViewById(R.id.listViewMain);
+            	ListView ourList = (ListView)findViewById(R.id.listViewFollow);
        			User ur = (User)ourList.getItemAtPosition(position);   
        			FollowSelectedUser(ur.getServerUserID());
        		}
@@ -65,7 +66,7 @@ public class FetchFollowActivity extends Activity
 
             public boolean onItemLongClick(AdapterView<?> arg0, View arg1, int position, long arg3) 
             {
-            	ListView ourList = (ListView)findViewById(R.id.listViewMain);
+            	ListView ourList = (ListView)findViewById(R.id.listViewFollow);
        			User ur = (User)ourList.getItemAtPosition(position);
        			Intent intent = new Intent(FetchFollowActivity.this, FollowActivity.class);					
        			intent.putExtra("followId", ur.getServerUserID());
@@ -95,13 +96,13 @@ public class FetchFollowActivity extends Activity
     	{
     		selectFile = getResources().getString(R.string.fetch_followers);
             TextView textVenue = (TextView)findViewById(R.id.User);
-            textVenue.setText("Users following");
+            textVenue.setText("is being followed by these users:");
     	}
     	else
     	{    		
     		selectFile = getResources().getString(R.string.fetch_following);
     		TextView textVenue = (TextView)findViewById(R.id.User);
-            textVenue.setText("Following users");    		
+            textVenue.setText("is following these users:");    		
     	}
     	
     	String response;
@@ -170,11 +171,6 @@ public class FetchFollowActivity extends Activity
 			Log.v("Error", "JSONException " + e.getMessage());    			
 			return;
 	    }
-    }
-    
-    private void FetchDisplayUser()
-    {
-    	//TODO: This
     }
     
     private void FollowSelectedUser(int userIdToFollow)

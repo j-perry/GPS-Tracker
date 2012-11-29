@@ -3,7 +3,6 @@ package com.team2.dash;
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -21,6 +20,7 @@ public class FollowActivity extends Activity {
 	
 	int followId;   //This is going to be for the user we have displayed
 	int userId;		// this is actual server user ID	
+	String followUserName = "Test User"; //TODO: On server fetch of user, set First Name and Surname here
 
     @Override
     public void onCreate(Bundle savedInstanceState) 
@@ -32,6 +32,7 @@ public class FollowActivity extends Activity {
         followId = bundle.getInt("followId");        
         userId = bundle.getInt("userId");        
         
+    	/*
     	String[][] vars = new String[1][2];
     	vars[0][0] = "user_id"; 
     	vars[0][1] = userId + "";  
@@ -48,6 +49,7 @@ public class FollowActivity extends Activity {
 			Log.v("Error", "CheckIn Exception " + e.getMessage());   
 			return;
     	}
+    	*/
     	
        //TODO: Go off and get data.
         
@@ -78,6 +80,7 @@ public class FollowActivity extends Activity {
 		Intent intent = new Intent(this, FetchFollowActivity.class);
 		intent.putExtra("currentUserId", userId);
 		intent.putExtra("followId", followId);
+		intent.putExtra("followUserName", followUserName);
 		intent.putExtra("userActivity", 2);
 		startActivity(intent);
     }
@@ -87,6 +90,7 @@ public class FollowActivity extends Activity {
 		Intent intent = new Intent(this, FetchFollowActivity.class);
 		intent.putExtra("currentUserId", userId);
 		intent.putExtra("followId", followId);		
+		intent.putExtra("followUserName", followUserName);
 		intent.putExtra("userActivity", 1);				
 		startActivity(intent);
     }    
