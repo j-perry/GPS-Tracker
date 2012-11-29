@@ -9,34 +9,27 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.team2.dash.entity.User;
-import com.team2.dash.entity.VenueInfo;
-import com.team2.dash.entity.VenueReview;
 
 import android.os.Bundle;
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 public class FetchFollowActivity extends Activity 
 {
 	private ArrayList<String> listItems = new ArrayList<String>();
-	private User activeUser = null;		// keep active user in here
 	private int userActivity = 1; //1 (fetch_following) or 2 (fetch_followers)	
 	private JSONObject results;
 	private int currentUserId;
 	private List<User> users;
-	private int displayId;
+	private int followId;
 	
     @Override
     public void onCreate(Bundle savedInstanceState) 
@@ -44,12 +37,10 @@ public class FetchFollowActivity extends Activity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_follow);
         Bundle bundle = getIntent().getExtras();
-        displayId = bundle.getInt("userId");
+        followId = bundle.getInt("followId");
         userActivity = bundle.getInt("userActivity");
+        currentUserId = bundle.getInt("currentUserId");
         
-        DatabaseHandler db = new DatabaseHandler(this);
-        activeUser = db.getActiveUser();        
-        currentUserId = activeUser.getServerUserID();  
         
         FetchDisplayUser();
         
@@ -66,7 +57,6 @@ public class FetchFollowActivity extends Activity
             	ListView ourList = (ListView)findViewById(R.id.listViewMain);
        			User ur = (User)ourList.getItemAtPosition(position);   
        			FollowSelectedUser(ur.getServerUserID());
-       			//TODO: Follow the user
        		}
        	});
        	
@@ -98,7 +88,7 @@ public class FetchFollowActivity extends Activity
     private void RefreshUserData()
     {
     	String[][] vars = new String[1][2];
-    	vars[0][1] = displayId + ""; 	  
+    	vars[0][1] = followId + ""; 	  
     	
     	String selectFile;
     	if(userActivity == 2)
@@ -189,6 +179,51 @@ public class FetchFollowActivity extends Activity
     
     private void FollowSelectedUser(int userIdToFollow)
     {
+    	String[][] vars = new String[2][2];
+    	vars[0][0] = "userid"; 
+    	vars[0][1] = currentUserId + "";  
+    	vars[1][0] = "followid";
+    	vars[1][1] = userIdToFollow + "";  
     	
+    	String response;
+    	try
+    	{
+    		ServerConnector sc2 = new ServerConnector(vars, true, FetchFollowActivity.this, "Contacting Dash Server ...");
+    		response = sc2.execute(new String[] {  getResources().getString(R.string.followUser) }).get(5, TimeUnit.SECONDS);    	
+    	} 
+    	catch (Exception e)
+    	{
+    		e.printStackTrace();
+			Log.v("Error", "CheckIn Exception " + e.getMessage());   
+			return;
+    	}
+
+		JSONObject results = ServerConnector.ConvertStringToObject(response);
+
+		if (results == null) {
+			Toast.makeText(this, "Unable to pull results", Toast.LENGTH_SHORT).show();
+			return;
+		}
+
+		try
+    	{    		
+			String status = results.getString("status");
+    		if(status.equals("true"))
+    		{
+    			Toast.makeText(this, "You are following selected user", Toast.LENGTH_SHORT).show();
+    		}
+    		else
+    		{
+    			String txt = "Error: " + status + "\n" + results.getString("error");
+    			Toast.makeText(this, txt, Toast.LENGTH_SHORT).show();
+    			return;
+    		}    			
+    	}      	
+	    catch (JSONException e)
+	    {
+	    	Toast.makeText(this, "Unable to pull results", Toast.LENGTH_SHORT).show();
+			Log.v("Error", "JSONException " + e.getMessage());    			
+			return;
+	    }
     }
 }

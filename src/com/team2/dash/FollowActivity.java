@@ -11,6 +11,7 @@ import com.team2.dash.entity.VenueInfo;
 
 import android.os.Bundle;
 import android.app.Activity;
+import android.content.Intent;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
@@ -72,20 +73,36 @@ public class FollowActivity extends Activity {
         return true;
     }
     
-    public void onClickUserReviews(View view) {
+    public void onClickUserReviews(View view) 
+    {
     	
     }
-    public void onClickUserFollowers(View view) {
+    
+    public void onClickUserCheckins(View view) 
+    {
     	
     }
-    public void onClickFollowingUsers(View view) {
-    	
+    
+    public void onClickUserFollowers(View view) 
+    {
+		Intent intent = new Intent(this, FetchFollowActivity.class);
+		intent.putExtra("currentUserId", userId);
+		intent.putExtra("followId", followId);
+		intent.putExtra("userActivity", 2);
+		startActivity(intent);
     }
-    public void onClickUserCheckins(View view) {
-    	
-    }
-    public void onClickFollowUser(View view) {
-    	
+    
+    public void onClickFollowingUsers(View view) 
+    {
+		Intent intent = new Intent(this, FetchFollowActivity.class);
+		intent.putExtra("currentUserId", userId);
+		intent.putExtra("followId", followId);		
+		intent.putExtra("userActivity", 1);				
+		startActivity(intent);
+    }    
+    
+    public void onClickFollowUser(View view) 
+    {    	
        	String[][] vars = new String[2][2];
     	vars[0][0] = "userid"; 
     	vars[0][1] = userId + "";  
@@ -132,8 +149,5 @@ public class FollowActivity extends Activity {
 			Log.v("Error", "JSONException " + e.getMessage());    			
 			return;
 	    }    	  
-
-      }
-
-    
+    }
 }
