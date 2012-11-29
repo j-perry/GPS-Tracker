@@ -1,82 +1,219 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+
+
+
+<!-- 
+
+	Designed by Marek Sitko and Jonathan Perry (jp373)
+	Advanced Software Engineering
+	
+	MSc Advanced Computer Science (2012)
+	
+ -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
-
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#EEE" >
+	
+    
+    
+    <!-- Workout Display -->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
+        android:layout_height="180dp"
+        android:layout_weight="0"
+        android:layout_marginTop="100dp"
+        android:layout_marginBottom="60dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
         android:orientation="vertical" >
 
-        <TextView
-            android:id="@+id/textGPS"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="GPS"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
-
-        <TextView
-            android:id="@+id/textTime"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Actual Time"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
-
+        <!-- 
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+         -->
+        
+        
+        <!-- Workout Time -->
         <TextView
             android:id="@+id/textWorkoutTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Workout Time"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center"
+            android:text="00:00:00.00"
+            android:textColor="#222"
+            android:textStyle="bold"
+            android:textSize="32dp"
+            android:textAllCaps="true"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+        
+        <!-- Time -->
+        <TextView
+            android:id="@+id/textTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center"
+            android:text="Actual Time"
+            android:textColor="#222"
+            android:textStyle="bold"
+            android:textSize="32dp"
+            android:textAllCaps="true"
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
+        <!-- Distance -->
         <TextView
             android:id="@+id/textDistance"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Distance"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center"
+            android:text="0.0m"
+            android:textColor="#222"
+            android:textStyle="bold"
+            android:textSize="32dp"
+            android:textAllCaps="true"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+        
+        <!-- GPS -->
+        <TextView
+            android:id="@+id/textGPS"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center"
+            android:text="GPS"
+            android:textColor="#222"
+            android:textStyle="bold"
+            android:textSize="32dp"
+            android:textAllCaps="true"
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
+        <!-- Have commented out Java implementation
         <ProgressBar
             android:id="@+id/progressBar1"
             style="?android:attr/progressBarStyleLarge"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal" />
+		-->
+        
 
+    </LinearLayout>
+    
+    
+    
+    <!-- Start, Pause, End Buttons -->
+    <LinearLayout 
+        android:layout_width="280dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="0"
+        android:layout_margin="0dp"
+        android:orientation="horizontal"
+        android:layout_gravity="center_horizontal">
+        
+        <!-- 
+        <ToggleButton 
+            android:id="@+id/resumeRun"
+            android:background="#3CF"
+            android:layout_width="75dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:layout_marginRight="2dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:onClick="onToggleClick"
+			android:textOn="Pause"
+			android:textOff="Resume"
+			android:textAllCaps="true"
+            android:textColor="#EEE"/>
+            -->
+        
+        <!-- Start -->
         <Button
             android:id="@+id/button1"
-            android:layout_width="match_parent"
+            android:background="#3CF"
+            android:layout_width="140dp"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:layout_marginRight="2dp"
+            android:gravity="center"
             android:layout_gravity="center_horizontal"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp"
             android:onClick="onStartClick"
-            android:text="START" />
+            android:text="@string/start"
+            android:textAllCaps="true"
+            android:textStyle="bold"
+            android:textColor="#EEE" />
 
+        <!-- Pause -->
         <Button
             android:id="@+id/button2"
-            android:layout_width="match_parent"
+            android:background="#3CF"
+            android:layout_width="140dp"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:layout_marginRight="2dp"
+            android:gravity="center"
             android:layout_gravity="center_horizontal"
-            android:onClick="onPauseClick"
-            android:text="PAUSE" />
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp"
+            android:onClick="onStopClick"
+            android:text="@string/pause"
+            android:textAllCaps="true"
+            android:textStyle="bold"
+            android:textColor="#EEE" />
 
+        <!-- End -->
         <Button
             android:id="@+id/button3"
-            android:layout_width="match_parent"
+            android:background="#3CF"
+            android:layout_width="140dp"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:gravity="center"
             android:layout_gravity="center_horizontal"
-            android:onClick="onEndClick"
-            android:text="END" />
-
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp"
+            android:onClick="onResetClick"
+            android:text="@string/end"
+            android:textAllCaps="true"
+            android:textStyle="bold"
+            android:textColor="#EEE" />
+                
+                
+    </LinearLayout>
+    
+    
+    
+    <!-- Results button -->
+    <LinearLayout 
+        android:layout_width="280dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="0"
+        android:layout_margin="5dp"
+        android:layout_gravity="center_horizontal"
+        android:orientation="vertical">
+    
         <Button
             android:id="@+id/button4"
+            android:background="#3CF"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center"
             android:layout_gravity="center_horizontal"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp"
             android:onClick="onMapClick"
-            android:text="Results" />
+            android:text="results"
+            android:textAllCaps="true"
+            android:textStyle="bold"
+            android:textColor="#EEE" />
+    
+    </LinearLayout>
 
-        </LinearLayout>
-
-</RelativeLayout>
+</LinearLayout>
