@@ -34,14 +34,14 @@ public class FollowActivity extends Activity {
         
     	/*
     	String[][] vars = new String[1][2];
-    	vars[0][0] = "user_id"; 
+//    	vars[0][0] = "user_id"; 
     	vars[0][1] = userId + "";  
     	
     	String response;
     	try
     	{
     		ServerConnector sc = new ServerConnector(vars, true, FollowActivity.this, "Contacting Dash Server ...");
-    		response = sc.execute(new String[] {  getResources().getString(R.string.checkinUser) }).get(5, TimeUnit.SECONDS);    	
+    		response = sc.execute(new String[] {  getResources().getString(R.string.fetchUser) }).get(5, TimeUnit.SECONDS);    	
     	} 
     	catch (Exception e)
     	{
@@ -51,12 +51,34 @@ public class FollowActivity extends Activity {
     	}
     	*/
     	
-       //TODO: Go off and get data.
-        
-        //TODO: Show list with who this user is following
-        
-        //TODO: Follow button        
-    }
+		JSONObject results = ServerConnector.ConvertStringToObject(response);
+
+		if (results == null) {
+			Toast.makeText(this, "Unable to pull results", Toast.LENGTH_SHORT).show();
+			return;
+		}
+
+		try
+    	{    		
+			String status = results.getString("status");
+
+    		if( status.equals("true") ){
+    			Toast.makeText(this, "You are following selected user", Toast.LENGTH_SHORT).show();
+    		}
+    		else{
+    			String txt = "Error: " + status + "\n" + results.getString("error");
+    			Toast.makeText(this, txt, Toast.LENGTH_SHORT).show();
+    			return;
+    		}
+    			
+    	}      	
+	    catch (JSONException e)
+	    {
+	    	Toast.makeText(this, "Unable to pull results", Toast.LENGTH_SHORT).show();
+			Log.v("Error", "JSONException " + e.getMessage());    			
+			return;
+	    }    	  
+   }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) 
