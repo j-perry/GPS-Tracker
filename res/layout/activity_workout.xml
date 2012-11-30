@@ -1,38 +1,70 @@
+
+
+
+
+
+<!-- 
+
+	Designed by Marek Sitko and Jonathan Perry (jp373)
+	Advanced Software Engineering
+	
+	MSc Advanced Computer Science (2012)
+	
+ -->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical"
+    android:background="#EEE" >
 
+    <!-- Buttons -->
     <LinearLayout
-        android:id="@+id/linearLayout1"
+        android:id="@+id/linearLayout1"       
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="15dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp" >
 
+        <!-- Add new workout -->
         <Button
             android:id="@+id/add"
-            android:layout_width="wrap_content"
+            android:background="#3CF"
+            android:layout_width="154dp"
             android:layout_height="wrap_content"
+            android:layout_marginRight="2dp"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp"
             android:onClick="onClick"
-            android:text="New Workout" />
+            android:textColor="#FFF"
+            android:text="@string/new_workout" />
 
+        <!-- Cancel button -->
         <Button
             android:id="@+id/cancel"
-            android:layout_width="wrap_content"
+            android:background="#3CF"
+            android:layout_width="154dp"
             android:layout_height="wrap_content"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp"
             android:onClick="onClick"
-            android:text="Cancel" />
+            android:textColor="#FFF"
+            android:text="@string/cancel"/>
         
     </LinearLayout>
-
-
-
-
+	
+	
+	
+	<!-- Previous Runs -->
     <ListView
 		android:id="@android:id/list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
         android:layout_alignParentLeft="true"
-        android:layout_below="@+id/linearLayout1" >
+        android:layout_below="@+id/linearLayout1"  >
 
     </ListView>
 

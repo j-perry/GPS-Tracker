@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="new_user">New User</string>
+    <string name="add_user_on_server">Add User on Server</string>
+    
+</resources>

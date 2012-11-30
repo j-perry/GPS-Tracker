@@ -1,98 +1,146 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    >
+    android:layout_height="match_parent" 
+    android:background="#EEE">
 
+    <!-- User form -->
     <LinearLayout
         android:id="@+id/linearLayout1"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" 
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
         android:orientation="vertical" >
         
+        <!-- Please Enter header -->
         <TextView
         	android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="5dp"
             android:text="@string/please_enter"
             tools:context=".AddUserActivity" />
 
+        <!-- First name -->
         <EditText
             android:id="@+id/edit_fname"
         	android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:singleLine="true"
-            android:hint="@string/edit_fname" />
-
+            android:textColorHint="#CCC"
+            android:textColor="#222"
+            android:hint="@string/edit_fname"  />
+		
+        <!-- Second name -->
         <EditText
             android:id="@+id/edit_sname"
         	android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:singleLine="true"
+            android:textColorHint="#CCC"
+            android:textColor="#222"
             android:hint="@string/edit_sname" />
 
+        <!-- Email address -->
         <EditText
             android:id="@+id/edit_email"
             android:inputType="textEmailAddress"
         	android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:singleLine="true"
+            android:textColorHint="#CCC"
+            android:textColor="#222"
             android:hint="@string/edit_email" />
 
+        <!-- Password -->
         <EditText
             android:id="@+id/edit_password"
             android:inputType="textVisiblePassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/edit_password"
-            android:singleLine="true" />
+            android:singleLine="true"
+            android:textColorHint="#CCC"
+            android:textColor="#222"
+            android:hint="@string/edit_password" />
 
+        <!-- Age -->
         <EditText
             android:id="@+id/edit_age"
             android:inputType="numberDecimal"
         	android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:singleLine="true"
+            android:textColorHint="#CCC"
+            android:textColor="#222"
             android:hint="@string/edit_age" />
 
+        <!-- Weight -->
         <EditText
             android:id="@+id/edit_weight"
             android:inputType="numberDecimal"
         	android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:singleLine="true"
+            android:textColorHint="#CCC"
+            android:textColor="#222"
             android:hint="@string/edit_weight" />
 
+        <!-- Height -->
         <EditText
             android:id="@+id/edit_height"
             android:inputType="numberDecimal"
         	android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:singleLine="true"
+            android:textColorHint="#CCC"
+            android:textColor="#222"
             android:hint="@string/edit_height" />
+        
     </LinearLayout>
 
+    
+    
+    <!-- Buttons -->
     <LinearLayout
         android:id="@+id/linearLayout2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/linearLayout1"
+        android:layout_margin="8dp"
         android:orientation="horizontal" >
 
+        <!-- Add User -->
         <Button
             android:id="@+id/add"
-            android:layout_width="wrap_content"
+            android:background="#3CF"
+            android:gravity="center"
+            android:layout_width="151dp"
             android:layout_height="wrap_content"
+            android:layout_marginRight="2dp"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp"
             android:onClick="onClick"
+            android:textColor="#FFF"
+            android:textSize="14dp"
+            android:textStyle="bold"
             android:text="@string/add_user" />
 
+        <!-- Cancel -->
         <Button
             android:id="@+id/cancel"
-            android:layout_width="wrap_content"
+            android:background="#3CF"
+            android:gravity="center"
+            android:layout_width="151dp"
             android:layout_height="wrap_content"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp"
             android:onClick="onClick"
+            android:textColor="#FFF"
+            android:textSize="14dp"
+            android:textStyle="bold"
             android:text="@string/cancel" />
+        
     </LinearLayout>
     
 </RelativeLayout>
