@@ -1,7 +1,6 @@
 package com.team2.dash;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -25,7 +24,6 @@ import android.widget.Toast;
 
 public class FetchFollowActivity extends Activity 
 {
-	private ArrayList<String> listItems = new ArrayList<String>();
 	private int userActivity = 1; //1 (fetch_following) or 2 (fetch_followers)	
 	private String followUserName;
 	private JSONObject results;
@@ -158,11 +156,9 @@ public class FetchFollowActivity extends Activity
 	    			User singleUser = new User();	    
 	    			singleUser.setServerUserID(singleJSONUser.getInt("user_id"));
 	    			singleUser.setFname(singleJSONUser.getString("Firstname"));
-	    			singleUser.setSname(singleJSONUser.getString("Surname"));	    			    			
+	    			singleUser.setSname(singleJSONUser.getString("Surname"));
+	    			singleUser.setTimeFollowing(singleJSONUser.getInt("DateTime"));
 	    			users.add(singleUser);
-	    			int time = singleJSONUser.getInt("DateTime");
-	    			Date normalDate = new Date((long)time*1000);	
-	    			listItems.add(singleUser.getFname() + " " + singleUser.getSname() + " - " + normalDate.toString());
 	    		}
 	    	}
     	}      	

@@ -36,8 +36,9 @@ public class FollowActivity extends Activity {
     	String[][] vars = new String[1][2];
 //    	vars[0][0] = "user_id"; 
     	vars[0][1] = userId + "";  
-    	
+    	                
     	String response;
+    	
     	try
     	{
     		ServerConnector sc = new ServerConnector(vars, true, FollowActivity.this, "Contacting Dash Server ...");
@@ -49,7 +50,7 @@ public class FollowActivity extends Activity {
 			Log.v("Error", "CheckIn Exception " + e.getMessage());   
 			return;
     	}
-    	*/
+    	
     	
 		JSONObject results = ServerConnector.ConvertStringToObject(response);
 
@@ -77,7 +78,8 @@ public class FollowActivity extends Activity {
 	    	Toast.makeText(this, "Unable to pull results", Toast.LENGTH_SHORT).show();
 			Log.v("Error", "JSONException " + e.getMessage());    			
 			return;
-	    }    	  
+	    }  
+		*/
    }
 
     @Override
