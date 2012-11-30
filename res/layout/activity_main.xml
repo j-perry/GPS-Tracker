@@ -91,7 +91,7 @@
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
             android:onClick="onUserClick"
-            android:text="@string/change_user"
+            android:text="@string/user_account"
             android:textSize="18dp"
             android:textColor="#FFF" />
 

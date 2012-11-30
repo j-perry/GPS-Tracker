@@ -32,9 +32,12 @@ public class AddReview extends Activity {
         Bundle bundle = getIntent().getExtras();
         userId = bundle.getInt("userId");
         venue = (VenueInfo)bundle.getParcelable("venueData");
-        TextView textVenue = (TextView)findViewById(R.id.textName);
-        textVenue.setText(venue.getVenueName());
         
+        // find the venue control
+        TextView textVenue = (TextView)findViewById(R.id.textName);
+        
+        // display the venue name
+        textVenue.setText(venue.getVenueName());        
     }
 
     @Override

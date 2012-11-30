@@ -3,7 +3,7 @@
     <string name="username">username</string>
     <string name="new_workout">New Workout</string>
     <string name="saved_workouts">Saved Workouts</string>
-    <string name="change_user">Change User</string>
+    <string name="user_account">User Account</string>
     <string name="test_area">Test Area</string>
     
 </resources>

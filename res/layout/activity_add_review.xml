@@ -1,8 +1,21 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+
+
+<!-- 
+
+	Designed by Marek Sitko, Jonathan Perry (jp373), Ben Dursley, Ndy Elliot
+	Advanced Software Engineering
+	
+	MSc Advanced Computer Science (2012)
+	
+ -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
-
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#EEE" >
+	<!-- Add Review form -->
     <LinearLayout
         android:id="@+id/linearLayout1"
         android:layout_width="wrap_content"
@@ -11,35 +24,34 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
+        android:layout_margin="5dp"
         android:orientation="vertical" >
 
+        <!-- Displays the Venue Name -->
         <TextView
             android:id="@+id/textName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="-"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
-
-        <Button
-            android:id="@+id/buttonAddReview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:onClick="onAddClick"
-            android:text="Add Review" />
-
+            android:text="@string/venue_name"
+            android:textColor="#222"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+        
+        <!-- Review Rating bar -->
         <RatingBar
             android:id="@+id/ratingBar"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.65"
+            android:layout_height="55dp"
+            android:layout_weight="0"
+            android:layout_marginTop="30dp"
+            android:layout_gravity="center_horizontal"
             android:rating="3" />
-
+		<!-- Review text box -->
         <EditText
             android:id="@+id/editText"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="265dp"
             android:layout_marginTop="50dp"
-            android:layout_weight="3.24"
+            android:layout_weight="0"
             android:ems="10"
             android:imeOptions="actionDone"
             android:inputType="textMultiLine"
@@ -47,7 +59,23 @@
 
             <requestFocus />
         </EditText>
+        
+        <!-- Add Review button -->
+        <Button
+            android:id="@+id/buttonAddReview"
+            android:background="#3CF"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp"
+            android:layout_marginBottom="0dp"
+            android:onClick="onAddClick"
+            android:textColor="#FFF"
+	        android:textStyle="bold"
+	        android:textAllCaps="false"
+	        android:textSize="14dp"
+            android:text="@string/add_review" />
 
     </LinearLayout>
 
-</RelativeLayout>
+</LinearLayout>

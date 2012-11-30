@@ -304,6 +304,7 @@ public class TrackerActivity  extends Activity implements LocationListener {
 //            button_end.setEnabled(false);
             Toast.makeText(this, gpsStatus, Toast.LENGTH_LONG).show();
         }
+        gpsStatus = null;
         gpsStatus = "NO GPS";
         
      	((TextView)findViewById(R.id.textGPS)).setText(gpsStatus);
@@ -494,9 +495,14 @@ public class TrackerActivity  extends Activity implements LocationListener {
       */
      public void onPauseClick(View view)
      {       
-    	 // stop the start timer
-     	 handleChrono.removeCallbacks(startTimer);
-//     	stopChrono = true;
+    	final String workoutStatus = "Workout Paused";
+    	
+    	// inform the user their workout has been paused
+    	Toast.makeText(this, workoutStatus, Toast.LENGTH_SHORT).show();
+    	 
+    	// stop the start timer
+     	handleChrono.removeCallbacks(startTimer);
+//   	stopChrono = true;
      	
      	// tracker status is paused
      	trackerStatus = tStatus.PAUSE;
@@ -529,6 +535,11 @@ public class TrackerActivity  extends Activity implements LocationListener {
       */
      public void onEndClick(View view)
      {
+    	final String workoutStatus = "Workout Finished";
+     	
+     	// inform the user their workout has been paused
+     	Toast.makeText(this, workoutStatus, Toast.LENGTH_SHORT).show(); 
+    	 
 //     	stopChrono = false;
     	 
     	// stop the workout for the workout
