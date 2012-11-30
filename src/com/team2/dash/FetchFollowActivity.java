@@ -1,6 +1,7 @@
 package com.team2.dash;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -127,10 +128,8 @@ public class FetchFollowActivity extends Activity
 			} 
 			else 
 			{
-				Log.e("HTTP Result", "Something else went wrong server side");
-			}	
-			
-			Toast.makeText(this, "Failed to Add Review", Toast.LENGTH_SHORT).show();
+				Log.e("HTTP Result", "No results");
+			}				
 		}     
 	    catch(JSONException e)
 	    {
@@ -159,9 +158,11 @@ public class FetchFollowActivity extends Activity
 	    			User singleUser = new User();	    
 	    			singleUser.setServerUserID(singleJSONUser.getInt("user_id"));
 	    			singleUser.setFname(singleJSONUser.getString("Firstname"));
-	    			singleUser.setSname(singleJSONUser.getString("Firstname"));
+	    			singleUser.setSname(singleJSONUser.getString("Surname"));	    			    			
 	    			users.add(singleUser);
-	    			listItems.add(singleUser.getFname() + " " + singleUser.getSname());
+	    			int time = singleJSONUser.getInt("DateTime");
+	    			Date normalDate = new Date((long)time*1000);	
+	    			listItems.add(singleUser.getFname() + " " + singleUser.getSname() + " - " + normalDate.toString());
 	    		}
 	    	}
     	}      	
