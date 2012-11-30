@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="username">username</string>
+    <string name="new_workout">New Workout</string>
+    <string name="saved_workouts">Saved Workouts</string>
+    <string name="change_user">Change User</string>
+    <string name="test_area">Test Area</string>
+    
+</resources>
