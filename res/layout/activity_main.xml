@@ -9,18 +9,15 @@
 	MSc Advanced Computer Science (2012)
 	
  -->
- <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+ <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#EEE" >
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
         android:orientation="vertical" >
         
         <!-- 
@@ -56,6 +53,7 @@
             android:layout_gravity="center_horizontal"
             android:onClick="onNewWorkoutClick"
             android:text="@string/new_workout"
+            android:textStyle="bold"
             android:textSize="18dp"
             android:textColor="#FFF" />
 
@@ -74,6 +72,7 @@
             android:layout_marginRight="15dp"
             android:onClick="onWorkoutClick"
             android:text="@string/saved_workouts"
+            android:textStyle="bold"
             android:textSize="18dp"
             android:textColor="#FFF" />
 
@@ -92,6 +91,7 @@
             android:layout_marginRight="15dp"
             android:onClick="onUserClick"
             android:text="@string/user_account"
+            android:textStyle="bold"
             android:textSize="18dp"
             android:textColor="#FFF" />
 
@@ -115,4 +115,4 @@
 
     </LinearLayout>
 
-</RelativeLayout>
+</LinearLayout>

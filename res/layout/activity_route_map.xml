@@ -44,7 +44,7 @@
             android:layout_marginLeft="24dp"
             android:layout_toRightOf="@+id/textView1"
             android:textColor="#222"
-            android:text="0m" />
+            android:text="@string/distance_covered_value" />
 
         <!-- Race Time Header -->
         <TextView
@@ -66,7 +66,7 @@
             android:layout_alignBottom="@+id/textView2"
             android:layout_alignLeft="@+id/lblDistanceCovered"
             android:textColor="#222"
-            android:text="0:00s" />
+            android:text="@string/race_time_value" />
         
      </RelativeLayout>
 

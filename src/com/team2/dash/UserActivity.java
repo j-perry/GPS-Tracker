@@ -27,8 +27,8 @@ public class UserActivity extends ListActivity {
 	/**
 	 * Private members
 	 */
-    private List<User> 		values;		// 
-    private DatabaseHandler db;			// 
+    private List<User> 		values;		// displays list of venues visited during workout
+    private DatabaseHandler db;			// handles database operations
     
     /**
      * 

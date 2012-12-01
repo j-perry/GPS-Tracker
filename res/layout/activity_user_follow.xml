@@ -1,26 +1,50 @@
+
+
+
+
+<!-- 
+
+	Designed by Marek Sitko, Jonathan Perry (jp373), Ben Dursley, Ndifreke Idorenyin Ekott
+	Advanced Software Engineering
+	
+	MSc Advanced Computer Science (2012)
+	
+ -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:orientation="vertical" >
-
+    android:orientation="vertical"
+    android:background="#EEE" >
+	<!-- Following -->
     <TextView
         android:id="@+id/Following"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="-"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:text="@string/following"
+        android:textColor="#222"
+        android:textSize="18dp"
         android:textAppearance="?android:attr/textAppearanceMedium" />
-
+	<!-- User -->
     <TextView
         android:id="@+id/User"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="-"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:text="@string/user_following"
+        android:textColor="#222"
+        android:textSize="18dp"
         android:textAppearance="?android:attr/textAppearanceMedium" />
-
+	<!-- Followers -->
     <ListView
         android:id="@+id/listView1"
         android:layout_width="320dp"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp" >
 
     </ListView>
 

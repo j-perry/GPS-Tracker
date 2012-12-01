@@ -22,6 +22,9 @@ import android.support.v4.app.NavUtils;
 
 public class AddReview extends Activity {
 	
+	/**
+	 * Private members
+	 */
 	private VenueInfo venue;
 	private int userId;
 

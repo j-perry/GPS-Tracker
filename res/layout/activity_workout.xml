@@ -38,6 +38,7 @@
             android:paddingBottom="15dp"
             android:onClick="onClick"
             android:textColor="#FFF"
+            android:textStyle="bold"
             android:text="@string/new_workout" />
 
         <!-- Cancel button -->
@@ -50,6 +51,7 @@
             android:paddingBottom="15dp"
             android:onClick="onClick"
             android:textColor="#FFF"
+            android:textStyle="bold"
             android:text="@string/cancel"/>
         
     </LinearLayout>

@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="distance_covered">Distance Covered</string>
-    <string name="race_time">Race Time</string>
-    <string name="check_in">Check-in</string>
+    <string name="distance_covered_value">0m</string><string name="race_time">Race Time</string>
+    <string name="race_time_value">0:00s</string><string name="check_in">Check-in</string>
+    
+    
     
 </resources>

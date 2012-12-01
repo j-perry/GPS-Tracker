@@ -28,11 +28,11 @@ public class RouteMap extends MapActivity {
 	/**
 	 * Private members
 	 */
-	private List<LocationP> 	runPoints;		// 
-	private MapView 			mapView;		// 
-    private DatabaseHandler 	db;				// 
-    private int					workoutID;		// 
-    private double  			distance = 0;	//    
+	private List<LocationP> 	runPoints;		// stores points from workout to be pin-pointed onto the map
+	private MapView 			mapView;		// displays the map (Google Map)
+    private DatabaseHandler 	db;				// handles database operations
+    private int					workoutID;		// stores the workout ID
+    private double  			distance = 0;	// stores the distance of the workout
 	
     /**
      * 

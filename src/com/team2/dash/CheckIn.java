@@ -23,16 +23,18 @@ import android.widget.Toast;
 import com.team2.dash.entity.*;
 
 /*
- * Class to handle the display of checkin locations. Displays Locations in a clickable list.
+ * Class to handle the display of check-in locations. Displays Locations in a clickable list.
  */
 public class CheckIn extends ListActivity
 {
-
-	private ArrayList<String> listItems = new ArrayList<String>();
-	private List<VenueInfo> VenueInformation;	
-	private JSONObject results;		
-	private User	activeUser = null;		// keep active user in here
-	int				userId;
+	/**
+	 * Private members
+	 */
+	private ArrayList<String> 	listItems = new ArrayList<String>();
+	private List<VenueInfo> 	VenueInformation;	
+	private JSONObject 			results;		
+	private User				activeUser = null;		// keep active user in here
+	int							userId;
 	
     @Override
     public void onCreate(Bundle savedInstanceState) 

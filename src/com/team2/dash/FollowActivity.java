@@ -18,13 +18,18 @@ import android.widget.Toast;
 
 public class FollowActivity extends Activity {
 	
-	int followId;   //This is going to be for the user we have displayed
-	int userId;		// this is actual server user ID	
+	/**
+	 * Private members
+	 */
+	private int followId;   //This is going to be for the user we have displayed
+	private int userId;		// this is actual server user ID	
 
     @Override
     public void onCreate(Bundle savedInstanceState) 
     {
         super.onCreate(savedInstanceState);
+        
+        // display the activity_follow.xml layout screen
         setContentView(R.layout.activity_follow);
         
         Bundle bundle = getIntent().getExtras();

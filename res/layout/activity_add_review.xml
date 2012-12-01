@@ -18,12 +18,8 @@
 	<!-- Add Review form -->
     <LinearLayout
         android:id="@+id/linearLayout1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_margin="5dp"
         android:orientation="vertical" >
 
@@ -32,8 +28,10 @@
             android:id="@+id/textName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
             android:text="@string/venue_name"
             android:textColor="#222"
+            android:textSize="18dp"
             android:textAppearance="?android:attr/textAppearanceLarge" />
         
         <!-- Review Rating bar -->
@@ -49,8 +47,9 @@
         <EditText
             android:id="@+id/editText"
             android:layout_width="match_parent"
-            android:layout_height="265dp"
-            android:layout_marginTop="50dp"
+            android:layout_height="255dp"
+            android:layout_marginTop="50dp"            
+            android:layout_marginLeft="0dp"
             android:layout_weight="0"
             android:ems="10"
             android:imeOptions="actionDone"
@@ -68,7 +67,6 @@
             android:layout_height="wrap_content"
             android:paddingTop="15dp"
             android:paddingBottom="15dp"
-            android:layout_marginBottom="0dp"
             android:onClick="onAddClick"
             android:textColor="#FFF"
 	        android:textStyle="bold"

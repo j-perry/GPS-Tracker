@@ -19,9 +19,10 @@ public class WorkoutActivity extends ListActivity {
 	/**
 	 * Private members
 	 */
-    private List<Workout> 	values;			// 
-    private DatabaseHandler db;				// 
-    private int				activeUserID;	// 
+    private List<Workout> 	values;			// displays list of venues visited during workout
+    private DatabaseHandler db;				// handles database operations
+    private int				activeUserID;	// stores the user's ID
+    private User			activeUser;
     
     /**
      * 
@@ -30,6 +31,7 @@ public class WorkoutActivity extends ListActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         
+        // display the Workout screen
         setContentView(R.layout.activity_workout);
         
         db = new DatabaseHandler(this);
@@ -110,8 +112,17 @@ public class WorkoutActivity extends ListActivity {
 //        	Workout workout = new Workout( 0, activeUserID, 0, 0, 0, DateFormat.format("MM/dd/yy h:mmaa", new java.util.Date()).toString() );
 //        	db.addWorkout(workout);
 //        	refreshList();
+        	
+        	// create a new workout launch object
+            Intent intent = new Intent(this, TrackerActivity.class);
+            
+            // launch new workout
+            startActivityForResult(intent, 0);
+            
+        	// used for testing: Toast.makeText(this, "New Workout Clicked", Toast.LENGTH_SHORT).show();
         	break;
         case R.id.cancel:
+        	// return to the main menu
         	finish();
         	break;
         default:

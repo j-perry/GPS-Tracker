@@ -2,12 +2,9 @@
 
 
 
-
-
-
 <!-- 
 
-	Designed by Marek Sitko and Jonathan Perry (jp373)
+	Designed by Marek Sitko, Jonathan Perry (jp373), Ben Dursley, Ndifreke Idorenyin Ekott
 	Advanced Software Engineering
 	
 	MSc Advanced Computer Science (2012)
@@ -19,14 +16,12 @@
     android:orientation="vertical" 
     android:background="#EEE">
 
-
-
+    <!-- Locations -->
     <ListView
 		android:id="@android:id/list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/linearLayout1" >
+        android:layout_alignParentLeft="true" >
 
     </ListView>
 

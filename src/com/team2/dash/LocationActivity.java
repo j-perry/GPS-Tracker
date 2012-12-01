@@ -16,9 +16,9 @@ public class LocationActivity extends ListActivity {
 	/**
 	 * Private members
 	 */
-    List<LocationP> values;		//
-    DatabaseHandler db;			//
-    int				workoutID;	//
+    private List<LocationP> values;		//
+    private DatabaseHandler db;			//
+    private int				workoutID;	//
     
     /**
      * 

@@ -36,16 +36,18 @@ import android.util.Log;
 
 public class ServerConnector extends AsyncTask<String, Integer, String>
 {
-	//Current website URL
-	private String mProcessMessage = "processing ...";	
-	private static final int SOCKET_TIMEOUT = 5000;	
-	private static final int CONN_TIMEOUT = 3000;	
-	private ProgressDialog pDlg = null;
-	private static String ServerURL;
-	private Context mContext = null;
-	private boolean mUseCodeIgniter;	
-	public String responseString;	
-	private String[][] mVars;	
+	/**
+	 * Private members
+	 */
+	private String 				mProcessMessage = "processing ...";	//Current website URL
+	private static final int 	SOCKET_TIMEOUT = 5000;	
+	private static final int 	CONN_TIMEOUT = 3000;	
+	private ProgressDialog 		pDlg = null;
+	private static String 		ServerURL;
+	private Context 			mContext = null;
+	private boolean 			mUseCodeIgniter;	
+	public  String 				responseString;	
+	private String[][] 			mVars;	
 	
 	/*
 	 * This is the method that we will call to send, then receive data.

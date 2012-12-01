@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="venue_name_header">Venue Name:</string>
+    <string name="venue_address_header">Venue Address:</string>
+    <string name="venue_name_value">-</string>
+    <string name="venue_address_value">-</string>
+    <string name="checkins_header">Check-Ins</string>
+    <string name="checkins_value">-</string><string name="rating_header">Rating:</string>
+    <string name="rating_value">-</string>
+    
+    
+</resources>

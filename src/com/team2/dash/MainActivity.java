@@ -20,7 +20,7 @@ public class MainActivity extends Activity {
 	 * Private members
 	 */
 	private User				activeUser = null;		// keep active user in here
-    private DatabaseHandler 	db;						// 
+    private DatabaseHandler 	db;						// handles database operations 
 
     /**
      * 
@@ -31,6 +31,7 @@ public class MainActivity extends Activity {
 
         db = new DatabaseHandler(this);
         
+        // display the main menu
         setContentView(R.layout.activity_main);
 
         fastTost();   
@@ -71,11 +72,13 @@ protected void onDestroy() {
    }
    
    /**
-    * 
+    * Loads the splash screen
     */
    public void fastTost(){
        LinearLayout v = new LinearLayout(this);
        ImageView iv = new ImageView(this);
+       
+       // 
        iv.setImageResource(R.drawable.dash_logo);
 
        v.addView(iv);

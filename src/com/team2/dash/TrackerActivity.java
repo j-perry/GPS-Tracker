@@ -28,6 +28,9 @@ import android.location.LocationManager;
 
 public class TrackerActivity  extends Activity implements LocationListener {
 
+	/**
+	 * Private members
+	 */
 	private LocationManager 	locationManager = null;			// manages the user's location
 	private Location 			location;						// stores the user's location
 	private Handler 			handleTimer, handleChrono;		// handles the workout time

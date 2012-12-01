@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="start">start</string>
+    <string name="workout_time">00:00:00.00</string><string name="actual_time">Actual Time</string><string name="distance">0.0m</string><string name="gps_location">GPS</string><string name="start">start</string>
     <string name="pause">pause</string>
     <string name="end">end</string>
-    <string name="results">results</string>
+    <string name="results">Results</string>
+    
+    
+    
+    
     
 </resources>

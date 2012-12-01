@@ -1,64 +1,143 @@
+
+
+
+
+<!-- 
+
+	Designed by Marek Sitko, Jonathan Perry (jp373), Ben Dursley, Ndy Elliot
+	Advanced Software Engineering
+	
+	MSc Advanced Computer Science (2012)
+	
+ -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/LinearLayout2"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
-
-    <TextView
-        android:id="@+id/textView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Medium Text"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Medium Text"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
-
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Medium Text"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
-
-    <Button
-        android:id="@+id/button1"
+    android:orientation="vertical"
+    android:background="#EEE" >
+    
+    <LinearLayout 
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:padding="5dp"
+        android:orientation="vertical">
+        
+        
+    	<TextView
+	        android:id="@+id/textView1"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_marginLeft="5dp"
+	        android:layout_marginRight="5dp"
+	        android:text="Medium Text"
+	        android:textColor="#222"
+	        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+	    <TextView
+	        android:id="@+id/textView2"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_marginTop="15dp"
+	        android:layout_marginLeft="5dp"
+	        android:layout_marginRight="5dp"
+	        android:text="Medium Text"
+	        android:textAppearance="?android:attr/textAppearanceMedium" />
+	
+	    <TextView
+	        android:id="@+id/textView3"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_marginTop="15dp"
+	        android:layout_marginLeft="5dp"
+	        android:layout_marginRight="5dp"
+	        android:text="Medium Text"
+	        android:textAppearance="?android:attr/textAppearanceMedium" />    
+        
+    </LinearLayout>
+
+    
+    <!-- User's Reviews button -->
+    <Button
+        android:id="@+id/button1"
+        android:background="#3CF"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:paddingTop="15dp"
+        android:paddingBottom="15dp"
         android:onClick="onClickUserReviews"
+        android:textColor="#FFF"
+        android:textStyle="bold"
+        android:textSize="14dp"
         android:text="User&apos;s Reviews" />
 
     <Button
         android:id="@+id/button2"
+        android:background="#3CF"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:paddingTop="15dp"
+        android:paddingBottom="15dp"
         android:onClick="onClickUserCheckins"
+        android:textColor="#FFF"
+        android:textStyle="bold"
+        android:textSize="14dp"
         android:text="User&apos;s Checkins" />
 
     <Button
         android:id="@+id/button3"
+        android:background="#3CF"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:paddingTop="15dp"
+        android:paddingBottom="15dp"
         android:onClick="onClickUserFollowers"
+        android:textColor="#FFF"
+        android:textStyle="bold"
+        android:textSize="14dp"
         android:text="User&apos;s Followers" />
 
     <Button
         android:id="@+id/button4"
+        android:background="#3CF"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:paddingTop="15dp"
+        android:paddingBottom="15dp"
         android:onClick="onClickFollowingUsers"
+        android:textColor="#FFF"
+        android:textStyle="bold"
+        android:textSize="14dp"
         android:text="Following Users" />
 
     <Button
         android:id="@+id/button5"
+        android:background="#3CF"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:paddingTop="15dp"
+        android:paddingBottom="15dp"
         android:onClick="onClickFollowUser"
+        android:textColor="#FFF"
+        android:textStyle="bold"
+        android:textSize="14dp"
         android:text="Follow User" />
 
 </LinearLayout>

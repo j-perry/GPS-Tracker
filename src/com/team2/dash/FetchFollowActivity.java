@@ -30,6 +30,9 @@ import android.widget.Toast;
 
 public class FetchFollowActivity extends Activity 
 {
+	/**
+	 * Private members
+	 */
 	private ArrayList<String> listItems = new ArrayList<String>();
 	private User activeUser = null;		// keep active user in here
 	private int userActivity = 1; //1 (fetch_following) or 2 (fetch_followers)	
