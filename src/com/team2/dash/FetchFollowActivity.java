@@ -127,6 +127,7 @@ public class FetchFollowActivity extends Activity
 			} 
 			else 
 			{
+
 				Log.e("HTTP Result", "Something else went wrong server side");
 				Toast.makeText(this, "Some error", Toast.LENGTH_SHORT).show();
 			}	
@@ -146,7 +147,9 @@ public class FetchFollowActivity extends Activity
     	{    		
     		if (results == null)
 	    	{
+
 	    		Toast.makeText(this, "Unable to pull back results", Toast.LENGTH_SHORT).show();
+
 	    	} 
 	    	else 
 	    	{
@@ -160,8 +163,10 @@ public class FetchFollowActivity extends Activity
 	    			singleUser.setServerUserID(singleJSONUser.getInt("user_id"));
 	    			singleUser.setFname(singleJSONUser.getString("Firstname"));
 	    			singleUser.setSname(singleJSONUser.getString("Surname"));
+
 	    			users.add(singleUser);
 	    			listItems.add(singleUser.getFname() + " " + singleUser.getSname());
+
 	    		}
 	    	}
     	}      	

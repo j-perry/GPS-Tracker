@@ -43,6 +43,7 @@ public class FollowActivity extends Activity {
     	
 
         String response;
+
     	try
     	{
     		ServerConnector sc = new ServerConnector(vars, true, FollowActivity.this, "Contacting Dash Server ...");
@@ -87,6 +88,7 @@ public class FollowActivity extends Activity {
 	    	Toast.makeText(this, "Unable to pull results", Toast.LENGTH_SHORT).show();
 			Log.v("Error", "JSONException " + e.getMessage());    			
 			return;
+
 	    }
 		
         TextView Tv = (TextView) findViewById(R.id.textView2);
@@ -94,9 +96,8 @@ public class FollowActivity extends Activity {
         Tv = (TextView) findViewById(R.id.textView3);
         Tv.setText(userName);
         
-		
-   }
-
+    }
+        
     @Override
     public boolean onCreateOptionsMenu(Menu menu) 
     {
