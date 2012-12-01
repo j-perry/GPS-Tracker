@@ -70,6 +70,7 @@ public class ServerConnector extends AsyncTask<String, Integer, String>
 		}
 	}	
 	
+	
 	@Override
 	protected String doInBackground(String... params) 
 	{

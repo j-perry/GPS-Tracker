@@ -14,12 +14,17 @@ import android.content.Intent;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class FollowActivity extends Activity {
 	
 	int followId;   //This is going to be for the user we have displayed
 	int userId;		// this is actual server user ID	
+	String userName;
+	String firstName;
+	String lastName;
 	String followUserName = "Test User"; //TODO: On server fetch of user, set First Name and Surname here
 
     @Override
@@ -32,12 +37,12 @@ public class FollowActivity extends Activity {
         followId = bundle.getInt("followId");        
         userId = bundle.getInt("userId");        
         
-    	/*
-    	String[][] vars = new String[1][2];
-//    	vars[0][0] = "user_id"; 
-    	vars[0][1] = userId + "";  
     	
-    	String response;
+    	String[][] vars = new String[1][2];
+    	vars[0][1] = followId + "";  
+    	
+
+        String response;
     	try
     	{
     		ServerConnector sc = new ServerConnector(vars, true, FollowActivity.this, "Contacting Dash Server ...");
@@ -46,10 +51,10 @@ public class FollowActivity extends Activity {
     	catch (Exception e)
     	{
     		e.printStackTrace();
-			Log.v("Error", "CheckIn Exception " + e.getMessage());   
+			Log.v("Error", "Fetch Exception " + e.getMessage());   
 			return;
     	}
-    	*/
+    	
     	
 		JSONObject results = ServerConnector.ConvertStringToObject(response);
 
@@ -63,7 +68,12 @@ public class FollowActivity extends Activity {
 			String status = results.getString("status");
 
     		if( status.equals("true") ){
-    			Toast.makeText(this, "You are following selected user", Toast.LENGTH_SHORT).show();
+    			JSONObject userdata = results.getJSONObject("user");
+    			int userID = userdata.getInt("userid");
+    			userName = userdata.getString("username");
+    			firstName = userdata.getString("firstname");
+    			lastName = userdata.getString("lastname");
+    			followUserName = firstName + " " + lastName;
     		}
     		else{
     			String txt = "Error: " + status + "\n" + results.getString("error");
@@ -77,7 +87,14 @@ public class FollowActivity extends Activity {
 	    	Toast.makeText(this, "Unable to pull results", Toast.LENGTH_SHORT).show();
 			Log.v("Error", "JSONException " + e.getMessage());    			
 			return;
-	    }    	  
+	    }
+		
+        TextView Tv = (TextView) findViewById(R.id.textView2);
+        Tv.setText(followUserName);
+        Tv = (TextView) findViewById(R.id.textView3);
+        Tv.setText(userName);
+        
+		
    }
 
     @Override
@@ -94,7 +111,11 @@ public class FollowActivity extends Activity {
     
     public void onClickUserCheckins(View view) 
     {
-    	
+    	Intent intent = new Intent(this, UserCheckins.class);
+    	intent.putExtra("currentUserId", userId);
+    	intent.putExtra("followId", followId);
+    	intent.putExtra("followUserName", followUserName);
+    	startActivity(intent);
     }
     
     public void onClickUserFollowers(View view) 
