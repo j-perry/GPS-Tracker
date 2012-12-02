@@ -41,7 +41,6 @@ public class VenueActivity extends MapActivity
 	private JSONObject results;
 	private MapView mapView;	
 	private VenueInfo venue;	
-	private int dashId;
 	private int userId;
     
 	@Override
@@ -54,7 +53,6 @@ public class VenueActivity extends MapActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_venue);
         Bundle bundle = getIntent().getExtras();
-        dashId = bundle.getInt("dashId");
         userId = bundle.getInt("userId");
         venue = (VenueInfo)bundle.getParcelable("venueData");
         
@@ -74,14 +72,10 @@ public class VenueActivity extends MapActivity
         TextView textCheckin = (TextView)findViewById(R.id.textViewRealCheckin);
         textCheckin.setText("" + venue.getVenueCheckins());
         
-        String ratingText;
-        if(venue.isVenueUseRating() == true)
+        String ratingText = "No Ratings";
+        if(venue.getVenueUseRating() == 1)
         {
         	ratingText = "" + venue.getVenueRating();
-        } 
-        else
-        {
-        	ratingText = "No Ratings";
         }
 
         TextView textRating = (TextView)findViewById(R.id.textViewRealRating);
@@ -109,7 +103,9 @@ public class VenueActivity extends MapActivity
         itemizedoverlay.addOverlay(overlayitem);        
         mapOverlays.add(itemizedoverlay);        
         
-        ListView ourList = (ListView)findViewById(R.id.listView1);
+        ListView ourList = (ListView)findViewById(R.id.listViewMain);
+                
+        RefreshDataFromServer();       
        	
        	ourList.setClickable(true);
        	ourList.setOnItemClickListener(new AdapterView.OnItemClickListener() 
@@ -119,23 +115,23 @@ public class VenueActivity extends MapActivity
        			final int pos = position;
        			AlertDialog alertDialog = new AlertDialog.Builder(VenueActivity.this).create();
     			alertDialog.setTitle("Rate Review");
-    			alertDialog.setMessage("How would you like to rate this review?");
-    			alertDialog.setButton(DialogInterface.BUTTON_POSITIVE, "+1 Positive", new DialogInterface.OnClickListener() 
+    			alertDialog.setMessage("Do you agree or Disagree with this review?");
+    			alertDialog.setButton(DialogInterface.BUTTON_POSITIVE, "+1 Agree", new DialogInterface.OnClickListener() 
     			{
     				public void onClick(DialogInterface dialog, int arg1) 
     				{
-		       			ListView ourList = (ListView)findViewById(R.id.listView1);
+		       			ListView ourList = (ListView)findViewById(R.id.listViewMain);
 		       			VenueReview vr = (VenueReview)ourList.getItemAtPosition(pos);				       			
     					AddRatingToReview(vr, ourList, true);
     					dialog.cancel();	
     					return;
     	            }
     			});	
-    			alertDialog.setButton(DialogInterface.BUTTON_NEGATIVE, "+1 Negative", new DialogInterface.OnClickListener() 
+    			alertDialog.setButton(DialogInterface.BUTTON_NEGATIVE, "-1 Disagree", new DialogInterface.OnClickListener() 
     			{
     				public void onClick(DialogInterface dialog, int arg1) 
     				{
-		       			ListView ourList = (ListView)findViewById(R.id.listView1);
+		       			ListView ourList = (ListView)findViewById(R.id.listViewMain);
 		       			VenueReview vr = (VenueReview)ourList.getItemAtPosition(pos);				       			
     					AddRatingToReview(vr, ourList, false);
     					dialog.cancel();
@@ -151,20 +147,43 @@ public class VenueActivity extends MapActivity
 
             public boolean onItemLongClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
        			
-            	ListView ourList = (ListView)findViewById(R.id.listView1);
+            	ListView ourList = (ListView)findViewById(R.id.listViewMain);
        			VenueReview vr = (VenueReview)ourList.getItemAtPosition(position);
        			Intent intent = new Intent(VenueActivity.this, FollowActivity.class);					
        			intent.putExtra("followId", vr.DBUserId);
        			startActivity(intent); 
                 return true;
             }
-        }); 
+        });     	 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) 
+    {
+        getMenuInflater().inflate(R.menu.activity_venue, menu);
+        return true;
+    }
     
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) 
+    {
+        switch (item.getItemId()) 
+        {
+            case android.R.id.home:
+                NavUtils.navigateUpFromSameTask(this);
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+    
+    public void RefreshDataFromServer()
+    {
+        ListView ourList = (ListView)findViewById(R.id.listViewMain);
         
         String[][] vars = new String[1][2];
-        vars[0][1] = venue.getId();
-                
-        String response;
+        vars[0][1] = venue.getId();                
+    	
+    	String response;
     	try
     	{
     		ServerConnector sc2 = new ServerConnector(vars, true, VenueActivity.this, "Contacting Dash Server ...");
@@ -194,27 +213,8 @@ public class VenueActivity extends MapActivity
 			e.printStackTrace(); 
 			Log.v("Error", "CheckIn Exception " + e.getMessage());   
 			return;
-	    }
-    	 
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) 
-    {
-        getMenuInflater().inflate(R.menu.activity_venue, menu);
-        return true;
-    }
-    
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) 
-    {
-        switch (item.getItemId()) 
-        {
-            case android.R.id.home:
-                NavUtils.navigateUpFromSameTask(this);
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
+	    }     	
+    	
     }
     
     public void RefreshReviewInfo()
@@ -233,18 +233,30 @@ public class VenueActivity extends MapActivity
 	    		for(int i = 0; i < venues.length(); i++)
 	    		{
 	    			JSONObject singleJSONReview = venues.getJSONObject(i);
-	    			VenueReview singleReview = new VenueReview();	    			
+	    			VenueReview singleReview = new VenueReview();	    
 	    			singleReview.setDBLocationId(singleJSONReview.getInt("LocationId"));
 	    			singleReview.setDBReviewId(singleJSONReview.getInt("ReviewId"));
 	    			singleReview.setDBUserId(singleJSONReview.getInt("UserId"));
 	    			singleReview.setReviewDateTime(singleJSONReview.getInt("DateTime"));
-	    			//singleReview.setReviewNegative(singleJSONReview.getInt(""));
-	    			//singleReview.setReviewPositive(singleJSONReview.getInt(""));
+	    			singleReview.setReviewNegative(singleJSONReview.getInt("ReviewNegative"));
+	    			singleReview.setReviewPositive(singleJSONReview.getInt("ReviewPositive"));
 	    			singleReview.setReviewRating(singleJSONReview.getDouble("ReviewRating"));
 	    			singleReview.setReviewText(singleJSONReview.getString("ReviewText"));
 	    			reviews.add(singleReview);
 	    			listItems.add(singleReview.toString());
 	    		}
+	    		
+	    		JSONObject locationUpdate = results.getJSONObject("location");
+	    		String ratingText = "No Ratings";	    		
+	    		if (locationUpdate.getInt("LocationUseRatings") == 1)
+	    		{
+	    			venue.setVenueRating(locationUpdate.getDouble("LocationRatings"));
+	    			venue.setVenueUseRating(1);
+	    			ratingText = venue.getVenueRating() + "";
+	    		}	    		
+	    		
+	            TextView textRating = (TextView)findViewById(R.id.textViewRealRating);
+	            textRating.setText(ratingText);
 	    	}
     	}      	
 	    catch (JSONException e)
@@ -265,7 +277,6 @@ public class VenueActivity extends MapActivity
 	public void onAddClick(View view)
 	{
 		Intent intent = new Intent(this, AddReview.class);					
-		intent.putExtra("dashId", dashId);
 		intent.putExtra("userId", userId);
 		intent.putExtra("venueData", venue);
 		intent.putExtra("checkIn", false);
@@ -279,23 +290,28 @@ public class VenueActivity extends MapActivity
 		if(usePositive == true)
 		{
 			reviewText = "ReviewPositive";
+			review.setReviewPositive(review.getReviewPositive() + 1);
 		}
 		else
 		{
 			reviewText = "ReviewNegative";
-		}
+			review.setReviewNegative(review.getReviewNegative() + 1);
+		}		
 		
-        String[][] vars = new String[2][2];
-        vars[0][1] = "ri";
-        vars[0][1] = venue.getId();
-        vars[1][1] = "rr";
-        vars[1][1] = reviewText;
+        String[][] ratingVars = new String[3][2];
+        ratingVars[0][0] = "ri";
+        ratingVars[0][1] = review.getDBReviewId() + "";
+        ratingVars[1][0] = "rr";
+        ratingVars[1][1] = reviewText;
+        ratingVars[2][0] = "a";
+        ratingVars[2][1] = "updateReview";
                 
-        String response;
+        String ratingResults;
+        
     	try
     	{
-    		ServerConnector sc3 = new ServerConnector(vars, false, VenueActivity.this, "Contacting Dash Server ...");
-    		response = sc3.execute(new String[] {  getResources().getString(R.string.rateReview) }).get(5, TimeUnit.SECONDS);    	
+    		ServerConnector sc3 = new ServerConnector(ratingVars, false, this, "Contacting Server ...");
+    		ratingResults = sc3.execute(new String[] {  getResources().getString(R.string.rateReview) }).get(5, TimeUnit.SECONDS);    	
     	} 
     	catch (Exception e)
     	{
@@ -305,16 +321,21 @@ public class VenueActivity extends MapActivity
     	}
     	    	
     	try 
-    	{       		
-    		results = ServerConnector.ConvertStringToObject(response);    		
-    		String statusResponse = results.getString("status");
+    	{       
+    		JSONObject PosNegResponse;
+    		PosNegResponse = ServerConnector.ConvertStringToObject(ratingResults);    		
+    		String ratingResponse = PosNegResponse.getString("status");
     		
-			if (statusResponse.equals("true"))
+			if (ratingResponse.equals("true"))
 			{	
-		        RefreshReviewInfo();  		    	
-		       	ArrayAdapter<VenueReview> adapter = new ArrayAdapter<VenueReview>(this, android.R.layout.simple_list_item_1, reviews);
-		       	ListView ourList = (ListView)findViewById(R.id.listView1);
-		       	ourList.setAdapter(adapter);
+				if(PosNegResponse.getInt("result") > 0)
+				{
+					RefreshDataFromServer();
+				}
+				else
+				{
+					Toast.makeText(this, "Unable to update review with rating", Toast.LENGTH_SHORT).show();
+				}
 			}
 			else
 			{			
@@ -327,7 +348,6 @@ public class VenueActivity extends MapActivity
     		e.printStackTrace();
 			Log.v("Error", "JSON Exception " + e.getMessage());   
 			return;
-    	}
-
+    	}    	
 	}	
 }
