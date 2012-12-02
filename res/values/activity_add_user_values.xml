@@ -10,7 +10,7 @@
     <string name="edit_age">Age</string>
     <string name="edit_weight">Weight</string>
     <string name="edit_height">Height</string>
-    <string name="add_user">Add user</string>
+    <string name="add_user">Add User</string>
     <string name="cancel">Cancel</string>
 
 </resources>

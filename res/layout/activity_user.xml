@@ -25,7 +25,7 @@
 
         <Button
             android:id="@+id/add"
-            android:background="#3CF"
+            android:background="@drawable/button_bgcolor"
             android:layout_width="153dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
@@ -33,20 +33,20 @@
             android:layout_marginTop="5dp"
             android:layout_marginRight="2dp"
             android:onClick="onClick"
-            android:textColor="#FFF"
+            android:textColor="#EEE"
             android:textStyle="bold"
             android:text="@string/new_user" />
 
        <Button
             android:id="@+id/add_on_server"
-            android:background="#3CF"
+            android:background="@drawable/button_bgcolor"
             android:layout_width="153dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:padding="15dp"
             android:layout_marginTop="5dp"
             android:onClick="onClick"
-            android:textColor="#FFF"
+            android:textColor="#EEE"
             android:textStyle="bold"
             android:text="@string/add_user_on_server" />
         

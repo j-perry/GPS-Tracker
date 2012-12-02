@@ -35,12 +35,12 @@
             android:paddingLeft="5dp"
             android:text="@string/username"
             android:textSize="14dp"
-            android:textColor="#FFF" />
+            android:textColor="#EEE" />
 
         <!-- Start new workout -->
         <Button
-            android:id="@+id/button1"
-            android:background="#3CF"
+            android:id="@+id/menu_workout"
+            android:background="@drawable/button_bgcolor"
             android:paddingTop="15dp"
             android:paddingBottom="15dp"
             android:layout_marginTop="15dp"
@@ -49,18 +49,17 @@
             android:layout_marginRight="15dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
             android:layout_gravity="center_horizontal"
             android:onClick="onNewWorkoutClick"
-            android:text="@string/new_workout"
+            android:text="@string/new_workout"      
             android:textStyle="bold"
             android:textSize="18dp"
-            android:textColor="#FFF" />
-
+            android:textColor="#EEE" />
+        
         <!-- Saved workouts -->
         <Button
             android:id="@+id/button2"
-            android:background="#3CF"
+            android:background="@drawable/button_bgcolor"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
@@ -74,12 +73,12 @@
             android:text="@string/saved_workouts"
             android:textStyle="bold"
             android:textSize="18dp"
-            android:textColor="#FFF" />
+            android:textColor="#EEE" />
 
         <!-- Change default user -->
         <Button
             android:id="@+id/button3"
-            android:background="#3CF"
+            android:background="@drawable/button_bgcolor"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
@@ -93,12 +92,12 @@
             android:text="@string/user_account"
             android:textStyle="bold"
             android:textSize="18dp"
-            android:textColor="#FFF" />
+            android:textColor="#EEE" />
 
         <!-- Test Area -->
         <Button
             android:id="@+id/button4"
-            android:background="#3CF"
+            android:background="@drawable/button_bgcolor"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
@@ -111,7 +110,7 @@
             android:onClick="onTestClick"
             android:text="@string/test_area"
             android:textSize="18dp"
-            android:textColor="#FFF" />
+            android:textColor="#EEE" />
 
     </LinearLayout>
 

@@ -124,7 +124,7 @@
         <!-- Add User -->
         <Button
             android:id="@+id/add"
-            android:background="#3CF"
+            android:background="@drawable/button_bgcolor"
             android:gravity="center"
             android:layout_width="151dp"
             android:layout_height="wrap_content"
@@ -132,7 +132,7 @@
             android:paddingTop="15dp"
             android:paddingBottom="15dp"
             android:onClick="onClick"
-            android:textColor="#FFF"
+            android:textColor="#EEE"
             android:textSize="14dp"
             android:textStyle="bold"
             android:text="@string/add_user" />
@@ -140,14 +140,14 @@
         <!-- Cancel -->
         <Button
             android:id="@+id/cancel"
-            android:background="#3CF"
+            android:background="@drawable/button_bgcolor"
             android:gravity="center"
             android:layout_width="151dp"
             android:layout_height="wrap_content"
             android:paddingTop="15dp"
             android:paddingBottom="15dp"
             android:onClick="onClick"
-            android:textColor="#FFF"
+            android:textColor="#EEE"
             android:textSize="14dp"
             android:textStyle="bold"
             android:text="@string/cancel" />

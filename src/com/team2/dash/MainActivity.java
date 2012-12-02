@@ -5,10 +5,12 @@ import com.team2.dash.entity.User;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -21,6 +23,7 @@ public class MainActivity extends Activity {
 	 */
 	private User				activeUser = null;		// keep active user in here
     private DatabaseHandler 	db;						// handles database operations 
+    private String 				bgColor;
 
     /**
      * 
@@ -34,6 +37,7 @@ public class MainActivity extends Activity {
         // display the main menu
         setContentView(R.layout.activity_main);
 
+        // display the splash screen
         fastTost();   
    }
 
@@ -79,7 +83,7 @@ protected void onDestroy() {
        ImageView iv = new ImageView(this);
        
        // 
-       iv.setImageResource(R.drawable.dash_logo);
+       iv.setImageResource(R.drawable.splash);
 
        v.addView(iv);
        //populate layout with your image and text or whatever you want to put in here
@@ -96,7 +100,7 @@ protected void onDestroy() {
     * @param view
     */
    public void onUserClick(View view) {
-       Intent intent = new Intent(this, UserActivity.class); 
+	   Intent intent = new Intent(this, UserActivity.class); 
        startActivity(intent);
    }
 
@@ -105,14 +109,20 @@ protected void onDestroy() {
     * @param view
     */
    public void onNewWorkoutClick(View view) {
-	   try{
-	   Intent intent = new Intent(this, TrackerActivity.class);
-       intent.putExtra("activeUserID", activeUser.getID());        
-       startActivity(intent);
-	   }catch(NullPointerException exception){
+	   try {
+		   //bgColor = "#222222";
+		   
+		   //Button workoutBtn = (Button) findViewById(R.id.menu_workout);
+		   
+		   //workoutBtn.setBackgroundColor(Color.parseColor(bgColor));
+		   
+		   Intent intent = new Intent(this, TrackerActivity.class);
+	       intent.putExtra("activeUserID", activeUser.getID());        
+	       startActivity(intent);
+	   } catch(NullPointerException exception){
 		   Toast.makeText(this, "No active user selected", Toast.LENGTH_LONG).show();
 		   Log.e(MainActivity.class.toString(), "Default user for runtime not selected-"+exception.getLocalizedMessage());
-	   }catch(Exception ex){
+	   } catch(Exception ex) {
 		   Log.e(MainActivity.class.toString(),ex.getLocalizedMessage());
 	   }
    

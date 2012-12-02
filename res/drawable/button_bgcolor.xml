@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    
+    <!-- pressed state -->
+    <item android:state_pressed="true">
+    	<shape>
+	    	<solid android:color="#222222"/>
+	    </shape>
+    </item>
+          
+    <!-- focused state -->
+    <item android:state_focused="true">
+        <shape>
+	    	<solid android:color="#222222"/>
+	    </shape>
+    </item>
+    
+    <!-- hovered state -->
+    <item android:state_hovered="true"><shape>
+	    	<solid android:color="#222222"/>
+	    </shape>
+    </item>
+    
+    <!-- default state -->
+    <item>
+        <shape>
+	    	<solid android:color="#33ccff"/>
+	    </shape>
+    </item>
+    
+</selector>

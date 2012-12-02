@@ -87,13 +87,13 @@
     <!-- Check-in button -->
     <Button
     	android:id="@+id/btnCheckin"
-        android:background="#3CF"
+        android:background="@drawable/button_bgcolor"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="0dp"
         android:paddingTop="15dp"
         android:paddingBottom="15dp"
-        android:textColor="#FFF"
+        android:textColor="#EEE"
         android:textStyle="bold"
         android:textAllCaps="false"
         android:textSize="14dp"

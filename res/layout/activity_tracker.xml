@@ -135,7 +135,7 @@
         <!-- Start -->
         <Button
             android:id="@+id/button1"
-            android:background="#3CF"
+            android:background="@drawable/button_bgcolor"
             android:layout_width="140dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="5dp"
@@ -154,7 +154,7 @@
         <!-- Pause -->
         <Button
             android:id="@+id/button2"
-            android:background="#3CF"
+            android:background="@drawable/button_bgcolor"
             android:layout_width="140dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="5dp"
@@ -173,7 +173,7 @@
         <!-- End -->
         <Button
             android:id="@+id/button3"
-            android:background="#3CF"
+            android:background="@drawable/button_bgcolor"
             android:layout_width="140dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="5dp"
@@ -204,7 +204,7 @@
     
         <Button
             android:id="@+id/button4"
-            android:background="#3CF"
+            android:background="@drawable/button_bgcolor"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"

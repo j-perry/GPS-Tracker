@@ -62,7 +62,7 @@
     <!-- User's Reviews button -->
     <Button
         android:id="@+id/button1"
-        android:background="#3CF"
+        android:background="@drawable/button_bgcolor"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
@@ -71,14 +71,14 @@
         android:paddingTop="15dp"
         android:paddingBottom="15dp"
         android:onClick="onClickUserReviews"
-        android:textColor="#FFF"
+        android:textColor="#EEE"
         android:textStyle="bold"
         android:textSize="14dp"
         android:text="User&apos;s Reviews" />
 
     <Button
         android:id="@+id/button2"
-        android:background="#3CF"
+        android:background="@drawable/button_bgcolor"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
@@ -87,14 +87,14 @@
         android:paddingTop="15dp"
         android:paddingBottom="15dp"
         android:onClick="onClickUserCheckins"
-        android:textColor="#FFF"
+        android:textColor="#EEE"
         android:textStyle="bold"
         android:textSize="14dp"
         android:text="User&apos;s Checkins" />
 
     <Button
         android:id="@+id/button3"
-        android:background="#3CF"
+        android:background="@drawable/button_bgcolor"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
@@ -103,14 +103,14 @@
         android:paddingTop="15dp"
         android:paddingBottom="15dp"
         android:onClick="onClickUserFollowers"
-        android:textColor="#FFF"
+        android:textColor="#EEE"
         android:textStyle="bold"
         android:textSize="14dp"
         android:text="User&apos;s Followers" />
 
     <Button
         android:id="@+id/button4"
-        android:background="#3CF"
+        android:background="@drawable/button_bgcolor"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
@@ -119,14 +119,14 @@
         android:paddingTop="15dp"
         android:paddingBottom="15dp"
         android:onClick="onClickFollowingUsers"
-        android:textColor="#FFF"
+        android:textColor="#EEE"
         android:textStyle="bold"
         android:textSize="14dp"
         android:text="Following Users" />
 
     <Button
         android:id="@+id/button5"
-        android:background="#3CF"
+        android:background="@drawable/button_bgcolor"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
@@ -135,7 +135,7 @@
         android:paddingTop="15dp"
         android:paddingBottom="15dp"
         android:onClick="onClickFollowUser"
-        android:textColor="#FFF"
+        android:textColor="#EEE"
         android:textStyle="bold"
         android:textSize="14dp"
         android:text="Follow User" />

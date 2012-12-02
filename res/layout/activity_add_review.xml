@@ -62,13 +62,13 @@
         <!-- Add Review button -->
         <Button
             android:id="@+id/buttonAddReview"
-            android:background="#3CF"
+            android:background="@drawable/button_bgcolor"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingTop="15dp"
             android:paddingBottom="15dp"
             android:onClick="onAddClick"
-            android:textColor="#FFF"
+            android:textColor="#EEE"
 	        android:textStyle="bold"
 	        android:textAllCaps="false"
 	        android:textSize="14dp"

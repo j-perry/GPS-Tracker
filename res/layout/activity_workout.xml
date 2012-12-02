@@ -30,27 +30,27 @@
         <!-- Add new workout -->
         <Button
             android:id="@+id/add"
-            android:background="#3CF"
+            android:background="@drawable/button_bgcolor"
             android:layout_width="154dp"
             android:layout_height="wrap_content"
             android:layout_marginRight="2dp"
             android:paddingTop="15dp"
             android:paddingBottom="15dp"
             android:onClick="onClick"
-            android:textColor="#FFF"
+            android:textColor="#EEE"
             android:textStyle="bold"
             android:text="@string/new_workout" />
 
         <!-- Cancel button -->
         <Button
             android:id="@+id/cancel"
-            android:background="#3CF"
+            android:background="@drawable/button_bgcolor"
             android:layout_width="154dp"
             android:layout_height="wrap_content"
             android:paddingTop="15dp"
             android:paddingBottom="15dp"
             android:onClick="onClick"
-            android:textColor="#FFF"
+            android:textColor="#EEE"
             android:textStyle="bold"
             android:text="@string/cancel"/>
         
