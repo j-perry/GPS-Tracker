@@ -9,6 +9,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.team2.dash.entity.User;
+import com.team2.dash.entity.dao.DatabaseHandler;
 
 public class AddUserActivity extends Activity {
 

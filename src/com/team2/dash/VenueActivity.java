@@ -16,6 +16,7 @@ import com.google.android.maps.OverlayItem;
 import com.team2.dash.entity.MapItemizedOverlay;
 import com.team2.dash.entity.VenueInfo;
 import com.team2.dash.entity.VenueReview;
+import com.team2.dash.entity.dao.ServerConnector;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;

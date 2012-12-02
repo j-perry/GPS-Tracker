@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 
 import com.team2.dash.entity.LocationP;
+import com.team2.dash.entity.dao.DatabaseHandler;
 
 public class LocationActivity extends ListActivity {
 	

@@ -4,6 +4,7 @@ import com.google.android.maps.GeoPoint;
 import com.team2.dash.entity.LocationP;
 import com.team2.dash.entity.User;
 import com.team2.dash.entity.Workout;
+import com.team2.dash.entity.dao.DatabaseHandler;
 
 import android.os.Bundle;
 import android.os.Handler;

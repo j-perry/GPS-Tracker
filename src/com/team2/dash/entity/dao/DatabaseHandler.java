@@ -1,4 +1,4 @@
-package com.team2.dash;
+package com.team2.dash.entity.dao;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,8 +36,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private static final String TABLE_LOCATIONS = "locations";
     
     // 
-    static final int USER_ACTIVE = 		1;
-    static final int USER_NON_ACTIVE = 	0;
+    public static final int USER_ACTIVE = 		1;
+    public static final int USER_NON_ACTIVE = 	0;
     
     // Table Users
     private static final String[] TableUsersColumnNames = { 	"_id", 		"active", 	"fname", 	"sname", 	"email", 	"password",	"age", 		"weight", 	"height", "serverUserID" };

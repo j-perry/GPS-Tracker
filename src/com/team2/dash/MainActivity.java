@@ -1,6 +1,7 @@
 package com.team2.dash;
 
 import com.team2.dash.entity.User;
+import com.team2.dash.entity.dao.DatabaseHandler;
 
 import android.os.Bundle;
 import android.app.Activity;

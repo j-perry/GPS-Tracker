@@ -21,6 +21,8 @@ import android.widget.Toast;
 
 import com.team2.dash.entity.User;
 import com.team2.dash.entity.VenueInfo;
+import com.team2.dash.entity.dao.DatabaseHandler;
+import com.team2.dash.entity.dao.ServerConnector;
 
 public class UserActivity extends ListActivity {
 

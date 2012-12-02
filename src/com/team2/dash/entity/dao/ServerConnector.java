@@ -1,4 +1,4 @@
-package com.team2.dash;
+package com.team2.dash.entity.dao;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -19,6 +19,9 @@ import org.apache.http.params.HttpParams;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import com.team2.dash.R;
+import com.team2.dash.R.string;
 
 import android.app.ProgressDialog;
 import android.app.WallpaperManager;

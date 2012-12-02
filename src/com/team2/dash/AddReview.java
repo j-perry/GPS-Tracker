@@ -6,6 +6,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.team2.dash.entity.VenueInfo;
+import com.team2.dash.entity.dao.ServerConnector;
 
 import android.os.Bundle;
 import android.app.Activity;

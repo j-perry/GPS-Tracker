@@ -22,6 +22,8 @@ import com.google.android.maps.OverlayItem;
 import com.team2.dash.entity.DirectionPathOverlay;
 import com.team2.dash.entity.LocationP;
 import com.team2.dash.entity.MapItemizedOverlay;
+import com.team2.dash.entity.dao.DatabaseHandler;
+import com.team2.dash.entity.dao.ServerConnector;
 
 public class RouteMap extends MapActivity {
 	

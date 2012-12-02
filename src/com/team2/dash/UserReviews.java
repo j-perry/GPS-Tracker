@@ -11,6 +11,7 @@ import org.json.JSONObject;
 import com.team2.dash.entity.VenueReview;
 import com.team2.dash.entity.userCheckin;
 import com.team2.dash.entity.userReview;
+import com.team2.dash.entity.dao.ServerConnector;
 
 import android.os.Bundle;
 import android.app.Activity;

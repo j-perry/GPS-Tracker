@@ -21,6 +21,8 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.team2.dash.entity.*;
+import com.team2.dash.entity.dao.DatabaseHandler;
+import com.team2.dash.entity.dao.ServerConnector;
 
 /*
  * Class to handle the display of checkin locations. Displays Locations in a clickable list.
