@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.team2.dash"
     android:versionCode="1"
@@ -21,7 +22,7 @@
             android:required="true" />
 
         <activity
-            android:name=".MainActivity"
+            android:name="com.team2.dash.MainActivity"
             android:label="@string/title_activity_main" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -30,15 +31,15 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".TestActivity"
+            android:name="com.team2.dash.TestActivity"
             android:label="@string/title_activity_main" >
         </activity>
         <activity
-            android:name=".UserActivity"
+            android:name="com.team2.dash.UserActivity"
             android:label="@string/title_activity_user" >
         </activity>
         <activity
-            android:name=".AddUserActivity"
+            android:name="com.team2.dash.AddUserActivity"
             android:label="@string/title_activity_add_user" >
         </activity>
         <activity
@@ -49,42 +50,54 @@
                 android:value="com.google.android.maps.MapActivity" />
         </activity>
         <activity
-            android:name=".WorkoutActivity"
+            android:name="com.team2.dash.WorkoutActivity"
             android:label="@string/title_activity_workout" >
         </activity>
         <activity
-            android:name=".LocationActivity"
+            android:name="com.team2.dash.LocationActivity"
             android:label="@string/title_activity_location" >
         </activity>
         <activity
-            android:name=".Tracker"
+            android:name="com.team2.dash.Tracker"
             android:label="@string/title_activity_tracker" >
         </activity>
         <activity
-            android:name=".TrackerActivity"
+            android:name="com.team2.dash.TrackerActivity"
             android:label="@string/title_activity_tracker" >
         </activity>
         <activity
-            android:name=".CheckIn"
+            android:name="com.team2.dash.CheckIn"
             android:label="@string/title_activity_check_in" >
         </activity>
         <activity
-            android:name=".VenueActivity"
+            android:name="com.team2.dash.VenueActivity"
             android:label="@string/title_activity_venue" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.team2.dash.CheckIn" />
         </activity>
         <activity
-            android:name=".AddReview"
+            android:name="com.team2.dash.AddReview"
             android:label="@string/title_activity_add_review" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.team2.dash.VenueActivity" />
         </activity>
         <activity
-            android:name=".FollowActivity"
+            android:name="com.team2.dash.FollowActivity"
             android:label="@string/title_activity_follow" >
+        </activity>
+        <activity
+            android:name="com.team2.dash.FetchFollowActivity"
+            android:label="@string/title_activity_user_follow" >
+        </activity>
+        <activity
+            android:name="com.team2.dash.UserCheckins"
+            android:label="@string/title_activity_user_checkins" >
+        </activity>
+        <activity
+            android:name="com.team2.dash.UserReviews"
+            android:label="@string/title_activity_user_reviews" >
         </activity>
     </application>
 

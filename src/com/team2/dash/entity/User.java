@@ -1,5 +1,7 @@
 package com.team2.dash.entity;
 
+import java.util.Date;
+
 public class User {
 
 	/**
@@ -14,8 +16,11 @@ public class User {
 	int		age;		// age
 	int		weight;		// weight
 	int 	height;		// height
-	int		serverUserID = -1;
+	int		serverUserID = -1;	
+	int 	timeFollowing = -1;
 	
+
+
 	/**
 	 * 
 	 * @param id
@@ -49,18 +54,35 @@ public class User {
 		
 	}
 	
+	public int getTimeFollowing() 
+	{
+		return timeFollowing;
+	}
+
+	public void setTimeFollowing(int timeFollowing) 
+	{
+		this.timeFollowing = timeFollowing;
+	}
+	
 	/**
 	 * 
 	 */
     @Override
 	public String toString() {
-    	String txt;
+    	String txt= "";
     	if( this.getActive() == 1 )
     		txt = "*";
     	else
     		txt = " ";
+    	
+    	txt = txt + this.getFname() + " " + this.getSname();
+    	if( this.getTimeFollowing() > -1)
+    	{
+    		Date normalDate = new Date((long)this.getTimeFollowing()*1000);
+    		txt = txt + " (since " + normalDate.toString() + ")";
+    	}
     		
-		return( txt + this.getFname() + " " + this.getSname() );
+		return(txt);
 	}
 	
     /**

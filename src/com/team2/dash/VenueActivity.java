@@ -151,6 +151,7 @@ public class VenueActivity extends MapActivity
        			VenueReview vr = (VenueReview)ourList.getItemAtPosition(position);
        			Intent intent = new Intent(VenueActivity.this, FollowActivity.class);					
        			intent.putExtra("followId", vr.DBUserId);
+       			intent.putExtra("userId", userId);
        			startActivity(intent); 
                 return true;
             }

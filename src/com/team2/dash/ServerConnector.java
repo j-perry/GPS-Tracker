@@ -20,7 +20,6 @@ import org.apache.http.util.EntityUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.app.WallpaperManager;
 import android.content.Context;
@@ -70,6 +69,7 @@ public class ServerConnector extends AsyncTask<String, Integer, String>
 			ServerURL = ((Context) thisContext).getString(R.string.webServiceEndPointNoFile);
 		}
 	}	
+	
 	
 	@Override
 	protected String doInBackground(String... params) 
