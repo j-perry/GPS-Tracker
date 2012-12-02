@@ -9,13 +9,6 @@
         android:layout_height="wrap_content" >
 
         <Button
-            android:id="@+id/add"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="onClick"
-            android:text="New Workout" />
-
-        <Button
             android:id="@+id/cancel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

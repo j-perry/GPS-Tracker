@@ -149,7 +149,7 @@ public class UserActivity extends ListActivity {
     			int userID = userdata.getInt("userid");
     			user.setServerUserID(userID);
     			db.updateUser(user);
-    			txt = user + "registered on the server";
+    			txt = user + " is now registered on the server";
     			Toast.makeText(this, txt, Toast.LENGTH_SHORT).show();
     		}
     		else{

@@ -43,14 +43,6 @@
             android:onClick="onUserClick"
             android:text="User maintenance" />
 
-        <Button
-            android:id="@+id/button4"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:onClick="onTestClick"
-            android:text="Test Area" />
-
     </LinearLayout>
 
 </RelativeLayout>
