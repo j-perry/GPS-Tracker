@@ -95,6 +95,10 @@
             android:name="com.team2.dash.UserCheckins"
             android:label="@string/title_activity_user_checkins" >
         </activity>
+        <activity
+            android:name="com.team2.dash.UserReviews"
+            android:label="@string/title_activity_user_reviews" >
+        </activity>
     </application>
 
 </manifest>

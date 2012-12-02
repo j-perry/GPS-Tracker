@@ -107,6 +107,11 @@ public class FollowActivity extends Activity {
     
     public void onClickUserReviews(View view) 
     {
+    	Intent intent = new Intent(this, UserReviews.class);
+    	intent.putExtra("currentUserId", userId);
+    	intent.putExtra("followId", followId);
+    	intent.putExtra("followUserName", followUserName);
+    	startActivity(intent);
     	
     }
     

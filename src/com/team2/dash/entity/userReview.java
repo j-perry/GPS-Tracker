@@ -2,29 +2,30 @@ package com.team2.dash.entity;
 
 import android.text.format.DateFormat;
 
-public class userCheckins {
-	
-	private int 	checkinId;
+public class userReview {
+	private int 	reviewId;
 	private String	locationName;
+	private String  reviewTxt;
 	private	long	dateTime;
 
 	
-	public userCheckins( int checkinId, String locationName, int dateTime ) {
-		this.checkinId = checkinId;
+	public userReview( int checkinId, String locationName, String reviewTxt, int dateTime ) {
+		this.reviewId = checkinId;
 		this.locationName = locationName;
+		this.reviewTxt = reviewTxt;
 		this.dateTime = dateTime;
 	}
 
-	public userCheckins(){
+	public userReview(){
 		
 	}
 	
-	public void setCheckinId( int checkinId ){
-		this.checkinId = checkinId;
+	public void setReviewId( int checkinId ){
+		this.reviewId = checkinId;
 	}
 	
-	public int getCheckinId(){
-		return	this.checkinId;
+	public int getReviewId(){
+		return	this.reviewId;
 	}
 	
 	public void setLocationName( String name ){
@@ -33,6 +34,14 @@ public class userCheckins {
 	
 	public String getLocationName(){
 		return this.locationName;
+	}
+	
+	public void setReviewTxt( String name ){
+		this.reviewTxt = name;
+	}
+	
+	public String getReviewTxt(){
+		return this.reviewTxt;
 	}
 	
 	public void setDateTime( long dateTime ){
@@ -48,7 +57,7 @@ public class userCheckins {
 
     	String txt = DateFormat.format("dd/MM/yy h:mm:ssaa ", this.dateTime).toString();
     		
-		return( this.locationName + "\nChecked in: " + txt );
+		return( this.locationName + "\nReviewed: " + txt + "\n" + this.reviewTxt );
 	}
 
 }

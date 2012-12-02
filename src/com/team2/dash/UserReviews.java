@@ -8,12 +8,12 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.team2.dash.entity.VenueReview;
 import com.team2.dash.entity.userCheckin;
+import com.team2.dash.entity.userReview;
 
 import android.os.Bundle;
 import android.app.Activity;
-import android.app.ListActivity;
-import android.content.Intent;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
@@ -23,20 +23,21 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class UserCheckins extends Activity{
+public class UserReviews extends Activity {
+
 
 //	private ArrayList<String> listItems = new ArrayList<String>();
 	private String followUserName;
 	private JSONObject results;
 	private int currentUserId;
-	private List<userCheckin> venues;
+	private List<userReview> reviews;
 	private int followId;
 	
     @Override
     public void onCreate(Bundle savedInstanceState) 
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_user_checkins);
+        setContentView(R.layout.activity_user_reviews);
         Bundle bundle = getIntent().getExtras();
         followId = bundle.getInt("followId");
         currentUserId = bundle.getInt("currentUserId");
@@ -45,7 +46,7 @@ public class UserCheckins extends Activity{
 		TextView textVenue = (TextView)findViewById(R.id.Following);
         textVenue.setText(followUserName);    
   
-        ListView ourList = (ListView)findViewById(R.id.listViewCheckins);
+        ListView ourList = (ListView)findViewById(R.id.listViewReviews);
         
         RefreshUserData();
         
@@ -74,14 +75,14 @@ public class UserCheckins extends Activity{
             }
         });
        	
-       	ArrayAdapter<userCheckin> adapter = new ArrayAdapter<userCheckin>(this, android.R.layout.simple_list_item_1, venues);
+       	ArrayAdapter<userReview> adapter = new ArrayAdapter<userReview>(this, android.R.layout.simple_list_item_1, reviews);
        	ourList.setAdapter(adapter);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) 
     {
-        getMenuInflater().inflate(R.menu.activity_user_checkins, menu);
+        getMenuInflater().inflate(R.menu.activity_user_reviews, menu);
         return true;
     }
     
@@ -91,14 +92,14 @@ public class UserCheckins extends Activity{
     	vars[0][1] = followId + ""; 	  
     	
     	String selectFile;
-    	selectFile = getResources().getString(R.string.fetch_checkins);
+    	selectFile = getResources().getString(R.string.fetch_reviews);
     	TextView textVenue = (TextView)findViewById(R.id.User);
-        textVenue.setText("has checked in to:");    		
+        textVenue.setText("Reviewed locations:");    		
     	
     	String response;
     	try
     	{
-    		ServerConnector sc = new ServerConnector(vars, true, UserCheckins.this, "Contacting Dash Server ...");
+    		ServerConnector sc = new ServerConnector(vars, true, UserReviews.this, "Contacting Dash Server ...");
     		response = sc.execute(new String[] { selectFile }).get(5, TimeUnit.SECONDS);    	
     	} 
     	catch (Exception e)
@@ -125,7 +126,7 @@ public class UserCheckins extends Activity{
 	    catch(JSONException e)
 	    {
 			e.printStackTrace(); 
-			Log.v("Error", "CheckIn Exception " + e.getMessage());   
+			Log.v("Error", "Reviews Exception " + e.getMessage());   
 			return;
 	    }	
     }
@@ -140,17 +141,18 @@ public class UserCheckins extends Activity{
 	    	} 
 	    	else 
 	    	{
-	    		JSONArray checkins = results.getJSONArray("checkins");
+	    		JSONArray checkins = results.getJSONArray("reviews");
 	    		
-	    		venues = new ArrayList<userCheckin>();
+	    		reviews = new ArrayList<userReview>();
 	    		for(int i = 0; i < checkins.length(); i++)
 	    		{
 	    			JSONObject singleJSONUser = checkins.getJSONObject(i);
-	    			userCheckin ven = new userCheckin();	    
-	    			ven.setCheckinId(singleJSONUser.getInt("checkInId"));
-	    			ven.setLocationName(singleJSONUser.getString("LocationName"));
-	    			ven.setDateTime(singleJSONUser.getLong("DateTime"));
-	    			venues.add(ven);
+	    			userReview rev = new userReview();	    
+	    			rev.setReviewId(singleJSONUser.getInt("ReviewId"));
+	    			rev.setLocationName(singleJSONUser.getString("LocationName"));
+	    			rev.setReviewTxt(singleJSONUser.getString("ReviewText"));
+	    			rev.setDateTime(singleJSONUser.getLong("DateTime"));
+	    			reviews.add(rev);
 //	    			listItems.add(singleUser.getFname() + " " + singleUser.getSname());
 	    		}
 	    	}
@@ -163,4 +165,4 @@ public class UserCheckins extends Activity{
 	    }
     }
     
- }
+}
