@@ -55,7 +55,7 @@ public class userReview {
     @Override
 	public String toString() {
 
-    	String txt = DateFormat.format("dd/MM/yy h:mm:ssaa ", this.dateTime).toString();
+    	String txt = DateFormat.format("dd/MM/yy kk:mm:ss ", this.dateTime).toString();
     		
 		return( this.locationName + "\nReviewed: " + txt + "\n" + this.reviewTxt );
 	}

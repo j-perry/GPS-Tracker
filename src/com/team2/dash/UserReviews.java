@@ -152,7 +152,7 @@ public class UserReviews extends Activity {
 	    			rev.setReviewId(singleJSONUser.getInt("ReviewId"));
 	    			rev.setLocationName(singleJSONUser.getString("LocationName"));
 	    			rev.setReviewTxt(singleJSONUser.getString("ReviewText"));
-	    			rev.setDateTime(singleJSONUser.getLong("DateTime"));
+	    			rev.setDateTime((singleJSONUser.getLong("DateTime"))*1000);
 	    			reviews.add(rev);
 //	    			listItems.add(singleUser.getFname() + " " + singleUser.getSname());
 	    		}

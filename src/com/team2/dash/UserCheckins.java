@@ -150,7 +150,7 @@ public class UserCheckins extends Activity{
 	    			userCheckin ven = new userCheckin();	    
 	    			ven.setCheckinId(singleJSONUser.getInt("checkInId"));
 	    			ven.setLocationName(singleJSONUser.getString("LocationName"));
-	    			ven.setDateTime(singleJSONUser.getLong("DateTime"));
+	    			ven.setDateTime((singleJSONUser.getLong("DateTime"))*1000);
 	    			venues.add(ven);
 //	    			listItems.add(singleUser.getFname() + " " + singleUser.getSname());
 	    		}
